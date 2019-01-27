@@ -1,6 +1,82 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f" xmlns:l="sap.ui.layout">
-	<Dialog id="orderDialog" title="{i18n>Order}" contentWidth="90%" showHeader="false">
-		<HBox justifyContent="SpaceBetween">
+	<Dialog id="orderDialog" stretch="true" showHeader="false">
+		<content>
+			<HBox>
+				<List id="categoriesList" sticky="HeaderToolbar" items="{path:'restaurants>/Categories',suspended: true}" growing="true">
+					<layoutData>
+						<FlexItemData minWidth="350px"/>
+					</layoutData>
+					<headerToolbar>
+						<Toolbar>
+							<Button id="categoryBackButton" icon="sap-icon://arrow-left" press="onPressCategoryBack"/>
+							<Title text="{i18n>Categories}">
+								<layoutData>
+									<ToolbarLayoutData minWidth="100px"/>
+								</layoutData>
+							</Title>
+							<!--<SearchField liveChange="onSearchCategories"/>-->
+						</Toolbar>
+					</headerToolbar>
+					<items>
+						<ObjectListItem type="Navigation" title="{restaurants>Description}" press="onPressCategory"/>
+					</items>
+				</List>
+				<List id="productsList" sticky="HeaderToolbar" growing="true"
+					items="{path: 'restaurants>/Products' ,suspended: true, parameters: {expand:'Category,Images'}}">
+					<layoutData>
+						<FlexItemData minWidth="450px"/>
+					</layoutData>
+					<headerToolbar>
+						<Toolbar>
+							<Title text="{i18n>Products}">
+								<layoutData>
+									<ToolbarLayoutData minWidth="100px"/>
+								</layoutData>
+							</Title>
+							<SearchField liveChange="onSearchProducts"/>
+						</Toolbar>
+					</headerToolbar>
+					<items>
+						<ObjectListItem icon="{path:'restaurants>Images',formatter:'.models.getFavProductImageDownloadUrl'}" type="Navigation"
+							title="{restaurants>Description}" number="{path: 'restaurants>Price', type:'.types.floatType'}" numberUnit="ARS" press="onPressProduct"/>
+					</items>
+				</List>
+				<VBox justifyContent="SpaceBetween">
+					<Table items="{restaurants>Items}" mode="Delete" delete="onDeleteOrderItem" sticky="HeaderToolbar">
+						<layoutData>
+							<FlexItemData minWidth="450px"/>
+						</layoutData>
+						<headerToolbar>
+							<Toolbar >
+								<Title text="{i18n>Order}"/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column vAlign="Middle"></Column>
+							<Column vAlign="Middle" hAlign="End"></Column>
+						</columns>
+						<items>
+							<ColumnListItem >
+								<VBox justifyContent="SpaceAround" height="76px">
+									<Title titleStyle="H4" text="{restaurants>ProductDescription}"/>
+									<StepInput fieldGroupIds="orderFields" value="{path:'restaurants>Quantity', type: 'sap.ui.model.type.Integer'}" change="onChangeQuantity"/>
+								</VBox>
+								<VBox justifyContent="SpaceAround" alignItems="End">
+									<Title titleStyle="H3" text="{path:'restaurants>UnitPrice',type:'.types.floatType'}" class="sapUiTinyMarginBottom"/>
+									<Text text="ARS"/>
+								</VBox>
+							</ColumnListItem>
+						</items>
+					</Table>
+					<Toolbar design="Solid" style="Clear" height="50px">
+						<Title titleStyle="H1" text="{i18n>Total}" class="sapUiSmallMarginBegin"/>
+						<ToolbarSpacer/>
+						<Title titleStyle="H1" text="{path:'orderJSON>/Total',type:'.types.floatType'} ARS" class="sapUiSmallMarginEnd"/>
+					</Toolbar>
+				</VBox>
+			</HBox>
+		</content>
+		<!--	<HBox justifyContent="SpaceBetween">
 			<List id="productsTable" sticky="HeaderToolbar" growing="true"
 				items="{path: 'restaurants>/Products' ,parameters: {expand:'Category,Images'}, sorter: {path:'Category.CategoryId',group:'.getCategoryDescr'}}">
 				<layoutData>
@@ -54,7 +130,7 @@
 					<Title titleStyle="H1" text="{path:'orderJSON>/Total',type:'.types.floatType'} ARS" class="sapUiSmallMarginEnd"/>
 				</Toolbar>
 			</VBox>
-		</HBox>
+		</HBox>-->
 		<beginButton>
 			<Button icon="sap-icon://save" press="onSave"/>
 		</beginButton>

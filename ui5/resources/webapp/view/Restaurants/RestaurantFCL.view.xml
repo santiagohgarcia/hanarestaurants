@@ -15,7 +15,7 @@
 		<ToolbarSpacer/>
 		<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
 	</tnt:ToolHeader>
-	<f:FlexibleColumnLayout id="fcl" layout="{view>/layout}" initialBeginColumnPage="now" backgroundDesign="Solid" stateChange="onStateChanged">
+	<f:FlexibleColumnLayout id="fcl" layout="{view>/layout}" backgroundDesign="Solid" stateChange="onStateChanged">
 		<f:beginColumnPages>
 			<mvc:XMLView id="orderGrid" viewName="restaurants.ui5.view.Orders.OrderGrid"></mvc:XMLView>
 			<mvc:XMLView id="tableGrid" viewName="restaurants.ui5.view.Tables.TableGrid"></mvc:XMLView>

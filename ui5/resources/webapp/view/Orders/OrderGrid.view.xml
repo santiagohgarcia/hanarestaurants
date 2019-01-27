@@ -18,8 +18,12 @@
 			<ux:ObjectPageSection id="ordersSection" title="{i18n>OrderGrid_Orders}">
 				<ux:subSections>
 					<ux:ObjectPageSubSection title="{i18n>OrderGrid_Orders}">
-						<cc:MansoryLayout
-							content="{path:'restaurants>Orders', events: {dataRequested: '.showBusy', dataReceived: '.hideBusy'}, parameters:{expand:'Status,Customer,Items'}, filters: {path:'Status.StatusId', operator: 'EQ', value1: 3} , sorter: {path: 'ModifiedAt', descending:true},factory: '.orderItemFactory' }"></cc:MansoryLayout>
+						<f:GridList
+							items="{path:'restaurants>Orders', parameters:{expand:'Status,Customer,Items'}, filters: {path:'Status.StatusId', operator: 'EQ', value1: 3} , sorter: {path: 'ModifiedAt', descending:true},factory: '.orderItemFactory' }">
+							<f:customLayout>
+								<grid:GridBoxLayout boxMinWidth="400px"/>
+							</f:customLayout>
+						</f:GridList>
 					</ux:ObjectPageSubSection>
 				</ux:subSections>
 			</ux:ObjectPageSection>

@@ -27,8 +27,7 @@ sap.ui.define([
 				Total: 0
 			}), "orderJSON");
 			if (ctx.RestaurantId || ctx.RestaurantTableId) {
-				//this.filterCategories(ctx.RestaurantId);
-
+				this.filterCategories(ctx.RestaurantId);
 				models.getNewOrderId(ctx.RestaurantId, ctx.RestaurantTableId) //TODO: change this for AWAIT!!
 					.then(response => {
 						ctx.RestaurantOrderId = response.RestaurantOrderId;
@@ -55,7 +54,7 @@ sap.ui.define([
 
 		onSearchProducts: function(evt) {
 			var query = evt.getParameter("newValue");
-			this._view.byId("productsTable").getBinding("items").filter(query ? new Filter({
+			this._view.byId("productsList").getBinding("items").filter(query ? new Filter({
 				path: "Description",
 				operator: FO.Contains,
 				value1: query,
@@ -101,10 +100,6 @@ sap.ui.define([
 			this.sumOrderTotal();
 		},
 
-		getCategoryDescr: function(ctx) {
-			return ctx.getProperty("Category/Description");
-		},
-
 		onChangeQuantity: function() {
 			this.sumOrderTotal();
 		},
@@ -115,17 +110,52 @@ sap.ui.define([
 				.map(i => i.Quantity * i.UnitPrice)
 				.reduce(((a, b) => a + b), 0);
 			this._dialog.getModel("orderJSON").setProperty("/Total", sum);
-		}
+		},
 
-		/*	filterCategories: function(restaurantId, parentCategoryId) {
-				var categoriesBinding = this._view.byId("categoriesGrid").getBinding("items");
-				if (categoriesBinding) {
-					var filters = [];
-					filters.push(new Filter("RestaurantId", FO.EQ, restaurantId));
-					filters.push(new Filter("ParentCategory.CategoryId", FO.EQ, parentCategoryId || 0));
-					categoriesBinding.filter(filters);
-				}
-			}*/
+		filterCategories: function(restaurantId, parentCategoryId) {
+			var categoriesBinding = this._view.byId("categoriesList").getBinding("items");
+			if (categoriesBinding) {
+				var filters = [];
+				filters.push(new Filter("RestaurantId", FO.EQ, restaurantId));
+				filters.push(new Filter("ParentCategory.CategoryId", FO.EQ, parentCategoryId || 0));
+				categoriesBinding.filter(filters);
+			}
+			this._view.byId("categoryBackButton").setVisible(parentCategoryId ? true : false);
+		},
+
+		filterProducts: function(categoryId) {
+			var productsBinding = this._view.byId("productsList").getBinding("items");
+			if (productsBinding) {
+				var filters = [];
+				filters.push(new Filter("Category.CategoryId", FO.EQ, categoryId));
+				productsBinding.filter(filters);
+			}
+		},
+
+		onPressCategory: function(evt) {
+			var category = evt.getSource().getBindingContext("restaurants").getObject();
+			var order = this._dialog.getBindingContext("restaurants").getObject();
+			this._view.byId("categoriesList").bindElement({
+				path: `/Categories(RestaurantId=${order.RestaurantId},CategoryId=${category.CategoryId})`,
+				model: "restaurants"
+			});
+			this.filterCategories(order.RestaurantId, category.CategoryId);
+			this.filterProducts(category.CategoryId);
+		},
+
+		onPressCategoryBack: function() {
+			var categoryList = this._view.byId("categoriesList");
+			var category = categoryList.getBindingContext("restaurants").getObject();
+			var order = this._dialog.getBindingContext("restaurants").getObject();
+			var parentCategoryId = category["ParentCategory.CategoryId"];
+			this.filterCategories(order.RestaurantId, parentCategoryId);
+			this.filterProducts(parentCategoryId);
+			this._view.byId("categoriesList").bindElement({
+				path: `/Categories(RestaurantId=${order.RestaurantId},CategoryId=${parentCategoryId})`,
+				model: "restaurants"
+			});
+
+		}
 
 	});
 
