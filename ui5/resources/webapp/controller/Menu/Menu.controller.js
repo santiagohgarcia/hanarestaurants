@@ -2,7 +2,7 @@ sap.ui.define([
 	"restaurants/ui5/controller/BaseController",
 	"restaurants/ui5/model/formatter",
 	"restaurants/ui5/model/types",
-	"restaurants/ui5/model/models",
+	"restaurants/ui5/model/models", 
 	"sap/ui/model/json/JSONModel"
 ], function(BaseController, formatter, types, models, JSONModel) {
 	"use strict";
