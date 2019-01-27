@@ -1,0 +1,26 @@
+FUNCTION "restaurants.db.functions::TableOccupation"( RESTAURANT_ID INTEGER,
+												 TABLE_ID INTEGER)
+       RETURNS table (RESTAURANT_ID INTEGER,
+       				  TABLE_ID INTEGER,
+       				  CAPACITY INTEGER,
+       				  OCCUPIED INTEGER,
+       				  PERCENTAGE DECIMAL(10,2)
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+RETURN SELECT  RT."RestaurantId" as "RESTAURANT_ID", 
+	    RT."RestaurantTableId" AS "TABLE_ID" ,
+	    RT."Capacity" AS "CAPACITY", 
+	    IFNULL(COUNT(DISTINCT RO."Customer.CustomerId"),0) as "OCCUPIED",
+	    IFNULL(COUNT(DISTINCT RO."Customer.CustomerId"),0)*100/RT."Capacity" AS "PERCENTAGE"
+	  FROM "restaurants.db::RestaurantsContext.RestaurantTable" as RT
+	  LEFT OUTER JOIN "restaurants.db::RestaurantsContext.RestaurantOrder"  AS RO
+	  ON RT."RestaurantId" = RO."RestaurantId" 
+	  AND RT."RestaurantTableId" = RO."RestaurantTableId" AND
+	  (RO."Status.StatusId" = 2 OR RO."Status.StatusId" = 3)
+	  WHERE RT."RestaurantId" = RESTAURANT_ID AND
+		RT."RestaurantTableId" = TABLE_ID
+		GROUP BY RT."RestaurantId", RT."RestaurantTableId",RT."Capacity";
+END;

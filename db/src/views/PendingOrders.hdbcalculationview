@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="restaurants.db.views::PendingOrders" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="PendingOrders"/>
+<localVariables>
+  <variable id="RESTAURANT_ID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="INTEGER" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="restaurants.db::RestaurantsContext.RestaurantOrder">
+    <resourceUri>restaurants.db::RestaurantsContext.RestaurantOrder</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="RestaurantOrders" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="RestaurantId">
+        <descriptions defaultDescription="RestaurantId"/>
+      </viewAttribute>
+      <viewAttribute id="Status_StatusId">
+        <descriptions defaultDescription="Status_StatusId"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="restaurants.db::RestaurantsContext.RestaurantOrder">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RestaurantId" source="RestaurantId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Status_StatusId" source="Status.StatusId"/>
+    </input>
+    <filter>&quot;RestaurantId&quot;='$$RESTAURANT_ID$$' and &quot;Status_StatusId&quot;=3</filter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="RestaurantOrders">
+  <attributes>
+    <attribute id="RestaurantId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RestaurantId"/>
+      <keyMapping columnObjectName="RestaurantOrders" columnName="RestaurantId"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="PendingOrders" order="2" aggregationType="count" measureType="simple">
+      <descriptions defaultDescription="Status_StatusId"/>
+      <measureMapping columnObjectName="RestaurantOrders" columnName="Status_StatusId"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="RestaurantOrders" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="122" y="252"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>   

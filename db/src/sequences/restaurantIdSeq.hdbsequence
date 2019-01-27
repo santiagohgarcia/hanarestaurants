@@ -1,0 +1,2 @@
+SEQUENCE "restaurants.db.sequences::restaurantIdSeq" START WITH 10 MAXVALUE 999999
+RESET BY SELECT IFNULL(MAX("RestaurantId"), 10) + 1 FROM "restaurants.db::RestaurantsContext.Restaurant"

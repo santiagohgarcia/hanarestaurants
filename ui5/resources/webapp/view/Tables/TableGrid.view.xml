@@ -1,0 +1,53 @@
+<mvc:View controllerName="restaurants.ui5.controller.Tables.TableGrid" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f"
+	xmlns:ux="sap.uxap" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:grid="sap.ui.layout.cssgrid">
+	<ux:ObjectPageLayout id="tablesObjectPage" headerContentPinnable="false" useIconTabBar="true" navigate="onTabChange">
+		<ux:headerTitle>
+			<ux:ObjectPageDynamicHeaderTitle>
+				<ux:heading>
+					<OverflowToolbar style="Clear">
+						<Title text="{i18n>Tables}"/>
+					</OverflowToolbar>
+				</ux:heading>
+				<ux:actions>
+					<Button icon="sap-icon://add" press="onAddTable" type="Transparent"/>
+				</ux:actions>
+			</ux:ObjectPageDynamicHeaderTitle>
+		</ux:headerTitle>
+		<ux:sections>
+			<ux:ObjectPageSection id="tablesSection" title="{i18n>TableGrid_Tables}">
+				<ux:subSections>
+					<ux:ObjectPageSubSection title="{i18n>TableGrid_Tables}">
+						<f:GridList items="{restaurants>Tables}">
+							<!--	<f:customLayout>
+								<grid:GridBoxLayout boxMinWidth="170px"/>
+							</f:customLayout>-->
+							<f:items>
+								<CustomListItem type="Active" press="onPressTable">
+									<VBox class="sapUiSmallMargin">
+										<layoutData>
+											<FlexItemData growFactor="1" shrinkFactor="0"/>
+										</layoutData>
+										<HBox class="sapUiTinyMarginBottom" justifyContent="SpaceBetween" alignItems="Center">
+											<Title text="#{restaurants>RestaurantTableId}" titleStyle="H5"/>
+											<Button icon="sap-icon://add" type="Transparent" press="onAddOrder"/>
+										</HBox>
+										<HBox justifyContent="SpaceBetween" visible="{= ${restaurants>ActiveOrders/ActiveOrders} > 0 }" alignItems="Center">
+											<ObjectStatus binding="{restaurants>PendingOrders}" icon="sap-icon://pending" text="{restaurants>PendingOrders}" state="Warning"
+												visible="{= ${restaurants>PendingOrders} > 0 }"/>
+											<ObjectStatus binding="{restaurants>ReadyOrders}" icon="sap-icon://accept" text="{restaurants>ReadyOrders}" state="Success"
+												visible="{= ${restaurants>ReadyOrders} > 0 }"/>
+											<ObjectNumber binding="{restaurants>ActiveOrders}" number="{path:'restaurants>TotalPrice', type: '.types.floatType'}" unit="ARS"/>
+										</HBox>
+										<Label text="{i18n>TableGrid_Empty}" binding="{restaurants>ActiveOrders}"
+											visible="{= ${restaurants>ActiveOrders/ActiveOrders} === 0 }"/>
+									</VBox>
+								</CustomListItem>
+							</f:items>
+						</f:GridList>
+						<!--</Panel>-->
+					</ux:ObjectPageSubSection>
+				</ux:subSections>
+			</ux:ObjectPageSection>
+		</ux:sections>
+	</ux:ObjectPageLayout>
+</mvc:View>

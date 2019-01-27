@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="restaurants.db.views::OrderTotal" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="OrderTotal"/>
+<localVariables>
+  <variable id="RESTAURANT_ID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="INTEGER" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+  <variable id="TABLE_ID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="INTEGER" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+  <variable id="ORDER_ID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="INTEGER" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="restaurants.db.functions::OrderTotal">
+    <targetVariable name="RESTAURANT_ID" resourceUri="restaurants.db.functions::OrderTotal"/>
+    <localVariable>RESTAURANT_ID</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="restaurants.db.functions::OrderTotal">
+    <targetVariable name="TABLE_ID" resourceUri="restaurants.db.functions::OrderTotal"/>
+    <localVariable>TABLE_ID</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="restaurants.db.functions::OrderTotal">
+    <targetVariable name="ORDER_ID" resourceUri="restaurants.db.functions::OrderTotal"/>
+    <localVariable>ORDER_ID</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="restaurants.db.functions::OrderTotal" type="TABLE_FUNCTION">
+    <resourceUri>restaurants.db.functions::OrderTotal</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="restaurants.db.functions::OrderTotal">
+  <attributes>
+    <attribute id="RestaurantId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RestaurantId"/>
+      <keyMapping columnObjectName="OrderTotal" columnName="RESTAURANT_ID"/>
+    </attribute>
+    <attribute id="RestaurantTableId" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RestaurantTableId"/>
+      <keyMapping columnObjectName="OrderTotal" columnName="TABLE_ID"/>
+    </attribute>
+    <attribute id="RestaurantOrderId" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RestaurantOrderId"/>
+      <keyMapping columnObjectName="OrderTotal" columnName="ORDER_ID"/>
+    </attribute>
+    <attribute id="Total" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Total"/>
+      <keyMapping columnObjectName="OrderTotal" columnName="TOTAL_PRICE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

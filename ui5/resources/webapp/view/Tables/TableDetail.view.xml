@@ -1,0 +1,69 @@
+<mvc:View controllerName="restaurants.ui5.controller.Tables.TableDetail" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:c="sap.suite.ui.commons" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f" xmlns:ux="sap.uxap"
+	xmlns:mc="sap.suite.ui.microchart" xmlns:core="sap.ui.core" xmlns:grid="sap.ui.layout.cssgrid">
+	<ux:ObjectPageLayout useIconTabBar="true" headerContentPinnable="false" showTitleInHeaderContent="true">
+		<!-- DynamicPage Title -->
+		<ux:headerTitle>
+			<ux:ObjectPageHeader objectTitle="{i18n>TableGrid_Table} #{restaurants>RestaurantTableId}" isObjectTitleAlwaysVisible="false"
+				isObjectSubtitleAlwaysVisible="false" isActionAreaAlwaysVisible="true" showPlaceholder="false">
+				<ux:actions>
+					<ux:ObjectPageHeaderActionButton type="Transparent" icon="sap-icon://edit" press="onEditTable"/>
+					<ux:ObjectPageHeaderActionButton type="Transparent" icon="sap-icon://delete" press="onDeleteTable"/>
+					<ux:ObjectPageHeaderActionButton type="Emphasized" icon="sap-icon://simple-payment" text="{i18n>TableDetail_CloseTable}"
+						press="onPressCloseTable"/>
+					<ux:ObjectPageHeaderActionButton icon="sap-icon://add" press="onAddOrder" type="Transparent" text="{i18n>TableDetail_AddOrder}"/>
+					<ux:ObjectPageHeaderActionButton type="Transparent" icon="sap-icon://decline" press="onClose"/>
+				</ux:actions>
+			</ux:ObjectPageHeader>
+			<!--	<ux:ObjectPageDynamicHeaderTitle >
+				<ux:expandedHeading>
+					<Title text="{i18n>TableGrid_Table} #{restaurants>RestaurantTableId}"/>
+				</ux:expandedHeading>
+				<ux:snappedHeading>
+					<Title text="{i18n>TableGrid_Table} #{restaurants>RestaurantTableId}"/>
+				</ux:snappedHeading>
+				<ux:actions></ux:actions>
+			</ux:ObjectPageDynamicHeaderTitle>-->
+		</ux:headerTitle>
+		<!-- DynamicPage Header -->
+		<ux:headerContent>
+			<VBox binding="{restaurants>ActiveOrders}">
+				<!--	<Label text="{i18n>TableDetail_Status}"/>-->
+				<ObjectStatus text="{restaurants>StatusDescription}" state="{path:'restaurants>StatusId', formatter: '.formatter.tableStatusToState'}"/>
+			</VBox>
+			<VBox binding="{restaurants>ActiveOrders}" visible="{= ${restaurants>TotalPrice} > 0 }">
+				<Label text="{i18n>Total}"/>
+				<ObjectNumber number="{path:'restaurants>TotalPrice', type: '.types.floatType'}" unit="ARS"/>
+			</VBox>
+		</ux:headerContent>
+		<!-- DynamicPage Content -->
+		<ux:sections>
+			<ux:ObjectPageSection title="{i18n>TableDetail_ActiveOrders}" showTitle="true">
+				<ux:subSections>
+					<ux:ObjectPageSubSection class="sapUiNoContentPadding">
+						<IconTabBar select="onSelectStatusTab" expandable="false" tabDensityMode="Compact" applyContentPadding="false"
+							headerBackgroundDesign="Translucent" backgroundDesign="Translucent">
+							<items>
+								<IconTabFilter binding="{restaurants>ActiveOrders}" key="active" showAll="true" text="{i18n>TableDetail_ActiveOrders}"
+									count="{= Number(${restaurants>ActiveOrders})}"/>
+								<IconTabSeparator/>
+								<IconTabFilter binding="{restaurants>PendingOrders}" key="3" text="{i18n>TableDetail_InPreparationOrders}" icon="sap-icon://pending"
+									iconColor="Critical" count="{= Number(${restaurants>PendingOrders})}"/>
+								<IconTabFilter binding="{restaurants>ReadyOrders}" key="2" text="{i18n>TableDetail_ReadyOrders}" icon="sap-icon://accept"
+									iconColor="Positive" count="{= Number(${restaurants>ReadyOrders})}"/>
+							</items>
+							<content>
+								<f:GridList id="tableOrderList" class="sapUiTinyMarginTop"
+									items="{path:'restaurants>Orders', parameters:{expand:'Status,Customer,Items'}, filters: { filters: [ {path:'Status.StatusId', operator: 'EQ', value1: 3} ], and: false }, sorter: {path: 'ModifiedAt', descending:true},factory: '.orderItemFactory' }">
+									<f:customLayout>
+										<grid:GridBoxLayout boxMinWidth="350px"/>
+									</f:customLayout>
+								</f:GridList>
+							</content>
+						</IconTabBar>
+					</ux:ObjectPageSubSection>
+				</ux:subSections>
+			</ux:ObjectPageSection>
+		</ux:sections>
+	</ux:ObjectPageLayout>
+</mvc:View>

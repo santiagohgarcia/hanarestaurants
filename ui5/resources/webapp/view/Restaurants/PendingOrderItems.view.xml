@@ -1,0 +1,32 @@
+<mvc:View controllerName="restaurants.ui5.controller.Restaurants.PendingOrderItems" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.f" xmlns:ux="sap.uxap" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:mc="sap.suite.ui.microchart"
+	xmlns:cc="restaurants.ui5.controls" xmlns:grid="sap.ui.layout.cssgrid" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
+	<ux:ObjectPageLayout id="pendingItemsObjectPage" headerContentPinnable="false" useIconTabBar="true">
+		<ux:headerTitle>
+			<ux:ObjectPageDynamicHeaderTitle>
+				<ux:heading>
+					<OverflowToolbar style="Clear">
+						<Title text="{i18n>PendingItems}"/>
+					</OverflowToolbar>
+				</ux:heading>
+			</ux:ObjectPageDynamicHeaderTitle>
+		</ux:headerTitle>
+		<ux:sections>
+			<ux:ObjectPageSection  title="{i18n>PendingItems}">
+				<ux:subSections>
+					<ux:ObjectPageSubSection title="{i18n>PendingItems}">
+						<f:GridList items="{restaurants>PendingOrderItems}">
+							<f:customLayout>
+								<grid:GridBoxLayout boxMinWidth="17rem"/>
+							</f:customLayout>
+							<f:items>
+								<ObjectListItem icon="{path:'restaurants>',formatter:'.models.getProductImageDownloadUrl'}"
+									intro="{path:'restaurants>ModifiedAt',type:'.types.dateTimeType'}" title="{restaurants>ProductDescription}" number="{restaurants>Quantity}"></ObjectListItem>
+							</f:items>
+						</f:GridList>
+					</ux:ObjectPageSubSection>
+				</ux:subSections>
+			</ux:ObjectPageSection>
+		</ux:sections>
+	</ux:ObjectPageLayout>
+</mvc:View>

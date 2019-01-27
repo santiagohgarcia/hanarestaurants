@@ -1,0 +1,43 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog id="productDialog" title="{i18n>Product}" stretch="{= !${device>/system/desktop} }" contentWidth="35%">
+		<f:Form editable="true">
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0"
+					emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer>
+					<f:FormElement label="{i18n>ProductDialog_Description}">
+						<Input fieldGroupIds="productFields" required="true" value="{path: 'restaurants>Description', type: 'sap.ui.model.type.String' }"/>
+					</f:FormElement>
+					<f:FormElement label="{i18n>ProductDialog_Price}">
+						<Input textAlign="End" fieldGroupIds="productFields" required="true" value="{path: 'restaurants>Price', type: '.types.floatType' }"/>
+					</f:FormElement>
+					<f:FormElement label="{i18n>ProductDialog_NeedsPreparation}">
+						<Switch customTextOff="{i18n>OFF}" customTextOn="{i18n>ON}" state="{path:'restaurants>NeedPreparation',type:'.types.hanaBoolean'}"/>
+					</f:FormElement>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<UploadCollection id="uploadCollection" multiple="true" sameFilenameAllowed="true" instantUpload="true" typeMissmatch="onTypeMissmatch"
+			beforeUploadStarts="onBeforeUploadStarts" fileType="jpg,png,bmp" uploadComplete="onUploadComplete" mode="SingleSelectMaster"
+			selectionChange="onSelectionChange" uploadUrl="https://hxehost:51029/xsjs/functions/UploadProductImage.xsjs"
+			items="{path: 'restaurants>/ProductImages', suspended: true }">
+			<items>
+				<UploadCollectionItem deletePress="onDeleteFile" fileName="{restaurants>FileName}"
+					thumbnailUrl="{path:'restaurants>',formatter: '.models.getProductImageDownloadUrl'}" visibleEdit="false"
+					url="{parts:[{path:'restaurants>ImageId'},{path:'restaurants>ProductId'}],formatter: '.models.getProductImageDownloadUrl'}">
+					<markers>
+						<ObjectMarker type="Favorite" visible="{path:'restaurants>Favorite',type: '.types.hanaBoolean'}"/>
+					</markers>
+				</UploadCollectionItem>
+			</items>
+		</UploadCollection>
+		<beginButton>
+			<Button icon="sap-icon://save" press="onSave"/>
+		</beginButton>
+		<endButton>
+			<Button icon="sap-icon://decline" press="onCloseDialog"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,129 @@
+{
+	"_version": "1.5.0",
+
+	"sap.app": {
+		"id": "restaurants.ui5",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "hanatemplates.basicSAPUI5ApplicationProject",
+			"version": "0.0.0"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"handleValidation": true,
+		"rootView": {
+			"viewName": "restaurants.ui5.view.App",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.30.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {},
+				"sap.ushell": {},
+				"sap.collaboration": {},
+				"sap.ui.comp": {},
+				"sap.uxap": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "restaurants.ui5.i18n.i18n"
+				}
+			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/style.css"
+			}]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "restaurants.ui5.view",
+				"controlAggregation": "pages",
+				"controlId": "idAppControl"
+			},
+			"routes": [{
+				"name": "RestaurantTiles",
+				"pattern": "/",
+				"target": "restaurantTiles"
+			},{
+				"name": "Orders",
+				"pattern": "/Restaurant/{RestaurantId}/Orders",
+				"target": "restaurantFCL"
+			}, {
+				"name": "Tables",
+				"pattern": "/Restaurant/{RestaurantId}/Tables",
+				"target": "restaurantFCL"
+			}, {
+				"name": "PendingOrders",
+				"pattern": "/Restaurant/{RestaurantId}/PendingOrders",
+				"target": "restaurantFCL"
+			}, {
+				"name": "TableDetail",
+				"pattern": "/Restaurant/{RestaurantId}/Table/{RestaurantTableId}",
+				"target": "restaurantFCL"
+			}, {
+				"name": "OrderDetail",
+				"pattern": "/Restaurant/{RestaurantId}/Table/{RestaurantTableId}/Order/{RestaurantOrderId}",
+				"target": "restaurantFCL"
+			}, {
+				"name": "Menu",
+				"pattern": "/Restaurant/{RestaurantId}/Menu",
+				"target": "restaurantFCL"
+			}, {
+				"name": "PendingOrderItems",
+				"pattern": "/Restaurant/{RestaurantId}/PendingOrderItems",
+				"target": "restaurantFCL"
+			}],
+			"targets": {
+				"restaurantTiles": {
+					"viewType": "XML",
+					"viewName": "Restaurants.RestaurantTiles",
+					"viewLevel": 0
+				},
+				"restaurantFCL": {
+					"viewType": "XML",
+					"viewName": "Restaurants.RestaurantFCL",
+					"viewLevel": 1
+				}
+			}
+		}
+	}
+}

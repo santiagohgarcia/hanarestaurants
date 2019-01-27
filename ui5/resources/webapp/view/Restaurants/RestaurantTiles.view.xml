@@ -1,0 +1,25 @@
+<mvc:View controllerName="restaurants.ui5.controller.Restaurants.RestaurantTiles" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:tnt="sap.tnt" displayBlock="true" xmlns="sap.m" xmlns:mc="sap.suite.ui.microchart">
+	<tnt:ToolHeader >
+		<ToolbarSpacer/>
+		<Title text="{i18n>title}"/>
+		<ToolbarSpacer/>
+		<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
+	</tnt:ToolHeader>
+	<Page showHeader="false" class="sapUiContentPadding">
+		<OverflowToolbar style="Clear">
+			<Title titleStyle="H2" text="{i18n>RestaurantTiles_Restaurants}" class="sapUiTinyMarginBegin"/>
+			<ToolbarSpacer/>
+			<Button icon="sap-icon://add" press="onAddRestaurant" type="Transparent"/>
+		</OverflowToolbar>
+		<HBox wrap="Wrap" items="{restaurants>/Restaurants}">
+			<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="{restaurants>Name}" frameType="OneByOne" press="onPressRestaurant">
+				<tileContent>
+					<TileContent footer="{i18n>RestaurantTiles_Occupation}">
+						<mc:RadialMicroChart binding="{restaurants>Occupation}" total="{restaurants>Capacity}" fraction="{=Number(${restaurants>Occupied})}"/>
+					</TileContent>
+				</tileContent>
+			</GenericTile>
+		</HBox>
+	</Page>
+</mvc:View>

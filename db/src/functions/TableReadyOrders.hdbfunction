@@ -1,0 +1,21 @@
+FUNCTION "restaurants.db.functions::TableReadyOrders"( RESTAURANT_ID INTEGER, TABLE_ID INTEGER)
+        RETURNS table (RESTAURANT_ID INTEGER,
+       				  TABLE_ID INTEGER,
+       				  READY_ORDERS BIGINT
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+RETURN 	SELECT RT."RestaurantId" as "RESTAURANT_ID", 
+	    RT."RestaurantTableId" as "TABLE_ID" ,
+		COUNT(RO."RestaurantOrderId") as "READY_ORDERS"
+	  FROM "restaurants.db::RestaurantsContext.RestaurantTable" as RT
+	  LEFT OUTER JOIN "restaurants.db::RestaurantsContext.RestaurantOrder" as RO
+	  ON RT."RestaurantId" = RO."RestaurantId" AND
+		RT."RestaurantTableId" = RO."RestaurantTableId" and 
+		(RO."Status.StatusId" = 2)
+	  WHERE RT."RestaurantId" = RESTAURANT_ID AND
+		RT."RestaurantTableId" = TABLE_ID
+		GROUP BY RT."RestaurantId", RT."RestaurantTableId";
+END;
+

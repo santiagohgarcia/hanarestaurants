@@ -1,0 +1,94 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f" >
+	<!--	<CustomListItem class="sapUiTinyMarginBottom" id="orderItem">
+		<VBox class="sapUiSmallMargin">
+			<HBox justifyContent="SpaceBetween">
+				<HBox alignItems="Center">
+					<f:Avatar src="sap-icon://customer" displaySize="XS" class="sapUiTinyMarginEnd"/>
+					<VBox justifyContent="SpaceBetween">
+						<ObjectIdentifier title="{restaurants>Customer/Name}"/>
+						<Label text="{i18n>Table} #{restaurants>RestaurantTableId}"/>
+					</VBox>
+				</HBox>
+				<VBox justifyContent="SpaceBetween" alignItems="End">
+					<ObjectStatus text="{restaurants>Status/Description}"
+						state="{path:'restaurants>Status/StatusId', formatter:'.formatter.orderStatusToState'}"/>
+					<Label text="{path:'restaurants>ModifiedAt',type:'.types.dateTimeType'}"/>
+				</VBox>
+			</HBox>
+			<Panel expandable="true" expand="onExpandPanel" class="sapUiNoContentPadding">
+				<headerToolbar>
+					<OverflowToolbar>
+						<Text text="{path: 'restaurants>Items', formatter: '.formatter.concatOrderDetails'}" maxLines="1"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<Table items="{restaurants>Items}" inset="false">
+					<columns>
+						<Column width="70%"></Column>
+						<Column hAlign="End"></Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<Text text="{restaurants>Quantity} x {restaurants>ProductDescription}"/>
+							<ObjectNumber number="{path:'restaurants>Price',type:'.types.floatType'}" unit="ARS" emphasized="false"/>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+			<HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBegin sapUiTinyMarginTop">
+				<ObjectIdentifier binding="{restaurants>TotalPrice}" title="{i18n>Total}: {path:'restaurants>Total',type:'.types.floatType'} ARS"/>
+				<HBox visible="{= ${restaurants>Status/StatusId} === 3 }">
+					<Button type="Transparent" icon="sap-icon://accept" class="sapUiTinyMarginEnd" press="onPressReady"/>
+					<Button type="Transparent" icon="sap-icon://decline" press="onPressCancel" />
+				</HBox>
+			</HBox>
+		</VBox>
+	</CustomListItem>-->
+	<CustomListItem id="orderItem" highlight="{path:'restaurants>Status/StatusId', formatter:'.formatter.orderStatusToState'}">
+	
+		<HBox justifyContent="SpaceBetween" class="sapUiSmallMargin">
+			<VBox justifyContent="SpaceBetween" class="sapUiSmallMarginEnd">
+				<layoutData>
+					<FlexItemData growFactor="3" maxWidth="450px"/>
+				</layoutData>
+				<VBox justifyContent="Start" fitContainer="true" items="{restaurants>Items}" fieldGroupIds="items">
+					<HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom" alignItems="Center">
+						<Text text="{restaurants>Quantity} x {restaurants>ProductDescription}"/>
+						<ObjectNumber number="{path:'restaurants>Price',type:'.types.floatType'}" unit="ARS" emphasized="false" textAlign="End">
+							<layoutData>
+								<FlexItemData minWidth="60px"/>
+							</layoutData>
+						</ObjectNumber>
+					</HBox>
+				</VBox>
+				<!--	<HBox justifyContent="Center" alignItems="Center">
+					<Link text="More..." press="onMorePress"/>
+				</HBox>-->
+				<HBox justifyContent="SpaceBetween" alignItems="End" class="orderTotalLine">
+					<layoutData>
+						<FlexItemData minHeight="25px"/>
+					</layoutData>
+					<Label text="{i18n>Total}" design="Bold"/>
+					<Label binding="{restaurants>TotalPrice}" text="{path:'restaurants>Total',type:'.types.floatType'} ARS" design="Bold" textAlign="End"/>
+					<!--	<ObjectNumber binding="{restaurants>TotalPrice}" number="{path:'restaurants>Total',type:'.types.floatType'}" unit="ARS" textAlign="End"/>-->
+				</HBox>
+			</VBox>
+			<VBox justifyContent="SpaceBetween">
+				<layoutData>
+					<FlexItemData minWidth="90px" growFactor="1"/>
+				</layoutData>
+				<VBox alignItems="End">
+					<ObjectStatus text="{restaurants>Status/Description}"
+						state="{path:'restaurants>Status/StatusId', formatter:'.formatter.orderStatusToState'}"/>
+					<Label text="{path:'restaurants>ModifiedAt',type:'.types.dateTimeType'}" class="sapUiTinyMarginTop"/>
+					<Label visible="{= ${restaurants>RestaurantTableId} > 0 }" text="{i18n>Table} #{restaurants>RestaurantTableId}" class="sapUiTinyMarginTop"/>
+					<Label visible="{= ${restaurants>RestaurantTableId} === 0 }" text="{i18n>NoTable}" class="sapUiTinyMarginTop"/>
+					<f:Avatar src="sap-icon://customer" displaySize="XS" class="sapUiTinyMarginTop"/>
+				</VBox>
+				<HBox visible="{= ${restaurants>Status/StatusId} === 3 }" justifyContent="End" alignItems="Center">
+					<Button type="Transparent" icon="sap-icon://accept" press="onPressReady"/>
+					<Button type="Transparent" icon="sap-icon://decline" press="onPressCancel"/>
+				</HBox>
+			</VBox>
+		</HBox>
+	</CustomListItem>
+</core:FragmentDefinition>

@@ -1,0 +1,29 @@
+<mvc:View controllerName="restaurants.ui5.controller.Restaurants.RestaurantFCL" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:tnt="sap.tnt" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f">
+	<tnt:ToolHeader >
+		<Button icon="sap-icon://home" type="Transparent" press="onPressHome"/>
+		<Title text="{restaurants>Name}"/>
+		<ToolbarSpacer/>
+		<IconTabHeader id="iconTabHeader" select="onSelectTab">
+			<items>
+				<IconTabFilter key="orders" text="{i18n>OrderGrid_Orders}"/>
+				<IconTabFilter key="pendingItems" text="{i18n>PendingItems}"/>
+				<IconTabFilter key="tables" text="{i18n>Tables}"/>
+				<IconTabFilter key="menu" text="{i18n>Menu}"/>
+			</items>
+		</IconTabHeader>
+		<ToolbarSpacer/>
+		<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
+	</tnt:ToolHeader>
+	<f:FlexibleColumnLayout id="fcl" layout="{view>/layout}" initialBeginColumnPage="now" backgroundDesign="Solid" stateChange="onStateChanged">
+		<f:beginColumnPages>
+			<mvc:XMLView id="orderGrid" viewName="restaurants.ui5.view.Orders.OrderGrid"></mvc:XMLView>
+			<mvc:XMLView id="tableGrid" viewName="restaurants.ui5.view.Tables.TableGrid"></mvc:XMLView>
+			<mvc:XMLView id="menu" viewName="restaurants.ui5.view.Menu.Menu"></mvc:XMLView>
+			<mvc:XMLView id="pendingOrderItems" viewName="restaurants.ui5.view.Restaurants.PendingOrderItems"></mvc:XMLView>
+		</f:beginColumnPages>
+		<f:midColumnPages>
+			<mvc:XMLView id="tableDetail" viewName="restaurants.ui5.view.Tables.TableDetail"></mvc:XMLView>
+		</f:midColumnPages>
+	</f:FlexibleColumnLayout>
+</mvc:View>
