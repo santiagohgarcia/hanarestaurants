@@ -9,8 +9,9 @@ var pstmt = conn.prepareStatement(
 
 pstmt.setInteger(1, Number(headers.get("productid")));
 pstmt.setString(2, headers.get("filename"));
-pstmt.setBlob(3, data.asArrayBuffer());
-pstmt.setInteger(4, 0);
+pstmt.setInteger(3, 0);
+pstmt.setBlob(4, data.asArrayBuffer());
+
 pstmt.execute();
 
 conn.commit();

@@ -83,7 +83,7 @@ function RestaurantOrderBeforeCreate(param) {
 		values (?,?,?,?,?,?)`
 	);
 	pStmt.setInteger(1, newObject.RestaurantId);
-	pStmt.setInteger(2, newObject.RestaurantTableId);
+	pStmt.setInteger(2, newObject.RestaurantTableId || 0);
 	pStmt.setInteger(3, newObject.RestaurantOrderId);
 	pStmt.setInteger(4, newObject["Status.StatusId"] || 3); //In Preparation 
 	pStmt.setInteger(5, newObject["Customer.CustomerId"] || 0); //Anonym
@@ -121,10 +121,10 @@ function RestaurantOrderItemBeforeCreate(param) {
 		,?,?,?,?,?)`
 	);
 	pStmt.setInteger(1, newObject.RestaurantId);
-	pStmt.setInteger(2, newObject.RestaurantTableId);
+	pStmt.setInteger(2, newObject.RestaurantTableId || 0);
 	pStmt.setInteger(3, newObject.RestaurantOrderId);
 	pStmt.setInteger(4, newObject.RestaurantId);
-	pStmt.setInteger(5, newObject.RestaurantTableId);
+	pStmt.setInteger(5, newObject.RestaurantTableId || 0);
 	pStmt.setInteger(6, newObject.RestaurantOrderId);
 	pStmt.setInteger(7, newObject.Product);
 	pStmt.setString(8, newObject.ProductDescription);
