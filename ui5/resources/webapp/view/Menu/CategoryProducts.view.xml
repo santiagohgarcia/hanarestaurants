@@ -1,0 +1,37 @@
+<mvc:View controllerName="restaurants.ui5.controller.Menu.CategoryProducts" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" height="100%" xmlns:grid="sap.ui.layout.cssgrid">
+	<VBox>
+		<f:GridList id="categoryTree" items="{path: 'restaurants>/Categories', suspended:true}" showNoData="false">
+			<f:customLayout>
+				<grid:GridBoxLayout boxMinWidth="200px"/>
+			</f:customLayout>
+			<f:headerToolbar>
+				<Toolbar>
+					<Breadcrumbs id="categoryBreadcrumbs" currentLocationText="{i18n>AllCategories}"></Breadcrumbs>
+					<ToolbarSpacer/>
+					<Button id="addCategoryButton" icon="sap-icon://add" press="onAddCategory"/>
+				</Toolbar>
+			</f:headerToolbar>
+			<f:items>
+				<ObjectListItem type="Navigation" title="{restaurants>Description}" press="onPressCategory" class="sapUiTinyMargin"/>
+			</f:items>
+		</f:GridList>
+		<f:GridList id="productsList" sticky="HeaderToolbar" growing="true" mode="{= ${params>/mode} === 'R' ? 'None' : 'Delete' }"
+			items="{path: 'restaurants>/Products' ,suspended: true, parameters: {expand:'Category,Images'}}" delete="onDeleteProduct">
+			<f:headerToolbar>
+				<Toolbar>
+					<Title text="{i18n>Products}"/>
+					<!--<SearchField liveChange="onSearchProducts"/>-->
+				</Toolbar>
+			</f:headerToolbar>
+			<f:customLayout>
+				<grid:GridBoxLayout boxMinWidth="250px"/>
+			</f:customLayout>
+			<f:items>
+				<ObjectListItem type="{= ${params>/mode} === 'R' ? 'Active' : 'Detail' }" icon="{path:'restaurants>Images',formatter:'.models.getFavProductImageDownloadUrl'}"
+					title="{restaurants>Description}" class="sapUiTinyMargin" number="{path: 'restaurants>Price', type:'.types.floatType'}" numberUnit="ARS"
+					press="onPressProduct" detailPress="onEditProduct"/>
+			</f:items>
+		</f:GridList>
+	</VBox>
+</mvc:View>

@@ -1,7 +1,7 @@
 <mvc:View controllerName="restaurants.ui5.controller.Orders.OrderGrid" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f"
 	xmlns:ux="sap.uxap" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:grid="sap.ui.layout.cssgrid"
 	xmlns:cc="restaurants.ui5.controls">
-	<ux:ObjectPageLayout id="ordersObjectPage" headerContentPinnable="false" useIconTabBar="true" navigate="onTabChange">
+	<ux:ObjectPageLayout id="ordersObjectPage" headerContentPinnable="false" useIconTabBar="true" navigate="onTabChange" showFooter="true">
 		<ux:headerTitle>
 			<ux:ObjectPageDynamicHeaderTitle>
 				<ux:heading>
@@ -9,9 +9,6 @@
 						<Title text="{i18n>Orders}"/>
 					</OverflowToolbar>
 				</ux:heading>
-				<ux:actions>
-					<Button icon="sap-icon://add" press="onAddOrder" type="Transparent"/>
-				</ux:actions>
 			</ux:ObjectPageDynamicHeaderTitle>
 		</ux:headerTitle>
 		<ux:sections>
@@ -28,5 +25,11 @@
 				</ux:subSections>
 			</ux:ObjectPageSection>
 		</ux:sections>
+		<ux:footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://add" press="onAddOrder" type="Transparent"/>
+			</Toolbar>
+		</ux:footer>
 	</ux:ObjectPageLayout>
 </mvc:View>

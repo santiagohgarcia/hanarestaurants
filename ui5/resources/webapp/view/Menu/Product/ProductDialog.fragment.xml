@@ -21,7 +21,7 @@
 		</f:Form>
 		<UploadCollection id="uploadCollection" multiple="true" sameFilenameAllowed="true" instantUpload="true" typeMissmatch="onTypeMissmatch"
 			beforeUploadStarts="onBeforeUploadStarts" fileType="jpg,png,bmp" uploadComplete="onUploadComplete" mode="SingleSelectMaster"
-			selectionChange="onSelectionChange" uploadUrl="https://hxehost:51029/xsjs/functions/UploadProductImage.xsjs"
+			selectionChange="onSelectionChange" uploadUrl="https://hxehost:51030/xsjs/functions/UploadProductImage.xsjs"
 			items="{path: 'restaurants>/ProductImages', suspended: true }">
 			<items>
 				<UploadCollectionItem deletePress="onDeleteFile" fileName="{restaurants>FileName}"

@@ -19,14 +19,14 @@ sap.ui.define([
 			return this.getView().setModel(model, sModelName);
 		},
 
-		onNavBack: function() {
+		onNavBack: function(defaultNav) {
 			var oHistory, sPreviousHash;
 			oHistory = History.getInstance();
 			sPreviousHash = oHistory.getPreviousHash();
 			if (sPreviousHash !== undefined) {
 				window.history.go(-1);
 			} else {
-				this.getRouter().navTo("home", {}, true /*no history*/ );
+				this.getRouter().navTo(defaultNav || "home", {}, true /*no history*/ );
 			}
 		},
 
@@ -56,10 +56,6 @@ sap.ui.define([
 
 		openCategoryDialog: function(ctx) {
 			return this.getOwnerComponent().openCategoryDialog(ctx);
-		},
-
-		openOrderDialog: function(ctx) {
-			return this.getOwnerComponent().openOrderDialog(ctx);
 		},
 
 		openProductDialog: function(ctx) {

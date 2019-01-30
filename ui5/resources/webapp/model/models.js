@@ -20,7 +20,7 @@ sap.ui.define([
 		},
 
 		createRestaurantsModel: function() {
-			return new ODataModel("https://hxehost:51029/xsodata/Restaurants.xsodata", {
+			return new ODataModel("https://hxehost:51030/xsodata/Restaurants.xsodata", {
 				defaultBindingMode: sap.ui.model.BindingMode.TwoWay,
 				defaultUpdateMethod: sap.ui.model.odata.UpdateMethod.Put
 			});
@@ -29,7 +29,7 @@ sap.ui.define([
 		getNewOrderId: function(restaurantId, restaurantTableId) {
 			return jQuery.ajax({
 				type: "GET",
-				url: `https://hxehost:51029/xsjs/sequences/NewRestaurantOrderId.xsjs?RestaurantId=${restaurantId}&RestaurantTableId=${restaurantTableId}`,
+				url: `https://hxehost:51030/xsjs/sequences/NewRestaurantOrderId.xsjs?RestaurantId=${restaurantId}&RestaurantTableId=${restaurantTableId}`,
 				contentType: "application/json",
 				dataType: "json"
 			});
@@ -38,7 +38,7 @@ sap.ui.define([
 		getNewProductId: function() {
 			return jQuery.ajax({
 				type: "GET",
-				url: `https://hxehost:51029/xsjs/sequences/NewProductId.xsjs`,
+				url: `https://hxehost:51030/xsjs/sequences/NewProductId.xsjs`,
 				contentType: "application/json",
 				dataType: "json"
 			});
@@ -47,23 +47,23 @@ sap.ui.define([
 		setFavImage: function(productId, imageId) {
 			return jQuery.ajax({
 				type: "POST",
-				url: `https://hxehost:51029/xsjs/functions/SetFavImage.xsjs?ProductId=${productId}&ImageId=${imageId}`,
+				url: `https://hxehost:51030/xsjs/functions/SetFavImage.xsjs?ProductId=${productId}&ImageId=${imageId}`,
 				contentType: "application/json",
 				dataType: "json"
 			});
 		},
 
 		getProductImageUploadUrl: function(productId) {
-			return `https://hxehost:51029/xsjs/functions/NewProductId.xsjs?ProductId=${productId}`;
+			return `https://hxehost:51030/xsjs/functions/NewProductId.xsjs?ProductId=${productId}`;
 		},
 
 		getFavProductImageDownloadUrl: function(images) {
 			var restaurantModel = sap.ui.getCore().getModel("restaurants");
 			var favImage = images.map(i => restaurantModel.getObject("/" + i))
 				.find(i => i.Favorite);
-				
+
 			if (favImage.ProductId && favImage.ImageId) {
-				return `https://hxehost:51029/xsjs/functions/GetProductImage.xsjs?ProductId=${favImage.ProductId}&ImageId=${favImage.ImageId}`;
+				return `https://hxehost:51030/xsjs/functions/GetProductImage.xsjs?ProductId=${favImage.ProductId}&ImageId=${favImage.ImageId}`;
 			} else {
 				return "sap-icon://product";
 			}
@@ -71,7 +71,7 @@ sap.ui.define([
 
 		getProductImageDownloadUrl: function(image) {
 			if (image.ProductId && image.ImageId) {
-				return `https://hxehost:51029/xsjs/functions/GetProductImage.xsjs?ProductId=${image.ProductId}&ImageId=${image.ImageId}`;
+				return `https://hxehost:51030/xsjs/functions/GetProductImage.xsjs?ProductId=${image.ProductId}&ImageId=${image.ImageId}`;
 			} else {
 				return "sap-icon://product";
 			}
@@ -95,7 +95,7 @@ sap.ui.define([
 		closeTable: function(restaurantId, restaurantTableId) {
 			return jQuery.ajax({
 				type: "POST",
-				url: `https://hxehost:51029/xsjs/functions/CloseTable.xsjs?RestaurantId=${restaurantId}&RestaurantTableId=${restaurantTableId}`,
+				url: `https://hxehost:51030/xsjs/functions/CloseTable.xsjs?RestaurantId=${restaurantId}&RestaurantTableId=${restaurantTableId}`,
 				contentType: "application/json",
 				dataType: "json"
 			});

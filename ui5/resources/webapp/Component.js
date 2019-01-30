@@ -4,10 +4,9 @@ sap.ui.define([
 	"restaurants/ui5/model/models",
 	"restaurants/ui5/controller/Restaurants/RestaurantDialog",
 	"restaurants/ui5/controller/Tables/TableDialog",
-	"restaurants/ui5/controller/Orders/OrderDialog",
 	"restaurants/ui5/controller/Menu/Category/CategoryDialog",
 	"restaurants/ui5/controller/Menu/Product/ProductDialog"
-], function(UIComponent, Device, models, RestaurantDialog, TableDialog, OrderDialog, CategoryDialog, ProductDialog) {
+], function(UIComponent, Device, models, RestaurantDialog, TableDialog, CategoryDialog, ProductDialog) {
 	"use strict";
 
 	return UIComponent.extend("restaurants.ui5.Component", {
@@ -45,7 +44,6 @@ sap.ui.define([
 			//CREATE COMMON DIALOGS
 			this._restaurantDialog = new RestaurantDialog(this.getRootControl());
 			this._tableDialog = new TableDialog(this.getRootControl());
-			this._orderDialog = new OrderDialog(this.getRootControl());
 			this._categoryDialog = new CategoryDialog(this.getRootControl());
 			this._productDialog = new ProductDialog(this.getRootControl());
 		},
@@ -72,10 +70,6 @@ sap.ui.define([
 
 		openTableDialog: function(ctx) {
 			return this._tableDialog.open(ctx);
-		},
-
-		openOrderDialog: function(ctx) {
-			return this._orderDialog.open(ctx);
 		},
 
 		openCategoryDialog: function(ctx) {

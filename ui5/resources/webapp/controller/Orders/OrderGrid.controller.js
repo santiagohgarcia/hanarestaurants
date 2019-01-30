@@ -31,10 +31,9 @@ sap.ui.define([
 		},
 
 		onAddOrder: function(evt) {
-			var restaurantTable = evt.getSource().getBindingContext("restaurants").getObject();
-			this.openOrderDialog({
-				RestaurantId: restaurantTable.RestaurantId,
-				RestaurantTableId: 0 //No table
+			var restaurant = evt.getSource().getBindingContext("restaurants").getObject();
+			this.getRouter().navTo("NewOrder", {
+				RestaurantId: restaurant.RestaurantId
 			});
 		}
 

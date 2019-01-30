@@ -83,7 +83,7 @@
 				"name": "RestaurantTiles",
 				"pattern": "/",
 				"target": "restaurantTiles"
-			},{
+			}, {
 				"name": "Orders",
 				"pattern": "/Restaurant/{RestaurantId}/Orders",
 				"target": "restaurantFCL"
@@ -111,6 +111,10 @@
 				"name": "PendingOrderItems",
 				"pattern": "/Restaurant/{RestaurantId}/PendingOrderItems",
 				"target": "restaurantFCL"
+			}, {
+				"name": "NewOrder",
+				"pattern": "/Restaurant/{RestaurantId}/NewOrder",
+				"target": "newOrder"
 			}],
 			"targets": {
 				"restaurantTiles": {
@@ -122,6 +126,11 @@
 					"viewType": "XML",
 					"viewName": "Restaurants.RestaurantFCL",
 					"viewLevel": 1
+				},
+				"newOrder": {
+					"viewType": "XML",
+					"viewName": "Orders.NewOrder",
+					"viewLevel": 2
 				}
 			}
 		}

@@ -14,7 +14,8 @@
 			<ux:ObjectPageSection  title="{i18n>Menu}">
 				<ux:subSections>
 					<ux:ObjectPageSubSection title="{i18n>Menu}">
-						<l:Splitter height="500px">
+							<mvc:XMLView id="categoryProductsView" viewName="restaurants.ui5.view.Menu.CategoryProducts"></mvc:XMLView>
+					<!--	<l:Splitter height="500px">
 							<Tree id="categoryTree" items="{path: 'categoriesJSON>/',parameters:{arrayNames: ['SubCategories']}}" toggleOpenState="onToggleOpenState">
 								<headerToolbar>
 									<Toolbar>
@@ -56,7 +57,7 @@
 									</items>
 								</List>
 							</VBox>
-						</l:Splitter>
+						</l:Splitter>-->
 					</ux:ObjectPageSubSection>
 				</ux:subSections>
 			</ux:ObjectPageSection>
