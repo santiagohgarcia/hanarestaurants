@@ -7,7 +7,7 @@ sap.ui.define([
 
 		onPressRestaurant: function(evt) {
 			var restaurant = evt.getSource().getBindingContext("restaurants").getObject();
-			this.getRouter().navTo("Tables", {
+			this.getRouter().navTo("Orders", {
 				RestaurantId: restaurant.RestaurantId
 			});
 		},

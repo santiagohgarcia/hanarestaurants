@@ -20,7 +20,6 @@ sap.ui.define([
 			var args = evt.getParameter("arguments");
 			this.byId("categoryProductsView").init(args.RestaurantId);
 			this.byId("categoryProductsView").setMode("U");
-			//this._getCategories(args.RestaurantId).then(this._bindFirstCategory.bind(this));
 		}
 	
 

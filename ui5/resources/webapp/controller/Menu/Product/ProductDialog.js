@@ -24,21 +24,15 @@ sap.ui.define([
 
 		getNewContext: function(ctx) {
 			if (ctx["Category.CategoryId"]) {
-				models.getNewProductId() //TODO: change this for AWAIT!!
-					.then(response => {
-						ctx.ProductId = response.ProductId;
-						ctx.Images = [];
-						ctx = this._dialog.getModel("restaurants").createEntry("/Products", {
-							properties: ctx
-						});
-						this._dialog.setBindingContext(ctx, "restaurants");
-						this._bindProductImages();
-					});
-			} else {
-				this._dialog.setBindingContext(ctx, "restaurants");
-				this._bindProductImages();
-				return ctx;
+				ctx.ProductId = models.getNewProductId();
+				ctx.Images = [];
+				ctx = this._dialog.getModel("restaurants").createEntry("/Products", {
+					properties: ctx
+				});
 			}
+			this._dialog.setBindingContext(ctx, "restaurants");
+			this._bindProductImages();
+			return ctx;
 		},
 
 		getFieldGroup: function() {

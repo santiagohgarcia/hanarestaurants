@@ -23,8 +23,7 @@ sap.ui.define([
 			}), "params");
 		},
 
-		_init: function(restaurantId) {
-			this._filterCategories(restaurantId);
+		_init: function() {
 			this.byId("categoryBreadcrumbs").destroyLinks();
 			this.byId("categoryBreadcrumbs").setCurrentLocationText(this.getText("AllCategories"));
 		},
@@ -37,35 +36,31 @@ sap.ui.define([
 			this.getModel("params").setProperty("/mode", mode);
 		},
 
-		_filterCategories: function(restaurantId, parentCategoryId) {
-			var categoryBinding = this.byId("categoryTree").getBinding("items");
-			if (categoryBinding) {
-				categoryBinding.filter([
-					new Filter("RestaurantId", FO.EQ, restaurantId),
-					new Filter("ParentCategory.CategoryId", FO.EQ, parentCategoryId || 0)
-				]);
-				categoryBinding.resume();
-			}
-		},
-
 		onPressCategory: function(evt) {
-			var categoryCtx = evt.getSource().getBindingContext("restaurants");
-			var category = categoryCtx.getObject();
-			this.byId("productsList").getBinding("items")
-				.filter(new Filter("Category.CategoryId", FO.EQ, category.CategoryId));
-			this._filterCategories(category.RestaurantId, category.CategoryId);
-			this.byId("categoryBreadcrumbs").setCurrentLocationText(category.Description);
-			var newLink = new sap.m.Link({
-				text: category["ParentCategory.CategoryId"] ? "{restaurants>Description}" : "{i18n>AllCategories}",
-				press: this.onPressCategoryBreadcrumb.bind(this),
-				emphasized: true
-			});
+			var categoryCtx = evt.getSource().getBindingContext("restaurants"),
+				category = categoryCtx.getObject(),
+				newLink = new sap.m.Link({
+					text: category["ParentCategory.CategoryId"] ? "{restaurants>Description}" : "{i18n>AllCategories}",
+					press: this.onPressCategoryBreadcrumb.bind(this),
+					emphasized: true
+				});
+
+			this._bindCategory(category);
+
 			if (category["ParentCategory.CategoryId"]) {
 				newLink.bindElement(
 					`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category["ParentCategory.CategoryId"]})`);
 			}
-			this.byId("categoryBreadcrumbs").addLink(newLink);
 
+			this.byId("categoryBreadcrumbs")
+				.setCurrentLocationText(category.Description)
+				.addLink(newLink);
+
+		},
+
+		_bindCategory: function(category) {
+			this.getView().bindElement(
+				`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
 		},
 
 		onPressCategoryBreadcrumb: function(evt) {
@@ -77,11 +72,7 @@ sap.ui.define([
 				.filter(l => categoryBreadcrumbs.indexOfLink(l) >= pressedIndex)
 				.forEach(l => categoryBreadcrumbs.removeLink(l));
 			categoryBreadcrumbs.setCurrentLocationText(category.CategoryId ? category.Description : this.getText("AllCategories"));
-			this._filterCategories(category.RestaurantId, category.CategoryId);
-
-			this.byId("productsList").getBinding("items")
-				.filter(new Filter("Category.CategoryId", FO.EQ, category.CategoryId));
-
+			this._bindCategory(category);
 		},
 
 		onSearchProducts: function(evt) {
@@ -104,20 +95,6 @@ sap.ui.define([
 			var restaurant = evt.getSource().getBindingContext("restaurants").getObject();
 			this.openCategoryDialog({
 				RestaurantId: restaurant.RestaurantId
-			}).then(category => {
-				this.byId("categoryContainer").bindElement(
-					`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
-			});
-		},
-
-		onAddSubCategory: function(evt) {
-			var parentCategory = evt.getSource().getBindingContext("restaurants").getObject();
-			this.openCategoryDialog({
-				RestaurantId: parentCategory.RestaurantId,
-				"ParentCategory.CategoryId": parentCategory.CategoryId
-			}).then(category => {
-				this.byId("categoryContainer").bindElement(
-					`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
 			});
 		},
 
@@ -141,6 +118,7 @@ sap.ui.define([
 		onAddProduct: function(evt) {
 			var category = evt.getSource().getBindingContext("restaurants").getObject();
 			this.openProductDialog({
+				RestaurantId: category.RestaurantId,
 				"Category.CategoryId": category.CategoryId
 			});
 		},

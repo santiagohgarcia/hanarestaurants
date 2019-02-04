@@ -36,7 +36,7 @@ sap.ui.define([
 		},
 
 		getNewProductId: function() {
-			return jQuery.ajax({
+			return jQuery.sjax({
 				type: "GET",
 				url: `https://hxehost:51030/xsjs/sequences/NewProductId.xsjs`,
 				contentType: "application/json",
@@ -110,7 +110,7 @@ sap.ui.define([
 						new Filter("ParentCategory.CategoryId", FO.EQ, categoryId || 0)
 					],
 					urlParameters: {
-						"$expand": "SubCategories/SubCategories/SubCategories" //Max 4 levels
+						"$expand": "Categories/Categories/Categories" //Max 4 levels
 					},
 					success: function(resp) {
 						resolve(resp.results.map(this._formatSubCategories.bind(this)));
@@ -123,8 +123,8 @@ sap.ui.define([
 		},
 
 		_formatSubCategories: function(category) {
-			category.SubCategories = category.SubCategories.results || [];
-			category.SubCategories = category.SubCategories.map(this._formatSubCategories.bind(this));
+			category.Categories = category.Categories.results || [];
+			category.Categories = category.Categories.map(this._formatSubCategories.bind(this));
 			return category;
 		}
 	};

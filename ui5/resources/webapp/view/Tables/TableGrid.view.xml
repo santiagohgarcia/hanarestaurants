@@ -6,6 +6,8 @@
 				<ux:heading>
 					<OverflowToolbar style="Clear">
 						<Title text="{i18n>Tables}"/>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://add" press="onAddTable" type="Transparent"/>
 					</OverflowToolbar>
 				</ux:heading>
 			</ux:ObjectPageDynamicHeaderTitle>
@@ -25,16 +27,10 @@
 								</CustomListItem>
 							</f:items>
 						</f:GridList>
-						<!--</Panel>-->
 					</ux:ObjectPageSubSection>
 				</ux:subSections>
 			</ux:ObjectPageSection>
 		</ux:sections>
-		<ux:footer>
-			<Toolbar>
-				<ToolbarSpacer/>
-				<Button icon="sap-icon://add" press="onAddTable" type="Transparent"/>
-			</Toolbar>
-		</ux:footer>
+		<ux:footer></ux:footer>
 	</ux:ObjectPageLayout>
 </mvc:View>
