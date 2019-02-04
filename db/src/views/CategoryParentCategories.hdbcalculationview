@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="restaurants.db.views::CategoryParentCategories" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CategoryParentCategories"/>
+<localVariables>
+  <variable id="RESTAURANT_ID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="INTEGER" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+  <variable id="CATEGORY_ID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="INTEGER" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange lowValue="NULL"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="restaurants.db.functions::CategoryParentCategories">
+    <targetVariable name="RESTAURANT_ID" resourceUri="restaurants.db.functions::CategoryParentCategories"/>
+    <localVariable>RESTAURANT_ID</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="restaurants.db.functions::CategoryParentCategories">
+    <targetVariable name="CATEGORY_ID" resourceUri="restaurants.db.functions::CategoryParentCategories"/>
+    <localVariable>CATEGORY_ID</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="restaurants.db.functions::CategoryParentCategories" type="TABLE_FUNCTION">
+    <resourceUri>restaurants.db.functions::CategoryParentCategories</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="restaurants.db.functions::CategoryParentCategories">
+  <attributes>
+    <attribute id="CategoryId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CategoryId"/>
+      <keyMapping columnObjectName="CategoryParentCategories" columnName="CATEGORY_ID"/>
+    </attribute>
+    <attribute id="RestaurantId" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RestaurantId"/>
+      <keyMapping columnObjectName="CategoryParentCategories" columnName="RESTAURANT_ID"/>
+    </attribute>
+    <attribute id="Description" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Description"/>
+      <keyMapping columnObjectName="CategoryParentCategories" columnName="DESCRIPTION"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

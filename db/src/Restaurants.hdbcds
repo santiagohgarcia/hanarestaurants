@@ -63,15 +63,16 @@ context RestaurantsContext {
         key RestaurantId   : Integer;
         key CategoryId     : Integer;
             Description    : String(100);
-            ParentCategory : association[0..1] to RestaurantsContext.Category { CategoryId };
+            ParentCategory : association[0..1] to RestaurantsContext.Category { CategoryId } null;
             SubCategories  : association[0..*] to Category                                    on SubCategories.ParentCategory.CategoryId = CategoryId;
     }
 
     entity Product {
+    	key RestaurantId    : Integer;
+    	key Category        : association[1]    to RestaurantsContext.Category { CategoryId };
         key ProductId       : Integer;
             Description     : String(100);
             Price           : Decimal(10, 2);
-            Category        : association[1]    to RestaurantsContext.Category { CategoryId };
             NeedPreparation : Integer;
             Images          : association[1..*] to ProductImage                               on Images.ProductId = ProductId;
     }
@@ -92,13 +93,4 @@ context RestaurantsContext {
             DateTime          : UTCTimestamp null;
     }
 
-/*view BaseCategory as
-    select from Category
-    {
-        RestaurantId,
-        CategoryId,
-        Description
-    }
-    where
-        Category.ParentCategory.CategoryId = null;*/
 };

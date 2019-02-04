@@ -6,7 +6,8 @@ service {
 				"RestaurantToTodayRevenue"       as "TodayRevenue",
 				"RestaurantToPendingOrders"      as "PendingOrders",
 				"RestaurantToRestaurantOccupation" as "Occupation",
-				"RestaurantToCategories" as "Categories",
+				"RestaurantToRestaurantCategories" as "Categories",
+				"RestaurantToProducts" as "Products",
 				"RestaurantToRestaurantPendingOrderItems" as "PendingOrderItems" )
 	  create events( before "xsjslib:Restaurants.xsjslib::RestaurantBeforeCreate" );
 	
@@ -14,6 +15,12 @@ service {
 	principal "Restaurants"("RestaurantId")
 	multiplicity "1"
 	dependent "Tables"("RestaurantId")
+	multiplicity "*";
+	
+	association "RestaurantToProducts"
+	principal "Restaurants"("RestaurantId")
+	multiplicity "1"
+	dependent "Products"("RestaurantId")
 	multiplicity "*";
 	
 	association "RestaurantToOrderItems"
@@ -148,11 +155,12 @@ service {
 	
 	"restaurants.db::RestaurantsContext.Category" 
 	as "Categories" 
-	navigates ("CategoryToSubCategories" as "SubCategories",
-			   "CategoryToProducts" as "Products")
+	navigates ("CategoryToCategories" as "Categories",
+			   "CategoryToProducts" as "Products",
+			   "CategoryToParentCategories" as "ParentCategories")
 			   create events( before "xsjslib:Restaurants.xsjslib::CategoryBeforeCreate" );
 	
-	association "CategoryToSubCategories"
+	association "CategoryToCategories"
 	principal "Categories"("CategoryId")
 	multiplicity "1"
 	dependent "Categories"("ParentCategory.CategoryId")
@@ -197,7 +205,12 @@ service {
 	"restaurants.db.views::RestaurantPendingOrderItems" as "RestaurantPendingOrderItems" 
 	key("RestaurantId","RestaurantOrderId","ProductId") parameters via entity ;
 	
-
+	"restaurants.db.views::RestaurantCategories" as "RestaurantCategories" 
+	key("RestaurantId","CategoryId") parameters via entity ;
+	
+	"restaurants.db.views::CategoryParentCategories" as "CategoryParentCategories" 
+	key("RestaurantId","CategoryId") parameters via entity ;
+	
 	association via parameters "RestaurantToTodayRevenue"
     principal "Restaurants"("RestaurantId") multiplicity "1"
     dependent "TodayRevenue"("RESTAURANT_ID") multiplicity "1";
@@ -230,11 +243,18 @@ service {
     principal "Orders"("RestaurantId","RestaurantTableId","RestaurantOrderId") multiplicity "1"
     dependent "OrderTotal"("RESTAURANT_ID","TABLE_ID","ORDER_ID") multiplicity "1";
     
-      association via parameters "RestaurantToRestaurantPendingOrderItems"
+    association via parameters "RestaurantToRestaurantPendingOrderItems"
     principal "Restaurants"("RestaurantId") multiplicity "1"
     dependent "RestaurantPendingOrderItems"("RESTAURANT_ID") multiplicity "*";
 
-
+    association via parameters "RestaurantToRestaurantCategories"
+    principal "Restaurants"("RestaurantId") multiplicity "1"
+    dependent "RestaurantCategories"("RESTAURANT_ID") multiplicity "*";
+    
+    association via parameters "CategoryToParentCategories"
+    principal "Categories"("RestaurantId","CategoryId") multiplicity "1"
+    dependent "CategoryParentCategories"("RESTAURANT_ID","CATEGORY_ID") multiplicity "*";
+    
 }
 
 
