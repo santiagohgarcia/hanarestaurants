@@ -15,7 +15,7 @@ sap.ui.define([
 		models: models,
 
 		onInit: function() {
-			this.getView().init = this._init.bind(this);
+			this.getView().initialize = this._initialize.bind(this);
 			this.getView().setMode = this._setMode.bind(this);
 			this.getView().attachProductSelected = this._attachProductSelected.bind(this);
 			this.setModel(new JSONModel({
@@ -23,9 +23,8 @@ sap.ui.define([
 			}), "params");
 		},
 
-		_init: function() {
-			this.byId("categoryBreadcrumbs").destroyLinks();
-			this.byId("categoryBreadcrumbs").setCurrentLocationText(this.getText("AllCategories"));
+		_initialize: function(category) {
+			this._bindCategory(category);
 		},
 
 		_attachProductSelected: function(callback) {
@@ -37,52 +36,23 @@ sap.ui.define([
 		},
 
 		onPressCategory: function(evt) {
-			var categoryCtx = evt.getSource().getBindingContext("restaurants"),
-				category = categoryCtx.getObject(),
-				newLink = new sap.m.Link({
-					text: category["ParentCategory.CategoryId"] ? "{restaurants>Description}" : "{i18n>AllCategories}",
-					press: this.onPressCategoryBreadcrumb.bind(this),
-					emphasized: true
-				});
-
+			var category = evt.getSource().getBindingContext("restaurants").getObject();
 			this._bindCategory(category);
-
-			if (category["ParentCategory.CategoryId"]) {
-				newLink.bindElement(
-					`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category["ParentCategory.CategoryId"]})`);
-			}
-
-			this.byId("categoryBreadcrumbs")
-				.setCurrentLocationText(category.Description)
-				.addLink(newLink);
-
-		},
-
-		_bindCategory: function(category) {
-			this.getView().bindElement(
-				`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
 		},
 
 		onPressCategoryBreadcrumb: function(evt) {
-			var pressedLink = evt.getSource();
-			var category = pressedLink.getBindingContext("restaurants").getObject();
-			var categoryBreadcrumbs = this.byId("categoryBreadcrumbs");
-			var pressedIndex = categoryBreadcrumbs.indexOfLink(pressedLink);
-			categoryBreadcrumbs.getLinks()
-				.filter(l => categoryBreadcrumbs.indexOfLink(l) >= pressedIndex)
-				.forEach(l => categoryBreadcrumbs.removeLink(l));
-			categoryBreadcrumbs.setCurrentLocationText(category.CategoryId ? category.Description : this.getText("AllCategories"));
+			var category = evt.getSource().getBindingContext("restaurants").getObject();
 			this._bindCategory(category);
 		},
 
-		onSearchProducts: function(evt) {
-			var query = evt.getParameter("newValue");
-			this.byId("productsList").getBinding("items").filter(query ? new Filter({
-				path: "Description",
-				operator: FO.Contains,
-				value1: query,
-				caseSensitive: false
-			}) : []);
+		_bindCategory: function(category) {
+			if (category.CategoryId) {
+				this.getView().bindElement(
+					`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
+			} else {
+				this.getView().bindElement(
+					`restaurants>/Restaurants(RestaurantId=${category.RestaurantId})`);
+			}
 		},
 
 		onPressProduct: function(evt) {
@@ -92,9 +62,10 @@ sap.ui.define([
 		//CATEGORY
 
 		onAddCategory: function(evt) {
-			var restaurant = evt.getSource().getBindingContext("restaurants").getObject();
+			var parentCategory = evt.getSource().getBindingContext("restaurants").getObject();
 			this.openCategoryDialog({
-				RestaurantId: restaurant.RestaurantId
+				RestaurantId: parentCategory.RestaurantId,
+				"ParentCategory.CategoryId": parentCategory.CategoryId
 			});
 		},
 

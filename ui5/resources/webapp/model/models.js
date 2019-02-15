@@ -36,7 +36,7 @@ sap.ui.define([
 		},
 
 		getNewProductId: function() {
-			return jQuery.sjax({
+			return jQuery.ajax({
 				type: "GET",
 				url: `https://hxehost:51030/xsjs/sequences/NewProductId.xsjs`,
 				contentType: "application/json",

@@ -7,15 +7,13 @@
 			</f:customLayout>
 			<f:headerToolbar>
 				<Toolbar>
-					<Button icon="sap-icon://home"/>
-					<Text text=" / "/>
-					<Breadcrumbs id="categoryBreadcrumbs" currentLocationText="{restaurants>Description}" >
+					<Breadcrumbs id="categoryBreadcrumbs" currentLocationText="{restaurants>Description}" links="{restaurants>ParentCategories}">
 						<links>
 							<Link text="{restaurants>Description}" press="onPressCategoryBreadcrumb"/>
 						</links>
 					</Breadcrumbs>
 					<ToolbarSpacer/>
-					<Button icon="sap-icon://add" press="onAddCategory"/>
+					<Button text="{i18n>AddCategory}" icon="sap-icon://add" press="onAddCategory"/>
 				</Toolbar>
 			</f:headerToolbar>
 			<f:items>
@@ -26,10 +24,9 @@
 			items="{path: 'restaurants>Products', parameters: {expand:'Category,Images'}}" delete="onDeleteProduct">
 			<f:headerToolbar>
 				<Toolbar style="Clear">
-					<Title text="{i18n>Products}"/>
+					<SearchField liveChange="onSearchProducts"/>
 					<ToolbarSpacer/>
-					<Button icon="sap-icon://add" press="onAddProduct" visible="{= Boolean(${restaurants>CategoryId}) }"/>
-					<!--<SearchField liveChange="onSearchProducts"/>-->
+					<Button text="{i18n>AddProduct}" icon="sap-icon://add" press="onAddProduct" visible="{= Boolean(${restaurants>CategoryId}) }"/>
 				</Toolbar>
 			</f:headerToolbar>
 			<f:customLayout>
