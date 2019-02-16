@@ -55,7 +55,12 @@ function CategoryBeforeCreate(param) {
 	pStmt.setInteger(1, newObject.RestaurantId);
 	pStmt.setInteger(2, newObject.RestaurantId);
 	pStmt.setString(3, newObject.Description);
-	pStmt.setInteger(4, newObject["ParentCategory.CategoryId"] || 0);
+	if (newObject["ParentCategory.CategoryId"]) {
+		pStmt.setInteger(4, newObject["ParentCategory.CategoryId"]);
+	} else {
+		pStmt.setNull(4, null);
+	}
+
 	pStmt.executeUpdate();
 	pStmt.close();
 }
@@ -64,12 +69,14 @@ function ProductBeforeCreate(param) {
 	var newObject = getNewObject(param);
 	trucateAfter(param);
 	var pStmt = param.connection.prepareStatement(
-		`insert into "${param.afterTableName}" values((SELECT IFNULL(MAX("ProductId"), 0) + 1 FROM "restaurants.db::RestaurantsContext.Product"),?,?,?,?)`
+		`insert into "${param.afterTableName}" values(?,?,?,?,?,?)`
 	);
-	pStmt.setString(1, newObject.Description);
-	pStmt.setDecimal(2, newObject.Price);
+	pStmt.setInteger(1, newObject.RestaurantId);
+	pStmt.setInteger(2, newObject.ProductId);
 	pStmt.setInteger(3, newObject["Category.CategoryId"]);
-	pStmt.setInteger(4, newObject.NeedPreparation || 0);
+	pStmt.setString(4, newObject.Description);
+	pStmt.setDecimal(5, newObject.Price);
+	pStmt.setInteger(6, newObject.NeedPreparation || 0);
 	pStmt.executeUpdate();
 	pStmt.close();
 }

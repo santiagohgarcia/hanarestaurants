@@ -7,8 +7,11 @@ FUNCTION "restaurants.db.functions::CategoryParentCategories"(RESTAURANT_ID INTE
        SQL SECURITY INVOKER AS 
 BEGIN 
  
-IF NOT ( CATEGORY_ID > 0 ) THEN
 	RETURN 
+	SELECT "RestaurantId" AS RESTAURANT_ID, 0 AS CATEGORY_ID, 'All Categories' AS DESCRIPTION 
+		FROM "restaurants.db::RestaurantsContext.Restaurant" 
+		where "RestaurantId" = RESTAURANT_ID
+	union all
 	( SELECT RESTAURANT_ID AS RESTAURANT_ID , NODE_ID AS CATEGORY_ID, DESCRIPTION AS DESCRIPTION
 	FROM HIERARCHY_ANCESTORS (
 		SOURCE HIERARCHY (
@@ -27,6 +30,6 @@ IF NOT ( CATEGORY_ID > 0 ) THEN
 	)
 	WHERE NODE_ID <> CATEGORY_ID
 	ORDER BY hierarchy_rank );
-END IF;
+
  
 END;

@@ -8,7 +8,8 @@ service {
 				"RestaurantToRestaurantOccupation" as "Occupation",
 				"RestaurantToRestaurantCategories" as "Categories",
 				"RestaurantToProducts" as "Products",
-				"RestaurantToRestaurantPendingOrderItems" as "PendingOrderItems" )
+				"RestaurantToRestaurantPendingOrderItems" as "PendingOrderItems",
+				"RestaurantToParentCategories" as "ParentCategories")
 	  create events( before "xsjslib:Restaurants.xsjslib::RestaurantBeforeCreate" );
 	
     association "RestaurantToTables"
@@ -254,6 +255,10 @@ service {
     association via parameters "CategoryToParentCategories"
     principal "Categories"("RestaurantId","CategoryId") multiplicity "1"
     dependent "CategoryParentCategories"("RESTAURANT_ID","CATEGORY_ID") multiplicity "*";
+    
+    association via parameters "RestaurantToParentCategories"
+    principal "Restaurants"("RestaurantId") multiplicity "1"
+    dependent "CategoryParentCategories"("RESTAURANT_ID") multiplicity "*";
     
 }
 
