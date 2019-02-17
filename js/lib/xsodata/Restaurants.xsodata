@@ -10,7 +10,7 @@ service {
 				"RestaurantToProducts" as "Products",
 				"RestaurantToRestaurantPendingOrderItems" as "PendingOrderItems",
 				"RestaurantToParentCategories" as "ParentCategories")
-	  create events( before "xsjslib:Restaurants.xsjslib::RestaurantBeforeCreate" );
+	  create events( before "xsjslib:Restaurant.xsjslib::BeforeCreate" );
 	
     association "RestaurantToTables"
 	principal "Restaurants"("RestaurantId")
@@ -55,7 +55,7 @@ service {
 						   "TableToTableActiveOrders" as "ActiveOrders",
 						   "TableToTableReadyOrders" as "ReadyOrders",
 						   "TableToOrderStatusHistory" as "OrderStatusHistory") 
-	create events (before "xsjslib:Restaurants.xsjslib::RestaurantTableBeforeCreate");
+	create events (before "xsjslib:RestaurantTable.xsjslib::BeforeCreate");
 	
 	association "TableToOrders"
 	principal "Tables"("RestaurantId","RestaurantTableId")
@@ -75,8 +75,8 @@ service {
 	"OrderToOrderStatusHistory" as "StatusHistory",
 	"OrderToOrderItems" as "Items",
 	"OrderToOrderTotal" as "TotalPrice")
-	create events (before "xsjslib:Restaurants.xsjslib::RestaurantOrderBeforeCreate", after "xsjslib:Restaurants.xsjslib::RestaurantOrderAfterModif")
-	update events ( after "xsjslib:Restaurants.xsjslib::RestaurantOrderAfterModif");
+	create events (before "xsjslib:RestaurantOrder.xsjslib::BeforeCreate", after "xsjslib:RestaurantOrder.xsjslib::AfterModif")
+	update events ( after "xsjslib:RestaurantOrder.xsjslib::AfterModif");
 	
 	association "OrderToStatus"
 	principal "Orders"("Status.StatusId")
@@ -137,7 +137,7 @@ service {
 	
 	"restaurants.db::RestaurantsContext.Product" 
 	as "Products" navigates ("ProductToCategory" as "Category", "ProductToImages" as "Images")
-	create events (before "xsjslib:Restaurants.xsjslib::ProductBeforeCreate");
+	create events (before "xsjslib:Product.xsjslib::BeforeCreate");
 	
 	association "ProductToCategory"
 	principal "Products"("Category.CategoryId")
@@ -159,7 +159,7 @@ service {
 	navigates ("CategoryToCategories" as "Categories",
 			   "CategoryToProducts" as "Products",
 			   "CategoryToParentCategories" as "ParentCategories")
-			   create events( before "xsjslib:Restaurants.xsjslib::CategoryBeforeCreate" );
+			   create events( before "xsjslib:Category.xsjslib::BeforeCreate" );
 	
 	association "CategoryToCategories"
 	principal "Categories"("CategoryId")
