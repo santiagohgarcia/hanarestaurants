@@ -19,23 +19,3 @@ function BeforeCreate(param) {
 	pStmt.executeUpdate();
 	pStmt.close();
 }
-
-function RestaurantOrderAfterModif(param) {
-	var newObject = utils.getNewObject(param);
-
-	if (param.beforeTableName) {
-		var oldObject = utils.getOldObject(param);
-	}
-
-	if (!param.beforeTableName || newObject["Status.StatusId"] !== oldObject["Status.StatusId"]) {
-		var pStmt = param.connection.prepareStatement('insert into "restaurants.db::RestaurantsContext.OrderStatusHistory" values (?,?,?,?,?)');
-		pStmt.setInteger(1, newObject.RestaurantId);
-		pStmt.setInteger(2, newObject.RestaurantTableId);
-		pStmt.setInteger(3, newObject.RestaurantOrderId);
-		pStmt.setInteger(4, newObject["Status.StatusId"]);
-		pStmt.setTimestamp(5, new Date());
-		pStmt.executeUpdate();
-		pStmt.close();
-	}
-
-}

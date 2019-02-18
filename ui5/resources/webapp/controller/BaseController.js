@@ -1,9 +1,8 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History",
-	"sap/m/MessageToast",
-	"restaurants/ui5/controller/Orders/OrderItem"
-], function(Controller, History, MessageToast, OrderItem) {
+	"sap/m/MessageToast"
+], function(Controller, History, MessageToast) {
 	"use strict";
 	return Controller.extend("restaurants.ui5.controller.BaseController", {
 
@@ -50,10 +49,6 @@ sap.ui.define([
 			return this.getOwnerComponent().openRestaurantDialog(ctx);
 		},
 
-		openTableDialog: function(ctx) {
-			return this.getOwnerComponent().openTableDialog(ctx);
-		},
-
 		openCategoryDialog: function(ctx) {
 			return this.getOwnerComponent().openCategoryDialog(ctx);
 		},
@@ -66,13 +61,6 @@ sap.ui.define([
 			MessageToast.show(this.getText(id, args), {
 				closeOnBrowserNavigation: false
 			});
-		},
-
-		orderItemFactory: function(id) {
-			var itemController = new OrderItem();
-			var itemFragment = sap.ui.xmlfragment(id,"restaurants.ui5.view.Orders.OrderItem", itemController);
-			//this.getView().addDependent(itemFragment);
-			return itemFragment;
 		}
 	});
 });

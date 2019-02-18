@@ -6,7 +6,7 @@ function BeforeCreate(param) {
 	var newObject = utils.getNewObject(param);
 	utils.trucateAfter(param);
 	var pStmt = param.connection.prepareStatement(
-		`insert into "${param.afterTableName}" values(?,?,?,?,?,?)`
+		`insert into "${param.afterTableName}" values(?,?,?,?,?,?,?)`
 	);
 	pStmt.setInteger(1, newObject.RestaurantId);
 	pStmt.setInteger(2, newObject.ProductId);
@@ -14,6 +14,7 @@ function BeforeCreate(param) {
 	pStmt.setString(4, newObject.Description);
 	pStmt.setDecimal(5, newObject.Price);
 	pStmt.setInteger(6, newObject.NeedPreparation || 0);
+	pStmt.setBlob(7, newObject.Image);
 	pStmt.executeUpdate();
 	pStmt.close();
 }

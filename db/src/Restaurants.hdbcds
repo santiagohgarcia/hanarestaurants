@@ -22,9 +22,6 @@ context RestaurantsContext {
         key RestaurantOrderId : Integer;
             Status            : association[1] to RestaurantsContext.Status { StatusId };
             Customer          : association[1] to RestaurantsContext.Customer { CustomerId };
-            StatusHistory     : association[*] to OrderStatusHistory                          on     StatusHistory.RestaurantId      = RestaurantId
-                                                                                                 and StatusHistory.RestaurantTableId = RestaurantTableId
-                                                                                                 and StatusHistory.RestaurantOrderId = RestaurantOrderId;
             Items             : association[*] to RestaurantOrderItem                         on     Items.RestaurantId      = RestaurantId
                                                                                                  and Items.RestaurantTableId = RestaurantTableId
                                                                                                  and Items.RestaurantOrderId = RestaurantOrderId;
@@ -64,33 +61,19 @@ context RestaurantsContext {
         key CategoryId     : Integer;
             Description    : String(100);
             ParentCategory : association[0..1] to RestaurantsContext.Category { CategoryId } null;
-            SubCategories  : association[0..*] to Category                                    on SubCategories.ParentCategory.CategoryId = CategoryId;
+            SubCategories  : association[0..*] to Category                                   on     SubCategories.RestaurantId              = RestaurantId
+                                                                                                and SubCategories.ParentCategory.CategoryId = CategoryId;
+            Products       : association[0..*] to Product                                    on     Products.RestaurantId        = RestaurantId
+                                                                                                and Products.Category.CategoryId = CategoryId;
     }
 
     entity Product {
-    	key RestaurantId    : Integer;
-    	key Category        : association[1]    to RestaurantsContext.Category { CategoryId };
+        key RestaurantId    : Integer;
+        key Category        : association[1] to RestaurantsContext.Category { CategoryId };
         key ProductId       : Integer;
             Description     : String(100);
             Price           : Decimal(10, 2);
             NeedPreparation : Integer;
-            Images          : association[1..*] to ProductImage                               on Images.ProductId = ProductId;
-    }
-
-    entity ProductImage {
-        key ProductId : Integer;
-        key ImageId   : Integer;
-            FileName  : String(100);
-            Favorite  : Integer;
-            Image     : LargeBinary;
-    }
-
-    entity OrderStatusHistory {
-        key RestaurantId      : Integer;
-        key RestaurantTableId : Integer;
-        key RestaurantOrderId : Integer;
-        key Status            : association[1] to RestaurantsContext.Status { StatusId };
-            DateTime          : UTCTimestamp null;
-    }
-
+            Image           : LargeString;
+    } 
 };

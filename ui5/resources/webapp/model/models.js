@@ -26,15 +26,6 @@ sap.ui.define([
 			});
 		},
 
-		getNewOrderId: function(restaurantId, restaurantTableId) {
-			return jQuery.ajax({
-				type: "GET",
-				url: `https://hxehost:51030/xsjs/sequences/NewRestaurantOrderId.xsjs?RestaurantId=${restaurantId}&RestaurantTableId=${restaurantTableId}`,
-				contentType: "application/json",
-				dataType: "json"
-			});
-		},
-
 		getNewProductId: function() {
 			return jQuery.ajax({
 				type: "GET",
@@ -44,29 +35,8 @@ sap.ui.define([
 			});
 		},
 
-		setFavImage: function(productId, imageId) {
-			return jQuery.ajax({
-				type: "POST",
-				url: `https://hxehost:51030/xsjs/functions/SetFavImage.xsjs?ProductId=${productId}&ImageId=${imageId}`,
-				contentType: "application/json",
-				dataType: "json"
-			});
-		},
-
 		getProductImageUploadUrl: function(productId) {
 			return `https://hxehost:51030/xsjs/functions/NewProductId.xsjs?ProductId=${productId}`;
-		},
-
-		getFavProductImageDownloadUrl: function(images) {
-			var restaurantModel = sap.ui.getCore().getModel("restaurants");
-			var favImage = images.map(i => restaurantModel.getObject("/" + i))
-				.find(i => i.Favorite);
-
-			if (favImage.ProductId && favImage.ImageId) {
-				return `https://hxehost:51030/xsjs/functions/GetProductImage.xsjs?ProductId=${favImage.ProductId}&ImageId=${favImage.ImageId}`;
-			} else {
-				return "sap-icon://product";
-			}
 		},
 
 		getProductImageDownloadUrl: function(image) {
@@ -75,57 +45,8 @@ sap.ui.define([
 			} else {
 				return "sap-icon://product";
 			}
-		},
-
-		changeOrderStatus: function(orderCtx, status) {
-			var restaurantModel = sap.ui.getCore().getModel("restaurants");
-			restaurantModel.setProperty("Status.StatusId", status, orderCtx);
-			return new Promise(function(resolve, reject) {
-				restaurantModel.submitChanges({
-					success: function(resp) {
-						resolve(resp);
-					},
-					error: function(resp) {
-						reject(resp);
-					}
-				});
-			});
-		},
-
-		closeTable: function(restaurantId, restaurantTableId) {
-			return jQuery.ajax({
-				type: "POST",
-				url: `https://hxehost:51030/xsjs/functions/CloseTable.xsjs?RestaurantId=${restaurantId}&RestaurantTableId=${restaurantTableId}`,
-				contentType: "application/json",
-				dataType: "json"
-			});
-		},
-
-		getCategories: function(restaurantId, categoryId) {
-			var restaurantModel = sap.ui.getCore().getModel("restaurants");
-			return new Promise(function(resolve, reject) {
-				restaurantModel.read("/Categories", {
-					filters: [
-						new Filter("RestaurantId", FO.EQ, restaurantId),
-						new Filter("ParentCategory.CategoryId", FO.EQ, categoryId || 0)
-					],
-					urlParameters: {
-						"$expand": "Categories/Categories/Categories" //Max 4 levels
-					},
-					success: function(resp) {
-						resolve(resp.results.map(this._formatSubCategories.bind(this)));
-					}.bind(this),
-					error: function(resp) {
-						reject(resp);
-					}
-				});
-			}.bind(this));
-		},
-
-		_formatSubCategories: function(category) {
-			category.Categories = category.Categories.results || [];
-			category.Categories = category.Categories.map(this._formatSubCategories.bind(this));
-			return category;
 		}
+
+	
 	};
 });

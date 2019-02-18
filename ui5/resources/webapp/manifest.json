@@ -84,37 +84,9 @@
 				"pattern": "/",
 				"target": "restaurantTiles"
 			}, {
-				"name": "Orders",
-				"pattern": "/Restaurant/{RestaurantId}/Orders",
-				"target": "restaurantFCL"
-			}, {
-				"name": "Tables",
-				"pattern": "/Restaurant/{RestaurantId}/Tables",
-				"target": "restaurantFCL"
-			}, {
-				"name": "PendingOrders",
-				"pattern": "/Restaurant/{RestaurantId}/PendingOrders",
-				"target": "restaurantFCL"
-			}, {
-				"name": "TableDetail",
-				"pattern": "/Restaurant/{RestaurantId}/Table/{RestaurantTableId}",
-				"target": "restaurantFCL"
-			}, {
-				"name": "OrderDetail",
-				"pattern": "/Restaurant/{RestaurantId}/Table/{RestaurantTableId}/Order/{RestaurantOrderId}",
-				"target": "restaurantFCL"
-			}, {
 				"name": "Menu",
 				"pattern": "/Restaurant/{RestaurantId}/Menu",
 				"target": "restaurantFCL"
-			}, {
-				"name": "PendingOrderItems",
-				"pattern": "/Restaurant/{RestaurantId}/PendingOrderItems",
-				"target": "restaurantFCL"
-			}, {
-				"name": "NewOrder",
-				"pattern": "/Restaurant/{RestaurantId}/NewOrder",
-				"target": "newOrder"
 			}],
 			"targets": {
 				"restaurantTiles": {

@@ -6,9 +6,6 @@
 		<ToolbarSpacer/>
 		<IconTabHeader id="iconTabHeader" select="onSelectTab">
 			<items>
-				<IconTabFilter key="orders" text="{i18n>OrderGrid_Orders}"/>
-				<IconTabFilter key="pendingItems" text="{i18n>PendingItems}"/>
-				<IconTabFilter key="tables" text="{i18n>Tables}"/>
 				<IconTabFilter key="menu" text="{i18n>Menu}"/>
 			</items>
 		</IconTabHeader>
@@ -17,13 +14,7 @@
 	</tnt:ToolHeader>
 	<f:FlexibleColumnLayout id="fcl" layout="{view>/layout}" backgroundDesign="Solid" stateChange="onStateChanged">
 		<f:beginColumnPages>
-			<mvc:XMLView id="orderGrid" viewName="restaurants.ui5.view.Orders.OrderGrid"></mvc:XMLView>
-			<mvc:XMLView id="tableGrid" viewName="restaurants.ui5.view.Tables.TableGrid"></mvc:XMLView>
 			<mvc:XMLView id="menu" viewName="restaurants.ui5.view.Menu.Menu"></mvc:XMLView>
-			<mvc:XMLView id="pendingOrderItems" viewName="restaurants.ui5.view.Restaurants.PendingOrderItems"></mvc:XMLView>
 		</f:beginColumnPages>
-		<f:midColumnPages>
-			<mvc:XMLView id="tableDetail" viewName="restaurants.ui5.view.Tables.TableDetail"></mvc:XMLView>
-		</f:midColumnPages>
 	</f:FlexibleColumnLayout>
 </mvc:View>

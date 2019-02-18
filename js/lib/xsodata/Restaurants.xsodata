@@ -3,13 +3,8 @@ service {
 	  as "Restaurants"
 	  navigates ("RestaurantToTables"            as "Tables", 
 				"RestaurantToOrders"             as "Orders",
-				"RestaurantToTodayRevenue"       as "TodayRevenue",
-				"RestaurantToPendingOrders"      as "PendingOrders",
-				"RestaurantToRestaurantOccupation" as "Occupation",
-				"RestaurantToRestaurantCategories" as "Categories",
-				"RestaurantToProducts" as "Products",
-				"RestaurantToRestaurantPendingOrderItems" as "PendingOrderItems",
-				"RestaurantToParentCategories" as "ParentCategories")
+				"RestaurantToCategories" as "Categories",
+				"RestaurantToProducts" as "Products")
 	  create events( before "xsjslib:Restaurant.xsjslib::BeforeCreate" );
 	
     association "RestaurantToTables"
@@ -22,6 +17,12 @@ service {
 	principal "Restaurants"("RestaurantId")
 	multiplicity "1"
 	dependent "Products"("RestaurantId")
+	multiplicity "*";
+	
+	association "RestaurantToCategories"
+	principal "Restaurants"("RestaurantId")
+	multiplicity "1"
+	dependent "Categories"("RestaurantId")
 	multiplicity "*";
 	
 	association "RestaurantToOrderItems"
@@ -49,12 +50,7 @@ service {
 	multiplicity "*";
 	
 	"restaurants.db::RestaurantsContext.RestaurantTable" 
-	as "Tables" navigates ("TableToOrders"     as "Orders",
-						   "TableToTableOccupation" as "Occupation",
-						   "TableToTablePendingOrders" as "PendingOrders",
-						   "TableToTableActiveOrders" as "ActiveOrders",
-						   "TableToTableReadyOrders" as "ReadyOrders",
-						   "TableToOrderStatusHistory" as "OrderStatusHistory") 
+	as "Tables" navigates ("TableToOrders"     as "Orders")
 	create events (before "xsjslib:RestaurantTable.xsjslib::BeforeCreate");
 	
 	association "TableToOrders"
@@ -63,20 +59,11 @@ service {
 	dependent "Orders"("RestaurantId","RestaurantTableId")
 	multiplicity "*";
 	
-	association "TableToOrderStatusHistory"
-	principal "Tables"("RestaurantId","RestaurantTableId")
-	multiplicity "1"
-	dependent "OrderStatusHistory"("RestaurantId","RestaurantTableId")
-	multiplicity "*";
-	
 	"restaurants.db::RestaurantsContext.RestaurantOrder" as "Orders" 
 	navigates ("OrderToStatus" as "Status",
 	"OrderToCustomer" as "Customer",
-	"OrderToOrderStatusHistory" as "StatusHistory",
-	"OrderToOrderItems" as "Items",
-	"OrderToOrderTotal" as "TotalPrice")
-	create events (before "xsjslib:RestaurantOrder.xsjslib::BeforeCreate", after "xsjslib:RestaurantOrder.xsjslib::AfterModif")
-	update events ( after "xsjslib:RestaurantOrder.xsjslib::AfterModif");
+	"OrderToOrderItems" as "Items")
+	create events (before "xsjslib:RestaurantOrder.xsjslib::BeforeCreate");
 	
 	association "OrderToStatus"
 	principal "Orders"("Status.StatusId")
@@ -89,12 +76,6 @@ service {
 	multiplicity "1"
 	dependent "Customers"("CustomerId")
 	multiplicity "1";
-	
-	association "OrderToOrderStatusHistory"
-	principal "Orders"("RestaurantId","RestaurantTableId","RestaurantOrderId")
-	multiplicity "1"
-	dependent "OrderStatusHistory"("RestaurantId","RestaurantTableId","RestaurantOrderId")
-	multiplicity "*";
 	
 	association "OrderToOrderItems"
 	principal "Orders"("RestaurantId","RestaurantTableId","RestaurantOrderId")
@@ -118,25 +99,10 @@ service {
 	multiplicity "1"
 	dependent "Products"("ProductId")
 	multiplicity "1";
-
-	"restaurants.db::RestaurantsContext.OrderStatusHistory" as "OrderStatusHistory" 
-	navigates("OrderStatusHistoryToStatus" as "Status", "OrderStatusHistoyToOrder" as "Order");
-	
-	association "OrderStatusHistoyToOrder"
-	principal "OrderStatusHistory"("RestaurantId","RestaurantTableId","RestaurantOrderId")
-	multiplicity "1"
-	dependent "Orders"("RestaurantId","RestaurantTableId","RestaurantOrderId")
-	multiplicity "1";
-	
-	association "OrderStatusHistoryToStatus"
-	principal "OrderStatusHistory"("Status.StatusId")
-	multiplicity "1"
-	dependent "Statuses"("StatusId")
-	multiplicity "1";
 	
 	
 	"restaurants.db::RestaurantsContext.Product" 
-	as "Products" navigates ("ProductToCategory" as "Category", "ProductToImages" as "Images")
+	as "Products" navigates ("ProductToCategory" as "Category")
 	create events (before "xsjslib:Product.xsjslib::BeforeCreate");
 	
 	association "ProductToCategory"
@@ -145,32 +111,23 @@ service {
 	dependent "Categories"("CategoryId")
 	multiplicity "1";
 	
-	association "ProductToImages"
-	principal "Products"("ProductId")
-	multiplicity "1"
-	dependent "ProductImages"("ProductId")
-	multiplicity "*";
-	
-	"restaurants.db::RestaurantsContext.ProductImage" 
-	as "ProductImages" without ("Image");
 	
 	"restaurants.db::RestaurantsContext.Category" 
 	as "Categories" 
 	navigates ("CategoryToCategories" as "Categories",
-			   "CategoryToProducts" as "Products",
-			   "CategoryToParentCategories" as "ParentCategories")
+			   "CategoryToProducts" as "Products")
 			   create events( before "xsjslib:Category.xsjslib::BeforeCreate" );
 	
 	association "CategoryToCategories"
-	principal "Categories"("CategoryId")
+	principal "Categories"("RestaurantId","CategoryId")
 	multiplicity "1"
-	dependent "Categories"("ParentCategory.CategoryId")
+	dependent "Categories"("RestaurantId","ParentCategory.CategoryId")
 	multiplicity "*";
 	
 	association "CategoryToProducts"
-	principal "Categories"("CategoryId")
+	principal "Categories"("RestaurantId","CategoryId")
 	multiplicity "1"
-	dependent "Products"("Category.CategoryId")
+	dependent "Products"("RestaurantId","Category.CategoryId")
 	multiplicity "*";
 	
 	"restaurants.db::RestaurantsContext.Status" 
@@ -179,89 +136,13 @@ service {
 	"restaurants.db::RestaurantsContext.Customer" 
 	as "Customers";
      
-	"restaurants.db.views::TodayRevenue" as "TodayRevenue" 
-	key("RestaurantId") parameters via entity ;
-
-	"restaurants.db.views::PendingOrders" as "PendingOrders" 
-	key("RestaurantId") parameters via entity ;
-	
-	"restaurants.db.views::TableOccupation" as "TableOccupation" 
-	key("RestaurantId","RestaurantTableId") parameters via entity ;
-	
-	"restaurants.db.views::RestaurantOccupation" as "RestaurantOccupation" 
-	key("RestaurantId") parameters via entity ;
-	
-	"restaurants.db.views::TablePendingOrders" as "TablePendingOrders" 
-	key("RestaurantId","RestaurantTableId") parameters via entity ;
-	
-	"restaurants.db.views::TableActiveOrders" as "TableActiveOrders" 
-	key("RestaurantId","RestaurantTableId") parameters via entity ;
-	
-	"restaurants.db.views::TableReadyOrders" as "TableReadyOrders" 
-	key("RestaurantId","RestaurantTableId") parameters via entity ;
-	
-	"restaurants.db.views::OrderTotal" as "OrderTotal" 
-	key("RestaurantId","RestaurantTableId","RestaurantOrderId") parameters via entity ;
-	
-	"restaurants.db.views::RestaurantPendingOrderItems" as "RestaurantPendingOrderItems" 
-	key("RestaurantId","RestaurantOrderId","ProductId") parameters via entity ;
-	
-	"restaurants.db.views::RestaurantCategories" as "RestaurantCategories" 
-	key("RestaurantId","CategoryId") parameters via entity ;
-	
-	"restaurants.db.views::CategoryParentCategories" as "CategoryParentCategories" 
-	key("RestaurantId","CategoryId") parameters via entity ;
-	
-	association via parameters "RestaurantToTodayRevenue"
-    principal "Restaurants"("RestaurantId") multiplicity "1"
-    dependent "TodayRevenue"("RESTAURANT_ID") multiplicity "1";
-    
-   	association via parameters "RestaurantToPendingOrders"
-    principal "Restaurants"("RestaurantId") multiplicity "1"
-    dependent "PendingOrders"("RESTAURANT_ID") multiplicity "1";
-    
-    association via parameters "TableToTableOccupation"
-    principal "Tables"("RestaurantId","RestaurantTableId") multiplicity "1"
-    dependent "TableOccupation"("RESTAURANT_ID","TABLE_ID") multiplicity "1";
-    
-    association via parameters "TableToTablePendingOrders"
-    principal "Tables"("RestaurantId","RestaurantTableId") multiplicity "1"
-    dependent "TablePendingOrders"("RESTAURANT_ID","TABLE_ID") multiplicity "1";
-    
-    association via parameters "TableToTableActiveOrders"
-    principal "Tables"("RestaurantId","RestaurantTableId") multiplicity "1"
-    dependent "TableActiveOrders"("RESTAURANT_ID","TABLE_ID") multiplicity "1";
-    
-    association via parameters "TableToTableReadyOrders"
-    principal "Tables"("RestaurantId","RestaurantTableId") multiplicity "1"
-    dependent "TableReadyOrders"("RESTAURANT_ID","TABLE_ID") multiplicity "1";
-   
-    association via parameters "RestaurantToRestaurantOccupation"
-    principal "Restaurants"("RestaurantId") multiplicity "1"
-    dependent "RestaurantOccupation"("RESTAURANT_ID") multiplicity "1";
-    
-    association via parameters "OrderToOrderTotal"
-    principal "Orders"("RestaurantId","RestaurantTableId","RestaurantOrderId") multiplicity "1"
-    dependent "OrderTotal"("RESTAURANT_ID","TABLE_ID","ORDER_ID") multiplicity "1";
-    
-    association via parameters "RestaurantToRestaurantPendingOrderItems"
-    principal "Restaurants"("RestaurantId") multiplicity "1"
-    dependent "RestaurantPendingOrderItems"("RESTAURANT_ID") multiplicity "*";
-
-    association via parameters "RestaurantToRestaurantCategories"
-    principal "Restaurants"("RestaurantId") multiplicity "1"
-    dependent "RestaurantCategories"("RESTAURANT_ID") multiplicity "*";
-    
-    association via parameters "CategoryToParentCategories"
-    principal "Categories"("RestaurantId","CategoryId") multiplicity "1"
-    dependent "CategoryParentCategories"("RESTAURANT_ID","CATEGORY_ID") multiplicity "*";
-    
-    association via parameters "RestaurantToParentCategories"
-    principal "Restaurants"("RestaurantId") multiplicity "1"
-    dependent "CategoryParentCategories"("RESTAURANT_ID") multiplicity "*";
     
 }
+settings {
 
+  support null;
+
+}
 
 
 

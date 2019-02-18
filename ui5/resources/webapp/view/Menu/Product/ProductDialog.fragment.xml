@@ -1,4 +1,4 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified">
 	<Dialog id="productDialog" title="{i18n>Product}" stretch="{= !${device>/system/desktop} }" contentWidth="35%">
 		<f:Form editable="true">
 			<f:layout>
@@ -19,20 +19,11 @@
 				</f:FormContainer>
 			</f:formContainers>
 		</f:Form>
-		<UploadCollection id="uploadCollection" multiple="true" sameFilenameAllowed="true" instantUpload="true" typeMissmatch="onTypeMissmatch"
-			beforeUploadStarts="onBeforeUploadStarts" fileType="jpg,png,bmp" uploadComplete="onUploadComplete" mode="SingleSelectMaster"
-			selectionChange="onSelectionChange" uploadUrl="https://hxehost:51030/xsjs/functions/UploadProductImage.xsjs"
-			items="{path: 'restaurants>/ProductImages', suspended: true }">
-			<items>
-				<UploadCollectionItem deletePress="onDeleteFile" fileName="{restaurants>FileName}"
-					thumbnailUrl="{path:'restaurants>',formatter: '.models.getProductImageDownloadUrl'}" visibleEdit="false"
-					url="{parts:[{path:'restaurants>ImageId'},{path:'restaurants>ProductId'}],formatter: '.models.getProductImageDownloadUrl'}">
-					<markers>
-						<ObjectMarker type="Favorite" visible="{path:'restaurants>Favorite',type: '.types.hanaBoolean'}"/>
-					</markers>
-				</UploadCollectionItem>
-			</items>
-		</UploadCollection>
+		<HBox justifyContent="Center" class="sapUiSmallMargin">
+			<Image visible="{= Boolean(${restaurants>Image})}" src="{restaurants>Image}" width="100%" />
+			<u:FileUploader change="onImageUpload" visible="{= !Boolean(${restaurants>Image})}" buttonText="{i18n>UploadImage}" icon="sap-icon://upload" buttonOnly="true" width="200px"/>
+		</HBox>
+	
 		<beginButton>
 			<Button icon="sap-icon://save" press="onSave"/>
 		</beginButton>

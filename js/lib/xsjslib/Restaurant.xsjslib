@@ -5,7 +5,6 @@ var utils = $.require("./utils.js");
 function BeforeCreate(param) {
 	var newObject = utils.getNewObject(param);
 	utils.trucateAfter(param);
-	utils.insertAfter(param);
 	var pStmt = param.connection.prepareStatement(
 		`insert into "${param.afterTableName}" values("restaurants.db.sequences::restaurantIdSeq".NEXTVAL,?)`);
 	pStmt.setString(1, newObject.Name);

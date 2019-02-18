@@ -8,18 +8,12 @@
 	</tnt:ToolHeader>
 	<Page showHeader="false" class="sapUiContentPadding">
 		<OverflowToolbar style="Clear">
-			<Title titleStyle="H2" text="{i18n>RestaurantTiles_Restaurants}" class="sapUiTinyMarginBegin"/>
+			<Title titleStyle="H2" text="{i18n>Restaurants}" class="sapUiTinyMarginBegin"/>
 			<ToolbarSpacer/>
 			<Button icon="sap-icon://add" press="onAddRestaurant" type="Transparent"/>
 		</OverflowToolbar>
 		<HBox wrap="Wrap" items="{restaurants>/Restaurants}">
-			<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="{restaurants>Name}" frameType="OneByOne" press="onPressRestaurant">
-				<tileContent>
-					<TileContent footer="{i18n>RestaurantTiles_Occupation}">
-						<mc:RadialMicroChart binding="{restaurants>Occupation}" total="{restaurants>Capacity}" fraction="{=Number(${restaurants>Occupied})}"/>
-					</TileContent>
-				</tileContent>
-			</GenericTile>
+			<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop" header="{restaurants>Name}" frameType="OneByOne" press="onPressRestaurant"></GenericTile>
 		</HBox>
 	</Page>
 </mvc:View>
