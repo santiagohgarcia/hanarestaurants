@@ -7,23 +7,30 @@
 			</f:layout>
 			<f:formContainers>
 				<f:FormContainer>
-					<f:FormElement label="{i18n>ProductDialog_Description}">
+					<f:FormElement label="{i18n>Description}">
 						<Input fieldGroupIds="productFields" required="true" value="{path: 'restaurants>Description', type: 'sap.ui.model.type.String' }"/>
 					</f:FormElement>
-					<f:FormElement label="{i18n>ProductDialog_Price}">
+					<f:FormElement label="{i18n>Price}">
 						<Input textAlign="End" fieldGroupIds="productFields" required="true" value="{path: 'restaurants>Price', type: '.types.floatType' }"/>
 					</f:FormElement>
-					<f:FormElement label="{i18n>ProductDialog_NeedsPreparation}">
+					<f:FormElement label="{i18n>NeedsPreparation}">
 						<Switch customTextOff="{i18n>OFF}" customTextOn="{i18n>ON}" state="{path:'restaurants>NeedPreparation',type:'.types.hanaBoolean'}"/>
 					</f:FormElement>
 				</f:FormContainer>
 			</f:formContainers>
 		</f:Form>
-		<HBox justifyContent="Center" class="sapUiSmallMargin">
-			<Image visible="{= Boolean(${restaurants>Image})}" src="{restaurants>Image}" width="100%" />
-			<u:FileUploader change="onImageUpload" visible="{= !Boolean(${restaurants>Image})}" buttonText="{i18n>UploadImage}" icon="sap-icon://upload" buttonOnly="true" width="200px"/>
-		</HBox>
-	
+		<Panel class="sapUiResponsiveContentPadding">
+			<headerToolbar>
+				<Toolbar>
+					<Title text="{i18n>Image}"/>
+					<ToolbarSpacer/>
+					<Button visible="{= Boolean(${restaurants>Image})}" type="Transparent" icon="sap-icon://delete" press="onDeleteImage"/>
+					<u:FileUploader change="onImageUpload" visible="{= !Boolean(${restaurants>Image})}" buttonText="{i18n>UploadImage}" icon="sap-icon://upload"
+						buttonOnly="true"/>
+				</Toolbar>
+			</headerToolbar>
+			<Image visible="{= Boolean(${restaurants>Image})}" src="{= ${restaurants>Image} || 'sap-icon://upload' }" width="100%"/>
+		</Panel>
 		<beginButton>
 			<Button icon="sap-icon://save" press="onSave"/>
 		</beginButton>

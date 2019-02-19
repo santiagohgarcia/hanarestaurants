@@ -1,71 +1,82 @@
 <mvc:View controllerName="restaurants.ui5.controller.Menu.Menu" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
-	displayBlock="true" xmlns="sap.m" height="100%" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid">
-	<SplitContainer id="menuSplitCont" initialDetail="initPage" initialMaster="categories">
+	displayBlock="true" xmlns="sap.m" height="100%" xmlns:f="sap.f" xmlns:ux="sap.uxap" xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:cc="restaurants.ui5.controls">
+	<SplitContainer id="menuSplitCont" initialDetail="category" initialMaster="categories">
 		<masterPages>
-			<Page id="categories" title="{i18n>Categories}">
-				<List items="{path: 'restaurants>Categories', filters: {path: 'ParentCategory.CategoryId', operator: 'EQ', value1: null }}" mode="Delete"
-					delete="onDeleteCategory">
+			<Page id="categories" title="{i18n>Categories}" floatingFooter="true">
+				<List
+					items="{path: 'restaurants>Categories', filters: {path: 'ParentCategory.CategoryId', operator: 'EQ', value1: null }, events: {dataReceived: '.onCategoriesReceived'}}">
 					<items>
-						<ObjectListItem title="{restaurants>Description}" type="DetailAndActive" press="onPressCategory" detailPress="onEditCategory"/>
+						<ObjectListItem title="{restaurants>Description}" type="Active" press="onPressCategory"/>
 					</items>
 				</List>
 				<footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button icon="sap-icon://add" press="onAddCategory"/>
-					</Toolbar>
-				</footer>
-			</Page>
-			<Page id="subcategories" title="{restaurants>Description}" showNavButton="true" navButtonPress="onPressSubCategoriesBack">
-				<List items="{restaurants>Categories}" delete="onDeleteProduct">
-					<items>
-						<ObjectListItem title="{restaurants>Description}" type="Active" press="onSubCategoryPress" detailPress="onEditProduct"/>
-					</items>
-				</List>
-				<footer>
-					<Toolbar>
-						<ToolbarSpacer/>
-						<Button icon="sap-icon://add" press="onAddSubCategory"/>
+						<Button icon="sap-icon://add" press="onAddCategory" text="{i18n>AddCategory}" type="Emphasized"/>
 					</Toolbar>
 				</footer>
 			</Page>
 		</masterPages>
 		<detailPages>
-			<MessagePage id="initPage" showHeader="false" description="{i18n>SelectACategory}" text="{i18n>Welcome}"></MessagePage>
-			<Page id="category" title="{restaurants>Description}" class="sapUiResponsiveContentPadding">
-				<f:GridList items="{restaurants>Products}">
-					<f:customLayout>
-						<grid:GridBoxLayout boxWidth="15rem"/>
-					</f:customLayout>
-					<f:items>
-						<CustomListItem>
-							<VBox justifyContent="SpaceBetween">
-								<layoutData>
-									<FlexItemData growFactor="1" shrinkFactor="0"/>
-								</layoutData>
-								<VBox>
-									<HBox justifyContent="SpaceBetween" class="sapUiSmallMargin">
-										<Title text="{restaurants>Description}" wrapping="true"/>
-										<ObjectNumber number="{restaurants>Price}" unit="ARS"/>
-									</HBox>
-									<Image src="{restaurants>Image}" width="100%"></Image>
-								</VBox>
-								<OverflowToolbar design="Transparent">
-									<ToolbarSpacer/>
-									<Button icon="sap-icon://edit" type="Transparent" press="onEditProduct"/>
-									<Button icon="sap-icon://delete" type="Transparent" press="onDeleteProduct"/>
-								</OverflowToolbar>
-							</VBox>
-						</CustomListItem>
-					</f:items>
-				</f:GridList>
-				<footer>
-					<Toolbar>
-						<ToolbarSpacer/>
-						<Button icon="sap-icon://add" press="onAddProduct"/>
-					</Toolbar>
-				</footer>
-			</Page>
+			<ux:ObjectPageLayout id="category" showTitleInHeaderContent="true" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
+				isChildPage="true" enableLazyLoading="true" showFooter="true" sections="{restaurants>Categories}">
+				<ux:headerTitle>
+					<ux:ObjectPageDynamicHeaderTitle >
+						<ux:heading>
+							<Toolbar style="Clear">
+								<Title text="{restaurants>Description}"/>
+								<Button icon="sap-icon://edit" type="Transparent" press="onEditCategory"/>
+								<Button icon="sap-icon://delete" type="Transparent" press="onDeleteSubCategory"/>
+							</Toolbar>
+						</ux:heading>
+						<ux:actions>
+							<ux:ObjectPageHeaderActionButton icon="sap-icon://add" type="Emphasized" press="onAddSubCategory" text="{i18n>AddSubCategory}"
+								hideText="false"/>
+						</ux:actions>
+					</ux:ObjectPageDynamicHeaderTitle>
+				</ux:headerTitle>
+				<ux:sections>
+					<ux:ObjectPageSection title="{restaurants>Description}" showTitle="false" titleUppercase="false" titleLevel="H6">
+						<ux:subSections>
+							<ux:ObjectPageSubSection title="{restaurants>Description}">
+								<f:GridList items="{restaurants>Products}" class="sapUxAPObjectPageSubSectionAlignContent">
+									<f:headerToolbar>
+										<Toolbar style="Clear">
+											<Title text="{restaurants>Description}"/>
+											<Button icon="sap-icon://edit" type="Transparent" press="onEditCategory"/>
+											<Button icon="sap-icon://delete" type="Transparent" press="onDeleteSubCategory"/>
+											<ToolbarSpacer/>
+											<Button icon="sap-icon://add" press="onAddProduct" text="{i18n>AddProduct}" type="Emphasized"/>
+										</Toolbar>
+									</f:headerToolbar>
+									<f:customLayout>
+										<grid:GridBoxLayout boxWidth="15rem"/>
+									</f:customLayout>
+									<f:items>
+										<CustomListItem>
+											<VBox justifyContent="SpaceBetween">
+												<VBox>
+													<HBox justifyContent="SpaceBetween" class="sapUiSmallMargin">
+														<Title text="{restaurants>Description}" wrapping="true"/>
+														<ObjectNumber number="{path:'restaurants>Price',type:'.types.floatType'}" unit="ARS"/>
+													</HBox>
+													<Image src="{restaurants>Image}" width="100%" height="200px"></Image>
+												</VBox>
+												<OverflowToolbar design="Transparent">
+													<ToolbarSpacer/>
+													<Button icon="sap-icon://edit" type="Transparent" press="onEditProduct"/>
+													<Button icon="sap-icon://delete" type="Transparent" press="onDeleteProduct"/>
+												</OverflowToolbar>
+											</VBox>
+										</CustomListItem>
+									</f:items>
+								</f:GridList>
+							</ux:ObjectPageSubSection>
+						</ux:subSections>
+					</ux:ObjectPageSection>
+				</ux:sections>
+			</ux:ObjectPageLayout>
 		</detailPages>
 	</SplitContainer>
 </mvc:View>

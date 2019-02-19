@@ -10,29 +10,20 @@ sap.ui.define([
 		types: types,
 		formatter: formatter,
 		models: models,
-		onInit: function() {
-			this.getRouter().getRoute("Menu").attachMatched(this._attachMenuMatched.bind(this));
-		},
 
-		_attachMenuMatched: function(evt) {
-
+		onCategoriesReceived: function(evt) {
+			var data = evt.getParameter("data");
+			if (data) {
+				var category = data.results[0];
+				this.byId("category").bindElement(
+					`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
+			}
 		},
 
 		onPressCategory: function(evt) {
-			var subcategoriesPage = this.byId("subcategories");
 			var category = evt.getSource().getBindingContext("restaurants").getObject();
-			subcategoriesPage.bindElement(`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
-			this.byId("menuSplitCont").toMaster(subcategoriesPage);
-		},
-
-		onPressSubCategoriesBack: function() {
-			this.byId("menuSplitCont").backMaster();
-		},
-
-		onSubCategoryPress: function(evt) {
-			var category = evt.getSource().getBindingContext("restaurants").getObject();
-			this.byId("menuSplitCont").toDetail(this.byId("category"));
-			this.byId("category").bindElement(`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
+			this.byId("category").bindElement(
+				`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
 		},
 
 		//CATEGORIES
@@ -61,7 +52,17 @@ sap.ui.define([
 			var categoryId = categoryCtx.getProperty("CategoryId");
 			this.getModel("restaurants").remove(categoryCtx.getPath(), {
 				success: function() {
-					this.showMessageToast("CategoryDialog_CategoryDeleted", [categoryId]);
+					this.showMessageToast("CategoryDeleted", [categoryId]);
+				}.bind(this)
+			});
+		},
+
+		onDeleteSubCategory: function(evt) {
+			var categoryCtx = evt.getSource.getBindingContext("restaurants");
+			var categoryId = categoryCtx.getProperty("CategoryId");
+			this.getModel("restaurants").remove(categoryCtx.getPath(), {
+				success: function() {
+					this.showMessageToast("CategoryDeleted", [categoryId]);
 				}.bind(this)
 			});
 		},
@@ -86,7 +87,7 @@ sap.ui.define([
 			var productId = productCtx.getProperty("ProductId");
 			this.getModel("restaurants").remove(productCtx.getPath(), {
 				success: function() {
-					this.showMessageToast("ProductDialog_ProductDeleted", [productId]);
+					this.showMessageToast("ProductDeleted", [productId]);
 					this.getModel("restaurants").refresh();
 				}.bind(this)
 			});
