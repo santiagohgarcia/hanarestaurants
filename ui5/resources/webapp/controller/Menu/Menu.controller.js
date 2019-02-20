@@ -12,16 +12,18 @@ sap.ui.define([
 		models: models,
 
 		onCategoriesReceived: function(evt) {
-			var data = evt.getParameter("data");
+			var data = evt.getParameter("data"),
+				categoryList = this.byId("categoryList");
 			if (data) {
 				var category = data.results[0];
 				this.byId("category").bindElement(
 					`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
+				categoryList.setSelectedItem(categoryList.getItems()[0]);
 			}
 		},
 
-		onPressCategory: function(evt) {
-			var category = evt.getSource().getBindingContext("restaurants").getObject();
+		onSelectCategory: function(evt) {
+			var category = evt.getParameter("listItem").getBindingContext("restaurants").getObject();
 			this.byId("category").bindElement(
 				`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
 		},
@@ -88,7 +90,6 @@ sap.ui.define([
 			this.getModel("restaurants").remove(productCtx.getPath(), {
 				success: function() {
 					this.showMessageToast("ProductDeleted", [productId]);
-					this.getModel("restaurants").refresh();
 				}.bind(this)
 			});
 		}

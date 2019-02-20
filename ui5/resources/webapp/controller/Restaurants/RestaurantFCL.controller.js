@@ -7,6 +7,7 @@ sap.ui.define([
 
 		onInit: function() {
 			this.getRouter().getRoute("Menu").attachMatched(this._attachMenuMatched.bind(this));
+			this.getRouter().getRoute("Staff").attachMatched(this._attachStaffMatched.bind(this));
 		},
 
 		_setSelectedIconTab: function(key) {
@@ -17,6 +18,13 @@ sap.ui.define([
 			this.getModel("view").setProperty("/layout", sap.f.LayoutType.OneColumn);
 			this.byId("fcl").toBeginColumnPage(this.byId("menu").getId(), "fade");
 			this._setSelectedIconTab("menu");
+			this._bindRestaurant(evt);
+		},
+
+		_attachStaffMatched: function(evt) {
+			this.getModel("view").setProperty("/layout", sap.f.LayoutType.OneColumn);
+			this.byId("fcl").toBeginColumnPage(this.byId("staff").getId(), "fade");
+			this._setSelectedIconTab("staff");
 			this._bindRestaurant(evt);
 		},
 
@@ -36,8 +44,8 @@ sap.ui.define([
 			var selectedKey = evt.getParameter("key");
 			var restaurant = this.getView().getBindingContext("restaurants").getObject();
 			switch (selectedKey) {
-				case "tables":
-					this.getRouter().navTo("Tables", {
+				case "staff":
+					this.getRouter().navTo("Staff", {
 						RestaurantId: restaurant.RestaurantId
 					});
 					break;
@@ -46,16 +54,7 @@ sap.ui.define([
 						RestaurantId: restaurant.RestaurantId
 					});
 					break;
-				case "pendingItems":
-					this.getRouter().navTo("PendingOrderItems", {
-						RestaurantId: restaurant.RestaurantId
-					});
-					break;
-				case "orders":
-					this.getRouter().navTo("Orders", {
-						RestaurantId: restaurant.RestaurantId
-					});
-					break;
+
 			}
 		}
 

@@ -32,7 +32,7 @@ sap.ui.define([
 
 		success: function() {
 			var categoryCtx = this._dialog.getBindingContext("restaurants");
-			BaseController.prototype.showMessageToast("CategoryDialog_CategorySaved", [categoryCtx.getProperty("CategoryId")]);
+			BaseController.prototype.showMessageToast("CategorySaved", [categoryCtx.getProperty("CategoryId")]);
 			BaseDialog.prototype.success.apply(this);
 		}
 

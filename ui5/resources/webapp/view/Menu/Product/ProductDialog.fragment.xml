@@ -19,7 +19,7 @@
 				</f:FormContainer>
 			</f:formContainers>
 		</f:Form>
-		<Panel class="sapUiResponsiveContentPadding">
+		<Panel >
 			<headerToolbar>
 				<Toolbar>
 					<Title text="{i18n>Image}"/>
@@ -29,7 +29,9 @@
 						buttonOnly="true"/>
 				</Toolbar>
 			</headerToolbar>
-			<Image visible="{= Boolean(${restaurants>Image})}" src="{= ${restaurants>Image} || 'sap-icon://upload' }" width="100%"/>
+			<HBox fitContainer="true" justifyContent="Center">
+				<Image src="{= ${restaurants>Image} || './img/placeholder.png' }" heigth="300px"/>
+			</HBox>
 		</Panel>
 		<beginButton>
 			<Button icon="sap-icon://save" press="onSave"/>

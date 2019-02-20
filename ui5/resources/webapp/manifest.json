@@ -87,6 +87,10 @@
 				"name": "Menu",
 				"pattern": "/Restaurant/{RestaurantId}/Menu",
 				"target": "restaurantFCL"
+			}, {
+				"name": "Staff",
+				"pattern": "/Restaurant/{RestaurantId}/Staff",
+				"target": "restaurantFCL"
 			}],
 			"targets": {
 				"restaurantTiles": {
@@ -98,11 +102,6 @@
 					"viewType": "XML",
 					"viewName": "Restaurants.RestaurantFCL",
 					"viewLevel": 1
-				},
-				"newOrder": {
-					"viewType": "XML",
-					"viewName": "Orders.NewOrder",
-					"viewLevel": 2
 				}
 			}
 		}

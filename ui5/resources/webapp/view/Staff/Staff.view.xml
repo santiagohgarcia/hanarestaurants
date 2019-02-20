@@ -1,0 +1,4 @@
+<mvc:View controllerName="restaurants.ui5.controller.Staff.Staff" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m" height="100%">
+	<Text text="text"/>
+</mvc:View>

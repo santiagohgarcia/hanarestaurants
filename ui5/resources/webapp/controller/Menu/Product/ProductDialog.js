@@ -3,11 +3,8 @@ sap.ui.define([
 	"restaurants/ui5/controller/BaseController",
 	"restaurants/ui5/utils/Validator",
 	"restaurants/ui5/model/types",
-	"restaurants/ui5/model/models",
-	"sap/m/UploadCollectionParameter",
-	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function(BaseDialog, BaseController, Validator, types, models, UploadCollectionParameter, Filter, FO) {
+	"restaurants/ui5/model/models"
+], function(BaseDialog, BaseController, Validator, types, models) {
 	"use strict";
 
 	return BaseDialog.extend("restaurants.ui5.controller.Menu.Product.ProductDialog", {

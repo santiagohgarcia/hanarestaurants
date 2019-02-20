@@ -7,6 +7,7 @@
 		<IconTabHeader id="iconTabHeader" select="onSelectTab">
 			<items>
 				<IconTabFilter key="menu" text="{i18n>Menu}"/>
+				<IconTabFilter key="staff" text="{i18n>Staff}"/>
 			</items>
 		</IconTabHeader>
 		<ToolbarSpacer/>
@@ -15,6 +16,7 @@
 	<f:FlexibleColumnLayout id="fcl" layout="{view>/layout}" backgroundDesign="Solid" stateChange="onStateChanged">
 		<f:beginColumnPages>
 			<mvc:XMLView id="menu" viewName="restaurants.ui5.view.Menu.Menu"></mvc:XMLView>
+			<mvc:XMLView id="staff" viewName="restaurants.ui5.view.Staff.Staff"></mvc:XMLView>
 		</f:beginColumnPages>
 	</f:FlexibleColumnLayout>
 </mvc:View>
