@@ -3,11 +3,8 @@ sap.ui.define([
 	"restaurants/ui5/controller/BaseController",
 	"restaurants/ui5/utils/Validator",
 	"restaurants/ui5/model/types",
-	"restaurants/ui5/model/models",
-	"sap/m/UploadCollectionParameter",
-	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function(BaseDialog, BaseController, Validator, types, models, UploadCollectionParameter, Filter, FO) {
+	"restaurants/ui5/model/models"
+], function(BaseDialog, BaseController, Validator, types, models) {
 	"use strict";
 
 	return BaseDialog.extend("restaurants.ui5.controller.Menu.Product.ProductDialog", {
@@ -24,18 +21,12 @@ sap.ui.define([
 
 		getNewContext: function(ctx) {
 			if (ctx["Category.CategoryId"]) {
-				models.getNewProductId().then(ProductId => {
-					ctx.ProductId = ProductId.ProductId;
-					ctx = this._dialog.getModel("restaurants").createEntry("/Products", {
-						properties: ctx
-					});
-					this._dialog.setBindingContext(ctx, "restaurants");
+				ctx = this._dialog.getModel("restaurants").createEntry("/Products", {
+					properties: ctx
 				});
-				return undefined;
-			} else {
-				this._dialog.setBindingContext(ctx, "restaurants");
-				return ctx;
 			}
+			this._dialog.setBindingContext(ctx, "restaurants");
+			return ctx;
 		},
 
 		getFieldGroup: function() {
@@ -44,7 +35,7 @@ sap.ui.define([
 
 		success: function() {
 			var productCtx = this._dialog.getBindingContext("restaurants");
-			BaseController.prototype.showMessageToast("ProductDialog_ProductSaved", [productCtx.getProperty("ProductId")]);
+			BaseController.prototype.showMessageToast("ProductSaved", [productCtx.getProperty("ProductId")]);
 			BaseDialog.prototype.success.apply(this);
 		},
 
@@ -62,14 +53,12 @@ sap.ui.define([
 
 		onImageUpload: function(evt) {
 			var imageBlob = evt.getParameter("files")[0];
-			var reader = new FileReader();
-			reader.readAsDataURL(imageBlob);
-			this._dialog.getModel("restaurants").setProperty("Image", reader.result, this._dialog.getBindingContext("restaurants"));
-		/*	
-			reader.onloadend = function() {
-			
-			}.bind(this);*/
-			
+			models.getBase64(imageBlob)
+				.then(imageB64 => this._dialog.getModel("restaurants").setProperty("Image", imageB64, this._dialog.getBindingContext("restaurants")));
+		},
+
+		onDeleteImage: function() {
+			this._dialog.getModel("restaurants").setProperty("Image", null, this._dialog.getBindingContext("restaurants"));
 		}
 	});
 

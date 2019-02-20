@@ -36,8 +36,7 @@ sap.ui.define([
 			}
 		},
 		success: function() {
-			this._dialog.setBusy(false)
-				.getModel("restaurants").refresh();
+			this._dialog.setBusy(false);
 			this._openPromRes(this._dialog.getBindingContext("restaurants").getObject());
 			this.onCloseDialog();
 		},
