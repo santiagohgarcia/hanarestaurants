@@ -6,15 +6,20 @@ function BeforeCreate(param) {
 	var newObject = utils.getNewObject(param);
 	utils.trucateAfter(param);
 	var pStmt = param.connection.prepareStatement(
-		`insert into "${param.afterTableName}" values(?,?,?,?,?,?,?)`
+		`insert into "${param.afterTableName}" values(?,?,(SELECT IFNULL(MAX("ProductId"), 0) + 1 FROM "restaurants.db::RestaurantsContext.Product" WHERE "RestaurantId" = ? ),?,?,?,?)`
 	);
 	pStmt.setInteger(1, newObject.RestaurantId);
-	pStmt.setInteger(2, newObject.ProductId);
-	pStmt.setInteger(3, newObject["Category.CategoryId"]);
+	pStmt.setInteger(2, newObject["Category.CategoryId"]);
+	pStmt.setInteger(3, newObject.RestaurantId);
 	pStmt.setString(4, newObject.Description);
 	pStmt.setDecimal(5, newObject.Price);
 	pStmt.setInteger(6, newObject.NeedPreparation || 0);
-	pStmt.setBlob(7, newObject.Image);
+	if (newObject.Image) {
+		pStmt.setBlob(7, newObject.Image);
+	} else {
+		pStmt.setNull(7);
+	}
+
 	pStmt.executeUpdate();
 	pStmt.close();
 }

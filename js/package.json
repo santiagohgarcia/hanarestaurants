@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@sap/xsjs": "3.3.7",
 		"@sap/xsenv": "1.2.9",
+		"@sap/xssec": "2.1.16",
 		"sap-hdbext-promisfied": "1.0.0"
 	},
 	"devDependencies": {
