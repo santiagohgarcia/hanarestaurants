@@ -37,8 +37,8 @@ sap.ui.define([
 
 			// set the restaurants model
 			var restaurantModel = models.createRestaurantsModel();
-			this.setModel(restaurantModel, "restaurants");
-			sap.ui.getCore().setModel(restaurantModel, "restaurants");
+			this.setModel(restaurantModel);
+			sap.ui.getCore().setModel(restaurantModel);
 
 			//CREATE COMMON DIALOGS
 			this._restaurantDialog = new RestaurantDialog(this.getRootControl());

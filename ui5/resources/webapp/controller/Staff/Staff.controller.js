@@ -9,7 +9,17 @@ sap.ui.define([
 	return BaseController.extend("restaurants.ui5.controller.Staff.Staff", {
 		types: types,
 		formatter: formatter,
-		models: models
+		models: models,
+
+		onEmployeesReceived: function(evt) {
+			var data = evt.getParameter("data"),
+				employeeList = this.byId("employeeList");
+			if (data) {
+				var firstEmployee = employeeList.getItems()[0];
+				employeeList.setSelectedItem(firstEmployee);
+				this.byId("employee").setBindingContext(firstEmployee.getBindingContext());
+			}
+		}
 
 	});
 });

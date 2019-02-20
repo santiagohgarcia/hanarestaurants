@@ -17,7 +17,7 @@ sap.ui.define([
 
 		getNewContext: function(ctx) {
             if (!ctx) {
-				ctx = this._dialog.getModel("restaurants").createEntry("/Restaurants", {
+				ctx = this._dialog.getModel().createEntry("/Restaurants", {
 					properties: {
 						RestaurantId: -1
 					}
@@ -31,7 +31,7 @@ sap.ui.define([
 		},
 
 		success: function() {
-			var restaurantCtx = this._dialog.getBindingContext("restaurants");
+			var restaurantCtx = this._dialog.getBindingContext();
 			BaseController.prototype.showMessageToast("RestaurantDialog_RestaurantSaved", [restaurantCtx.getProperty("RestaurantId")]);
             BaseDialog.prototype.success.apply(this);
 		}

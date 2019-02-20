@@ -17,27 +17,27 @@ sap.ui.define([
 			if (data) {
 				var category = data.results[0];
 				this.byId("category").bindElement(
-					`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
+					`/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
 				categoryList.setSelectedItem(categoryList.getItems()[0]);
 			}
 		},
 
 		onSelectCategory: function(evt) {
-			var category = evt.getParameter("listItem").getBindingContext("restaurants").getObject();
+			var category = evt.getParameter("listItem").getBindingContext().getObject();
 			this.byId("category").bindElement(
-				`restaurants>/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
+				`/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
 		},
 
 		//CATEGORIES
 		onAddCategory: function() {
-			var restaurant = this.getView().getBindingContext("restaurants").getObject();
+			var restaurant = this.getView().getBindingContext().getObject();
 			this.openCategoryDialog({
 				RestaurantId: restaurant.RestaurantId
 			});
 		},
 
 		onAddSubCategory: function(evt) {
-			var parentCategory = evt.getSource().getBindingContext("restaurants").getObject();
+			var parentCategory = evt.getSource().getBindingContext().getObject();
 			this.openCategoryDialog({
 				RestaurantId: parentCategory.RestaurantId,
 				"ParentCategory.CategoryId": parentCategory.CategoryId
@@ -45,14 +45,14 @@ sap.ui.define([
 		},
 
 		onEditCategory: function(evt) {
-			var categoryCtx = evt.getSource().getBindingContext("restaurants");
+			var categoryCtx = evt.getSource().getBindingContext();
 			this.openCategoryDialog(categoryCtx);
 		},
 
 		onDeleteCategory: function(evt) {
-			var categoryCtx = evt.getParameter("listItem").getBindingContext("restaurants");
+			var categoryCtx = evt.getParameter("listItem").getBindingContext();
 			var categoryId = categoryCtx.getProperty("CategoryId");
-			this.getModel("restaurants").remove(categoryCtx.getPath(), {
+			this.getModel().remove(categoryCtx.getPath(), {
 				success: function() {
 					this.showMessageToast("CategoryDeleted", [categoryId]);
 				}.bind(this)
@@ -60,9 +60,9 @@ sap.ui.define([
 		},
 
 		onDeleteSubCategory: function(evt) {
-			var categoryCtx = evt.getSource.getBindingContext("restaurants");
+			var categoryCtx = evt.getSource.getBindingContext();
 			var categoryId = categoryCtx.getProperty("CategoryId");
-			this.getModel("restaurants").remove(categoryCtx.getPath(), {
+			this.getModel().remove(categoryCtx.getPath(), {
 				success: function() {
 					this.showMessageToast("CategoryDeleted", [categoryId]);
 				}.bind(this)
@@ -72,7 +72,7 @@ sap.ui.define([
 		//PRODUCTS
 
 		onAddProduct: function(evt) {
-			var category = evt.getSource().getBindingContext("restaurants").getObject();
+			var category = evt.getSource().getBindingContext().getObject();
 			this.openProductDialog({
 				RestaurantId: category.RestaurantId,
 				"Category.CategoryId": category.CategoryId
@@ -80,14 +80,14 @@ sap.ui.define([
 		},
 
 		onEditProduct: function(evt) {
-			var productCtx = evt.getSource().getBindingContext("restaurants");
+			var productCtx = evt.getSource().getBindingContext();
 			this.openProductDialog(productCtx);
 		},
 
 		onDeleteProduct: function(evt) {
-			var productCtx = evt.getSource().getBindingContext("restaurants");
+			var productCtx = evt.getSource().getBindingContext();
 			var productId = productCtx.getProperty("ProductId");
-			this.getModel("restaurants").remove(productCtx.getPath(), {
+			this.getModel().remove(productCtx.getPath(), {
 				success: function() {
 					this.showMessageToast("ProductDeleted", [productId]);
 				}.bind(this)

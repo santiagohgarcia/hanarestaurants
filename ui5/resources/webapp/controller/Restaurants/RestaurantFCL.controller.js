@@ -31,8 +31,7 @@ sap.ui.define([
 		_bindRestaurant: function(evt) {
 			var args = evt.getParameter("arguments");
 			this.getView().bindElement({
-				path: `/Restaurants(RestaurantId=${args.RestaurantId})`,
-				model: "restaurants"
+				path: `/Restaurants(RestaurantId=${args.RestaurantId})`
 			});
 		},
 
@@ -42,7 +41,7 @@ sap.ui.define([
 
 		onSelectTab: function(evt) {
 			var selectedKey = evt.getParameter("key");
-			var restaurant = this.getView().getBindingContext("restaurants").getObject();
+			var restaurant = this.getView().getBindingContext().getObject();
 			switch (selectedKey) {
 				case "staff":
 					this.getRouter().navTo("Staff", {

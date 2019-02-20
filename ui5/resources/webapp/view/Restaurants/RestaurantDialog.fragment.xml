@@ -8,7 +8,7 @@
 			<f:formContainers>
 				<f:FormContainer>
 					<f:FormElement label="{i18n>RestaurantDialog_Name}">
-						<Input fieldGroupIds="restaurantFields" required="true" value="{path: 'restaurants>Name', type: 'sap.ui.model.type.String' }"/>
+						<Input fieldGroupIds="restaurantFields" required="true" value="{path: 'Name', type: 'sap.ui.model.type.String' }"/>
 					</f:FormElement>
 				</f:FormContainer>
 			</f:formContainers>

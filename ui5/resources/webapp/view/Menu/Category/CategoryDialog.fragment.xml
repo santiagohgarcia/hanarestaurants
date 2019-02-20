@@ -6,7 +6,7 @@
             <f:formContainers>
                 <f:FormContainer>
                     <f:FormElement label="{i18n>Description}">
-                        <Input fieldGroupIds="categoryFields" required="true" value="{path: 'restaurants>Description', type: 'sap.ui.model.type.String' }" /> </f:FormElement>
+                        <Input fieldGroupIds="categoryFields" required="true" value="{path: 'Description', type: 'sap.ui.model.type.String' }" /> </f:FormElement>
                 </f:FormContainer>
             </f:formContainers>
         </f:Form>
