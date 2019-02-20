@@ -28,6 +28,9 @@ modules:
     type: html5
     path: ui5
 
+
+  
+
 resources:
   - name: hdi_db
     properties:
