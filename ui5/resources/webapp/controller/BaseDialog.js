@@ -16,14 +16,14 @@ sap.ui.define([
 				this._view.addDependent(this._dialog);
 			}
 			ctx = this.getNewContext(ctx);
-			this._dialog.setBindingContext(ctx, "restaurants");
+			this._dialog.setBindingContext(ctx);
 			// forward compact/cozy style into dialog
 			jQuery.sap.syncStyleClass(this._view.getController().getOwnerComponent().getContentDensityClass(), this._view, this._dialog);
 			this._dialog.open();
 			return new Promise((res) => this._openPromRes = res);
 		},
 		onSave: function() {
-			var restaurantModel = this._dialog.getModel("restaurants");
+			var restaurantModel = this._dialog.getModel();
 			if (Validator.isValid(this.getFieldGroup(), this._dialog)) {
 				if (restaurantModel.hasPendingChanges()) {
 					this._dialog.setBusy(true);
@@ -37,12 +37,12 @@ sap.ui.define([
 		},
 		success: function() {
 			this._dialog.setBusy(false);
-			this._openPromRes(this._dialog.getBindingContext("restaurants").getObject());
+			this._openPromRes(this._dialog.getBindingContext().getObject());
 			this.onCloseDialog();
 		},
 		onCloseDialog: function() {
-			var ctx = this._dialog.getBindingContext("restaurants");
-			var restaurantModel = this._dialog.getModel("restaurants");
+			var ctx = this._dialog.getBindingContext();
+			var restaurantModel = this._dialog.getModel();
 			if (ctx.bCreated) {
 				restaurantModel.deleteCreatedEntry(ctx);
 			} else {

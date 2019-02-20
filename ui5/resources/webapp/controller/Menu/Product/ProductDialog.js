@@ -21,11 +21,11 @@ sap.ui.define([
 
 		getNewContext: function(ctx) {
 			if (ctx["Category.CategoryId"]) {
-				ctx = this._dialog.getModel("restaurants").createEntry("/Products", {
+				ctx = this._dialog.getModel().createEntry("/Products", {
 					properties: ctx
 				});
 			}
-			this._dialog.setBindingContext(ctx, "restaurants");
+			this._dialog.setBindingContext(ctx);
 			return ctx;
 		},
 
@@ -34,14 +34,14 @@ sap.ui.define([
 		},
 
 		success: function() {
-			var productCtx = this._dialog.getBindingContext("restaurants");
+			var productCtx = this._dialog.getBindingContext();
 			BaseController.prototype.showMessageToast("ProductSaved", [productCtx.getProperty("ProductId")]);
 			BaseDialog.prototype.success.apply(this);
 		},
 
 		onCloseDialog: function() {
-			var ctx = this._dialog.getBindingContext("restaurants");
-			var restaurantModel = this._dialog.getModel("restaurants");
+			var ctx = this._dialog.getBindingContext();
+			var restaurantModel = this._dialog.getModel();
 			if (ctx.bCreated) {
 				restaurantModel.deleteCreatedEntry(ctx);
 				this._dialog.close();
@@ -54,11 +54,11 @@ sap.ui.define([
 		onImageUpload: function(evt) {
 			var imageBlob = evt.getParameter("files")[0];
 			models.getBase64(imageBlob)
-				.then(imageB64 => this._dialog.getModel("restaurants").setProperty("Image", imageB64, this._dialog.getBindingContext("restaurants")));
+				.then(imageB64 => this._dialog.getModel().setProperty("Image", imageB64, this._dialog.getBindingContext()));
 		},
 
 		onDeleteImage: function() {
-			this._dialog.getModel("restaurants").setProperty("Image", null, this._dialog.getBindingContext("restaurants"));
+			this._dialog.getModel().setProperty("Image", null, this._dialog.getBindingContext());
 		}
 	});
 

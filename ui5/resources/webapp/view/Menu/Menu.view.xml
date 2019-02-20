@@ -5,9 +5,9 @@
 		<masterPages>
 			<Page id="categories" title="{i18n>Categories}" floatingFooter="true">
 				<List id="categoryList" mode="SingleSelectMaster" selectionChange="onSelectCategory"
-					items="{path: 'restaurants>Categories', filters: {path: 'ParentCategory.CategoryId', operator: 'EQ', value1: null }, events: {dataReceived: '.onCategoriesReceived'}}">
+					items="{path: 'Categories', filters: {path: 'ParentCategory.CategoryId', operator: 'EQ', value1: null }, events: {dataReceived: '.onCategoriesReceived'}}">
 					<items>
-						<ObjectListItem title="{restaurants>Description}"/>
+						<ObjectListItem title="{Description}"/>
 					</items>
 				</List>
 				<footer>
@@ -20,12 +20,12 @@
 		</masterPages>
 		<detailPages>
 			<ux:ObjectPageLayout id="category" showTitleInHeaderContent="true" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
-				isChildPage="true" enableLazyLoading="true" showFooter="true" sections="{restaurants>Categories}">
+				isChildPage="true" enableLazyLoading="true" showFooter="true" sections="{Categories}">
 				<ux:headerTitle>
 					<ux:ObjectPageDynamicHeaderTitle >
 						<ux:heading>
 							<Toolbar style="Clear">
-								<Title text="{restaurants>Description}"/>
+								<Title text="{Description}"/>
 								<Button icon="sap-icon://edit" type="Transparent" press="onEditCategory"/>
 								<Button icon="sap-icon://delete" type="Transparent" press="onDeleteSubCategory"/>
 							</Toolbar>
@@ -37,13 +37,13 @@
 					</ux:ObjectPageDynamicHeaderTitle>
 				</ux:headerTitle>
 				<ux:sections>
-					<ux:ObjectPageSection title="{restaurants>Description}" showTitle="false" titleUppercase="false" titleLevel="H6">
+					<ux:ObjectPageSection title="{Description}" showTitle="false" titleUppercase="false" titleLevel="H6">
 						<ux:subSections>
-							<ux:ObjectPageSubSection title="{restaurants>Description}">
-								<f:GridList items="{restaurants>Products}" class="sapUxAPObjectPageSubSectionAlignContent">
+							<ux:ObjectPageSubSection title="{Description}">
+								<f:GridList items="{Products}" class="sapUxAPObjectPageSubSectionAlignContent">
 									<f:headerToolbar>
 										<Toolbar style="Clear">
-											<Title text="{restaurants>Description}"/>
+											<Title text="{Description}"/>
 											<Button icon="sap-icon://edit" type="Transparent" press="onEditCategory"/>
 											<Button icon="sap-icon://delete" type="Transparent" press="onDeleteSubCategory"/>
 											<ToolbarSpacer/>
@@ -58,10 +58,10 @@
 											<VBox justifyContent="SpaceBetween">
 												<VBox>
 													<HBox justifyContent="SpaceBetween" class="sapUiSmallMargin">
-														<Title text="{restaurants>Description}" wrapping="true"/>
-														<ObjectNumber number="{path:'restaurants>Price',type:'.types.floatType'}" unit="ARS"/>
+														<Title text="{Description}" wrapping="true"/>
+														<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS"/>
 													</HBox>
-													<Image src="{= ${restaurants>Image} || './img/placeholder.png' }" width="100%" height="200px"></Image>
+													<Image src="{= ${Image} || './img/placeholder.png' }" width="100%" height="200px"></Image>
 												</VBox>
 												<OverflowToolbar design="Transparent">
 													<ToolbarSpacer/>

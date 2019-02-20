@@ -6,7 +6,7 @@ sap.ui.define([
 	return BaseController.extend("restaurants.ui5.controller.Restaurants.RestaurantTiles", {
 
 		onPressRestaurant: function(evt) {
-			var restaurant = evt.getSource().getBindingContext("restaurants").getObject();
+			var restaurant = evt.getSource().getBindingContext().getObject();
 			this.getRouter().navTo("Menu", {
 				RestaurantId: restaurant.RestaurantId
 			});

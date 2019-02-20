@@ -8,13 +8,13 @@
 			<f:formContainers>
 				<f:FormContainer>
 					<f:FormElement label="{i18n>Description}">
-						<Input fieldGroupIds="productFields" required="true" value="{path: 'restaurants>Description', type: 'sap.ui.model.type.String' }"/>
+						<Input fieldGroupIds="productFields" required="true" value="{path: 'Description', type: 'sap.ui.model.type.String' }"/>
 					</f:FormElement>
 					<f:FormElement label="{i18n>Price}">
-						<Input textAlign="End" fieldGroupIds="productFields" required="true" value="{path: 'restaurants>Price', type: '.types.floatType' }"/>
+						<Input textAlign="End" fieldGroupIds="productFields" required="true" value="{path: 'Price', type: '.types.floatType' }"/>
 					</f:FormElement>
 					<f:FormElement label="{i18n>NeedsPreparation}">
-						<Switch customTextOff="{i18n>OFF}" customTextOn="{i18n>ON}" state="{path:'restaurants>NeedPreparation',type:'.types.hanaBoolean'}"/>
+						<Switch customTextOff="{i18n>OFF}" customTextOn="{i18n>ON}" state="{path:'NeedPreparation',type:'.types.hanaBoolean'}"/>
 					</f:FormElement>
 				</f:FormContainer>
 			</f:formContainers>
@@ -24,13 +24,13 @@
 				<Toolbar>
 					<Title text="{i18n>Image}"/>
 					<ToolbarSpacer/>
-					<Button visible="{= Boolean(${restaurants>Image})}" type="Transparent" icon="sap-icon://delete" press="onDeleteImage"/>
-					<u:FileUploader change="onImageUpload" visible="{= !Boolean(${restaurants>Image})}" buttonText="{i18n>UploadImage}" icon="sap-icon://upload"
+					<Button visible="{= Boolean(${Image})}" type="Transparent" icon="sap-icon://delete" press="onDeleteImage"/>
+					<u:FileUploader change="onImageUpload" visible="{= !Boolean(${Image})}" buttonText="{i18n>UploadImage}" icon="sap-icon://upload"
 						buttonOnly="true"/>
 				</Toolbar>
 			</headerToolbar>
 			<HBox fitContainer="true" justifyContent="Center">
-				<Image src="{= ${restaurants>Image} || './img/placeholder.png' }" heigth="300px"/>
+				<Image src="{= ${Image} || './img/placeholder.png' }" heigth="300px"/>
 			</HBox>
 		</Panel>
 		<beginButton>

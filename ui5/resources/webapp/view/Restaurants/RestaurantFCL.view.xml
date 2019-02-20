@@ -2,7 +2,7 @@
 	xmlns:mvc="sap.ui.core.mvc" xmlns:tnt="sap.tnt" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f">
 	<tnt:ToolHeader >
 		<Button icon="sap-icon://home" type="Transparent" press="onPressHome"/>
-		<Title text="{restaurants>Name}"/>
+		<Title text="{Name}"/>
 		<ToolbarSpacer/>
 		<IconTabHeader id="iconTabHeader" select="onSelectTab">
 			<items>

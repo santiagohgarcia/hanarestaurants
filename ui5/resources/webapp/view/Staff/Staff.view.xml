@@ -1,4 +1,37 @@
 <mvc:View controllerName="restaurants.ui5.controller.Staff.Staff" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
-	displayBlock="true" xmlns="sap.m" height="100%">
-	<Text text="text"/>
+	displayBlock="true" xmlns="sap.m" height="100%" xmlns:ux="sap.uxap">
+	<SplitContainer id="employeesSplitCont" initialDetail="employee" initialMaster="employees">
+		<masterPages>
+			<Page id="employees" title="{i18n>Staff}" floatingFooter="true">
+				<List id="employeeList" mode="SingleSelectMaster" selectionChange="onSelectEmployee"
+					items="{path: 'Employees', events: {dataReceived: '.onEmployeesReceived'} }">
+					<items>
+						<ObjectListItem icon="sap-icon://employee" title="{Name} {LastName}"/>
+					</items>
+				</List>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://add" press="onAddEmployee" text="{i18n>AddEmployee}" type="Emphasized"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</masterPages>
+		<detailPages>
+			<ux:ObjectPageLayout id="employee" showTitleInHeaderContent="true" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
+				isChildPage="true" enableLazyLoading="true" showFooter="true">
+				<ux:headerTitle>
+					<ux:ObjectPageHeader objectTitle="{Name} {LastName}" objectImageURI="sap-icon://employee"
+						objectImageShape="Circle" isObjectIconAlwaysVisible="false" isObjectTitleAlwaysVisible="false" isObjectSubtitleAlwaysVisible="false"
+						isActionAreaAlwaysVisible="true">
+						<ux:actions>
+							<Button icon="sap-icon://edit" type="Transparent" press="onEditEmployee"/>
+							<Button icon="sap-icon://delete" type="Transparent" press="onDeleteEmployee"/>
+						</ux:actions>
+					</ux:ObjectPageHeader>
+				</ux:headerTitle>
+		
+			</ux:ObjectPageLayout>
+		</detailPages>
+	</SplitContainer>
 </mvc:View>

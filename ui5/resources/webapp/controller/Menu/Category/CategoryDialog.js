@@ -16,7 +16,7 @@ sap.ui.define([
 
 		getNewContext: function(ctx) {
 			if (ctx.RestaurantId || ctx["ParentCategory.CategoryId"]) {
-				ctx = this._dialog.getModel("restaurants").createEntry("/Categories", {
+				ctx = this._dialog.getModel().createEntry("/Categories", {
 					properties: {
 						RestaurantId: ctx.RestaurantId,
 						"ParentCategory.CategoryId": ctx["ParentCategory.CategoryId"]
@@ -31,7 +31,7 @@ sap.ui.define([
 		},
 
 		success: function() {
-			var categoryCtx = this._dialog.getBindingContext("restaurants");
+			var categoryCtx = this._dialog.getBindingContext();
 			BaseController.prototype.showMessageToast("CategorySaved", [categoryCtx.getProperty("CategoryId")]);
 			BaseDialog.prototype.success.apply(this);
 		}
