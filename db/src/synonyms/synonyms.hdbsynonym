@@ -1,0 +1,8 @@
+{
+  "restaurants.db.synonyms::Users": {
+    "target": {
+      "schema": "SYS",
+      "object": "USERS"
+    }
+  }
+}

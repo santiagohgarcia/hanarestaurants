@@ -5,7 +5,7 @@ sap.ui.define([
 
 	return Controller.extend("restaurants.ui5.controller.App", {
 		onInit: function() {
-			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+			//this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 		}
 	});
 });

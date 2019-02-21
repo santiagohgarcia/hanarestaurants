@@ -15,6 +15,7 @@ context RestaurantsContext {
             Name       : String(50);
             LastName   : String(50);
             UserId     : String(50);
+            Password   : String(50);
     }
 
     entity RestaurantTable {
