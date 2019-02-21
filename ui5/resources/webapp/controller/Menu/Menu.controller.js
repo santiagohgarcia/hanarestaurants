@@ -16,16 +16,23 @@ sap.ui.define([
 				categoryList = this.byId("categoryList");
 			if (data) {
 				var category = data.results[0];
-				this.byId("category").bindElement(
-					`/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
+				this._bindCategory(category);
 				categoryList.setSelectedItem(categoryList.getItems()[0]);
 			}
 		},
 
 		onSelectCategory: function(evt) {
 			var category = evt.getParameter("listItem").getBindingContext().getObject();
-			this.byId("category").bindElement(
-				`/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`);
+			this._bindCategory(category);
+		},
+
+		_bindCategory: function(category) {
+			this.byId("category").bindElement({
+				path: `/Categories(RestaurantId=${category.RestaurantId},CategoryId=${category.CategoryId})`,
+				parameters: {
+					expand: "Categories,Categories/Products"
+				}
+			});
 		},
 
 		//CATEGORIES

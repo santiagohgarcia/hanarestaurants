@@ -12,7 +12,7 @@
 				<footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button icon="sap-icon://add" press="onAddStaff" text="{i18n>AddEmployee}" type="Emphasized" />
+						<Button icon="sap-icon://add" press="onAddStaff" text="{i18n>AddEmployee}" type="Transparent" />
 					</Toolbar>
 				</footer>
 			</Page>
@@ -41,7 +41,7 @@
 				<ux:footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button icon="sap-icon://save" text="{i18n>Save}" type="Emphasized" press="onSave"/>
+						<Button icon="sap-icon://save" text="{i18n>Save}" type="Transparent" press="onSave"/>
 					</Toolbar>
 				</ux:footer>
 			</ux:ObjectPageLayout>

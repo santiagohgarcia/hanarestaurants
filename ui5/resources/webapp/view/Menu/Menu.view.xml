@@ -13,7 +13,7 @@
 				<footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button icon="sap-icon://add" press="onAddCategory" text="{i18n>AddCategory}" type="Emphasized"/>
+						<Button icon="sap-icon://add" press="onAddCategory" text="{i18n>AddCategory}" type="Transparent"/>
 					</Toolbar>
 				</footer>
 			</Page>
@@ -31,7 +31,7 @@
 							</Toolbar>
 						</ux:heading>
 						<ux:actions>
-							<ux:ObjectPageHeaderActionButton icon="sap-icon://add" type="Emphasized" press="onAddSubCategory" text="{i18n>AddSubCategory}"
+							<ux:ObjectPageHeaderActionButton icon="sap-icon://add" type="Transparent" press="onAddSubCategory" text="{i18n>AddSubCategory}"
 								hideText="false"/>
 						</ux:actions>
 					</ux:ObjectPageDynamicHeaderTitle>
@@ -47,7 +47,7 @@
 											<Button icon="sap-icon://edit" type="Transparent" press="onEditCategory"/>
 											<Button icon="sap-icon://delete" type="Transparent" press="onDeleteSubCategory"/>
 											<ToolbarSpacer/>
-											<Button icon="sap-icon://add" press="onAddProduct" text="{i18n>AddProduct}" type="Emphasized"/>
+											<Button icon="sap-icon://add" press="onAddProduct" text="{i18n>AddProduct}" type="Transparent"/>
 										</Toolbar>
 									</f:headerToolbar>
 									<f:customLayout>
