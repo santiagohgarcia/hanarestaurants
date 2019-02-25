@@ -19,6 +19,7 @@ sap.ui.define([
 			this.setModel(new JSONModel({
 				Edit: false
 			}), "view");
+			this.setModel(models.createRestaurantsModel(), "restaurants"); //Add same model with other name for double binding
 		},
 
 		_onStaffMatched: function() {
@@ -28,7 +29,7 @@ sap.ui.define([
 		onStaffReceived: function(evt) {
 			var data = evt.getParameter("data"),
 				staffList = this.byId("staffList");
-			if (data) {
+			if (data && !this.byId("staff").getElementBinding()) {
 				var firstStaff = staffList.getItems()[0];
 				staffList.setSelectedItem(firstStaff);
 				this._bindStaff(firstStaff.getBindingContext().getObject());
@@ -37,13 +38,16 @@ sap.ui.define([
 		},
 
 		_bindStaff: function(staff) {
-			this.byId("staff").unbindElement();
 			this.byId("staff").bindElement({
 				path: `/Staff(StaffId=${staff.StaffId})`,
 				parameters: {
 					expand: "Restaurants"
 				}
 			});
+		},
+
+		onSelectStaff: function(evt) {
+			this._bindStaff(evt.getParameter("listItem").getBindingContext().getObject());
 		},
 
 		onDeleteStaff: function(evt) {
@@ -56,15 +60,14 @@ sap.ui.define([
 			});
 		},
 
-		onEditProfile: function() {
-			this._setSectionBlock(true);
+		onEditStaff: function(evt) {
+			this._setSectionBlock(evt.getParameter("pressed"));
 		},
 
 		_setSectionBlock: function(edit) {
 			Fragment.load({
 				name: `restaurants.ui5.view.Staff.fragments.Staff${ edit ? "Change" : "Display" }`
 			}).then(form => this.byId("profileSection").destroyBlocks().addBlock(form));
-
 			this.getModel("view").setProperty("/Edit", edit);
 		},
 
@@ -84,18 +87,36 @@ sap.ui.define([
 		},
 
 		onAddStaff: function() {
-			var ctx = this.getModel().createEntry("/Staff");
-			this.byId("staff").setBindingContext(ctx);
+			var ctx = this.getModel().createEntry("/Staff", {
+				properties: {
+					"Name": "",
+					"LastName": "",
+					"UserId": "",
+					"Restaurants": []
+				}
+			});
+			this.byId("staff").unbindElement().setBindingContext(ctx);
 			this._setSectionBlock(true);
+		},
+
+		isRestaurantMember: function(restaurantId, staffRestaurants) {
+			return restaurantId && staffRestaurants &&
+				staffRestaurants.map(r => this.getModel().getObject("/" + r))
+				.some(r => r.RestaurantId === restaurantId);
 		},
 
 		onChangeRestaurantMember: function(evt) {
 			var staff = this.byId("staff").getBindingContext().getObject();
-			var restaurant = evt.getSource().getBindingContext().getObject();
+			var restaurant = evt.getSource().getBindingContext("restaurants").getObject();
 			models.updateRestaurantStaffRelation({
-				RestaurantId: restaurant.RestaurantId,
-				StaffId: staff.StaffId
-			}, evt.getParameter("state"));
+					RestaurantId: restaurant.RestaurantId,
+					StaffId: staff.StaffId,
+					Add: evt.getParameter("state")
+				} )
+				.then(() => {
+					this.showMessageToast("StaffUpdated", [staff.StaffId, staff.UserId]);
+				});
+
 		}
 
 	});

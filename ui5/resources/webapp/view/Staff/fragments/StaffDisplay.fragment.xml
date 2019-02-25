@@ -20,13 +20,20 @@
 				<f:FormElement label="{i18n>UserId}">
 					<Text text="{UserId}"/>
 				</f:FormElement>
-				<f:FormElement label="{i18n>Password}">
+				<!--	<f:FormElement label="{i18n>Password}">
 					<Text text="{= ${view>/ViewPassword} ? ${Password} : '********' }"/>
 					<ToggleButton icon="sap-icon://display" type="Transparent" pressed="{view>/ViewPassword}">
 						<layoutData>
 							<l:GridData span="XL2 L2 M3 S4"/>
 						</layoutData>
 					</ToggleButton>
+				</f:FormElement>-->
+				<f:FormElement >
+					<Button icon="sap-icon://reset" type="Transparent" text="{i18n>ResetPassword}" width="200px">
+						<layoutData>
+							<l:GridData indent="L3 M3 S6" span="L3 M3 S6"/>
+						</layoutData>
+					</Button>
 				</f:FormElement>
 			</f:FormContainer>
 		</f:formContainers>
