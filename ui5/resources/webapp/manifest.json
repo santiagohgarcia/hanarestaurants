@@ -81,16 +81,20 @@
 			},
 			"routes": [{
 				"name": "AdminHome",
-				"pattern": "/",
+				"pattern": "",
 				"target": "adminHome"
 			}, {
 				"name": "Menu",
-				"pattern": "/Restaurant/{RestaurantId}/Menu",
+				"pattern": "Restaurant/{RestaurantId}/Menu",
 				"target": "restaurantFCL"
 			}, {
 				"name": "Staff",
-				"pattern": "/Staff",
+				"pattern": "Staff",
 				"target": "staff"
+			}, {
+				"name": "NewOrder",
+				"pattern": "Restaurant/{RestaurantId}/NewOrder",
+				"target": "newOrder"
 			}],
 			"targets": {
 				"adminHome": {
@@ -106,6 +110,11 @@
 				"staff": {
 					"viewType": "XML",
 					"viewName": "Staff.Staff",
+					"viewLevel": 1
+				},
+				"newOrder": {
+					"viewType": "XML",
+					"viewName": "Order.NewOrder",
 					"viewLevel": 1
 				}
 			}

@@ -80,3 +80,12 @@
     bottom: 48px;
 }
 /* END FOOTER */
+
+
+.productNumber .sapMObjectNumberText {
+	font-size: 1.312rem;
+}
+
+.sapMSplitContainerMaster {
+	width: 1000px;
+}

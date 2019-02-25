@@ -38,6 +38,15 @@ sap.ui.define([
 			});
 		},
 
+		getNewOrderId: function(restaurant) {
+			return jQuery.ajax({
+				type: "GET",
+				contentType: 'application/json',
+				url: baseURl + `/xsjs/sequences/NewOrderId.xsjs?RestaurantId=${restaurant.RestaurantId}`,
+				dataType: "json"
+			});
+		},
+
 		getBase64: function(file) {
 			return new Promise((resolve, reject) => {
 				const reader = new FileReader();

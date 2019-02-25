@@ -20,53 +20,38 @@
 		</masterPages>
 		<detailPages>
 			<ux:ObjectPageLayout id="category" showTitleInHeaderContent="true" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
-				isChildPage="true" enableLazyLoading="true" showFooter="true" sections="{Categories}">
+				isChildPage="true" enableLazyLoading="true" showFooter="true">
 				<ux:headerTitle>
 					<ux:ObjectPageDynamicHeaderTitle >
 						<ux:heading>
 							<Toolbar style="Clear">
 								<Title text="{Description}"/>
-								<Button icon="sap-icon://edit" type="Transparent" press="onEditCategory"/>
-								<Button icon="sap-icon://delete" type="Transparent" press="onDeleteSubCategory"/>
 							</Toolbar>
 						</ux:heading>
 						<ux:actions>
-							<ux:ObjectPageHeaderActionButton icon="sap-icon://add" type="Transparent" press="onAddSubCategory" text="{i18n>AddSubCategory}"
-								hideText="false"/>
+							<Button icon="sap-icon://edit" type="Transparent" press="onEditCategory"/>
+							<Button icon="sap-icon://delete" type="Transparent" press="onDeleteCategory"/>
 						</ux:actions>
 					</ux:ObjectPageDynamicHeaderTitle>
 				</ux:headerTitle>
 				<ux:sections>
 					<ux:ObjectPageSection title="{Description}" showTitle="false" titleUppercase="false" titleLevel="H6">
 						<ux:subSections>
-							<ux:ObjectPageSubSection title="{Description}">
+							<ux:ObjectPageSubSection title="{i18n>Products}">
 								<f:GridList items="{Products}" class="sapUxAPObjectPageSubSectionAlignContent">
-									<f:headerToolbar>
-										<Toolbar style="Clear">
-											<Title text="{Description}"/>
-											<Button icon="sap-icon://edit" type="Transparent" press="onEditCategory"/>
-											<Button icon="sap-icon://delete" type="Transparent" press="onDeleteSubCategory"/>
-											<ToolbarSpacer/>
-											<Button icon="sap-icon://add" press="onAddProduct" text="{i18n>AddProduct}" type="Transparent"/>
-										</Toolbar>
-									</f:headerToolbar>
 									<f:customLayout>
 										<grid:GridBoxLayout boxWidth="15rem"/>
 									</f:customLayout>
 									<f:items>
 										<CustomListItem>
 											<VBox justifyContent="SpaceBetween">
-												<VBox>
-													<HBox justifyContent="SpaceBetween" class="sapUiSmallMargin">
-														<Title text="{Description}" wrapping="true"/>
-														<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS"/>
-													</HBox>
-													<Image src="{= ${Image} || './img/placeholder.png' }" width="100%" height="200px"></Image>
-												</VBox>
+												<ObjectIdentifier title="{Description}" class="sapUiSmallMargin"/>
+												<Image src="{= ${Image} || './img/placeholder.png' }" width="100%" height="200px"></Image>
 												<OverflowToolbar design="Transparent">
-													<ToolbarSpacer/>
 													<Button icon="sap-icon://edit" type="Transparent" press="onEditProduct"/>
 													<Button icon="sap-icon://delete" type="Transparent" press="onDeleteProduct"/>
+													<ToolbarSpacer/>
+													<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="sapUiTinyMarginEnd productNumber"/>
 												</OverflowToolbar>
 											</VBox>
 										</CustomListItem>
@@ -76,6 +61,12 @@
 						</ux:subSections>
 					</ux:ObjectPageSection>
 				</ux:sections>
+				<ux:footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://add" press="onAddProduct" text="{i18n>AddProduct}" type="Transparent"/>
+					</Toolbar>
+				</ux:footer>
 			</ux:ObjectPageLayout>
 		</detailPages>
 	</SplitContainer>

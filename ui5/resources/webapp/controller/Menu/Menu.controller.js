@@ -43,14 +43,6 @@ sap.ui.define([
 			});
 		},
 
-		onAddSubCategory: function(evt) {
-			var parentCategory = evt.getSource().getBindingContext().getObject();
-			this.openCategoryDialog({
-				RestaurantId: parentCategory.RestaurantId,
-				"ParentCategory.CategoryId": parentCategory.CategoryId
-			});
-		},
-
 		onEditCategory: function(evt) {
 			var categoryCtx = evt.getSource().getBindingContext();
 			this.openCategoryDialog(categoryCtx);
@@ -58,16 +50,6 @@ sap.ui.define([
 
 		onDeleteCategory: function(evt) {
 			var categoryCtx = evt.getParameter("listItem").getBindingContext();
-			var categoryId = categoryCtx.getProperty("CategoryId");
-			this.getModel().remove(categoryCtx.getPath(), {
-				success: function() {
-					this.showMessageToast("CategoryDeleted", [categoryId]);
-				}.bind(this)
-			});
-		},
-
-		onDeleteSubCategory: function(evt) {
-			var categoryCtx = evt.getSource.getBindingContext();
 			var categoryId = categoryCtx.getProperty("CategoryId");
 			this.getModel().remove(categoryCtx.getPath(), {
 				success: function() {
