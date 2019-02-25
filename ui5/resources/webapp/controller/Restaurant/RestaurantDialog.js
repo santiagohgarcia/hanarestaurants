@@ -4,7 +4,7 @@ sap.ui.define([
 ], function(BaseDialog, BaseController) {
 	"use strict";
 
-	return BaseDialog.extend("restaurants.ui5.controller.Restaurants.RestaurantDialog", {
+	return BaseDialog.extend("restaurants.ui5.controller.Restaurant.RestaurantDialog", {
 
         
         getDialogId: function() {
@@ -12,16 +12,12 @@ sap.ui.define([
 		},
 
 		getFragmentId: function() {
-			return "restaurants.ui5.view.Restaurants.RestaurantDialog";
+			return "restaurants.ui5.view.Restaurant.RestaurantDialog";
 		},
 
 		getNewContext: function(ctx) {
             if (!ctx) {
-				ctx = this._dialog.getModel().createEntry("/Restaurants", {
-					properties: {
-						RestaurantId: -1
-					}
-				});
+				ctx = this._dialog.getModel().createEntry("/Restaurants");
 			}
 			return ctx;
 		},

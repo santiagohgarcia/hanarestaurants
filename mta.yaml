@@ -10,6 +10,11 @@ modules:
   - name: js
     type: nodejs
     path: js
+    parameters:
+      host: js
+      register-service-url: true
+      service-name: js
+      service-url: '${default-url}'
     provides:
       - name: js_api
         properties:
@@ -17,22 +22,24 @@ modules:
     requires:
       - name: hdi_db
       - name: db
-
-  
-
-
-  
-
-
+      - name: uaa
   - name: ui5
     type: html5
     path: ui5
-
-
-  
-
+    requires:
+      - name: uaa
+      - name: js_api
+        group: destinations
+        properties:
+          name: js_api
+          url: '~{url}'
+          forwardAuthToken: true
 resources:
   - name: hdi_db
     properties:
       hdi-container-name: '${service-name}'
     type: com.sap.xs.hdi-container
+  - name: uaa
+    type: com.sap.xs.uaa-space
+    parameters:
+      path: ./xs-security.json

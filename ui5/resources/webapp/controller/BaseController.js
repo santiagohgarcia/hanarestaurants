@@ -6,6 +6,10 @@ sap.ui.define([
 	"use strict";
 	return Controller.extend("restaurants.ui5.controller.BaseController", {
 
+		onPressHome: function() {
+			this.getRouter().navTo("AdminHome");
+		},
+
 		getRouter: function() {
 			return sap.ui.core.UIComponent.getRouterFor(this);
 		},

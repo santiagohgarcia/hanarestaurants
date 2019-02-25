@@ -5,8 +5,8 @@ service {
 				"RestaurantToOrders"             as "Orders",
 				"RestaurantToCategories" as "Categories",
 				"RestaurantToProducts" as "Products",
-				"RestaurantToEmployees" as "Employees")
-	  create events( before "xsjslib:Restaurant.xsjslib::BeforeCreate" );
+				"RestaurantToStaff" as "Staff")
+	  create events( before "xsjslib:Restaurant.xsjslib::BeforeCreate");
 	
     association "RestaurantToTables"
 	principal "Restaurants"("RestaurantId")
@@ -50,23 +50,25 @@ service {
 	dependent "Categories"("RestaurantId")
 	multiplicity "*";
 	
-	association "RestaurantToEmployees"
-	principal "Restaurants"("RestaurantId")
-	multiplicity "1"
-	dependent "Employees"("Restaurant.RestaurantId")
-	multiplicity "*";
+	"restaurants.db::RestaurantsContext.RestaurantStaff" 
+    as "RestaurantStaff";
 	
-	"restaurants.db::RestaurantsContext.Employee" 
-    as "Employees"
-    navigates ("EmployeeToRestaurant"            as "Restaurant")
-    create events (before "xsjslib:Employee.xsjslib::BeforeCreate");
+	"restaurants.db::RestaurantsContext.Staff" 
+    as "Staff"
+    navigates ("StaffToRestaurant"            as "Restaurants");
 	
-	association "EmployeeToRestaurant"
-	principal "Employees"("Restaurant.RestaurantId")
-	multiplicity "1"
-	dependent "Restaurants"("RestaurantId")
-	multiplicity "1";
-	
+	 association "RestaurantToStaff" 
+        principal "Restaurants"("RestaurantId") multiplicity "*" 
+        dependent "Staff"("StaffId") multiplicity "*"
+        over "restaurants.db::RestaurantsContext.RestaurantStaff" principal ("Restaurant.RestaurantId") dependent ("Staff.StaffId");
+        
+	association "StaffToRestaurant" 
+        principal "Staff"("StaffId") multiplicity "*" 
+        dependent "Restaurants"("RestaurantId") multiplicity "*"
+        over "restaurants.db::RestaurantsContext.RestaurantStaff" principal ("Staff.StaffId") dependent ("Restaurant.RestaurantId");
+        
+      
+
 	
 	"restaurants.db::RestaurantsContext.RestaurantTable" 
 	as "Tables" navigates ("TableToOrders"     as "Orders")

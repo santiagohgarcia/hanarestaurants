@@ -12,9 +12,13 @@ sap.ui.define([
 			});
 		},
 
+		onPressStaff: function() {
+			this.getRouter().navTo("Staff");
+		},
+
 		onAddRestaurant: function() {
 			this.openRestaurantDialog();
 		}
-		
+
 	});
 });

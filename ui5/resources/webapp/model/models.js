@@ -4,7 +4,7 @@ sap.ui.define([
 	"sap/ui/model/odata/v2/ODataModel",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator"
-], function(JSONModel, Device, ODataModel, Filter, FO) {
+], function(JSONModel, Device, ODataModel) {
 	"use strict";
 
 	return {
@@ -20,31 +20,20 @@ sap.ui.define([
 		},
 
 		createRestaurantsModel: function() {
-			return new ODataModel("https://hxehost:51030/xsodata/Restaurants.xsodata", {
+			return new ODataModel("/xsodata/Restaurants.xsodata", {
 				defaultBindingMode: sap.ui.model.BindingMode.TwoWay,
 				defaultUpdateMethod: sap.ui.model.odata.UpdateMethod.Put
 			});
 		},
 
-		getNewProductId: function() {
+		updateRestaurantStaffRelation: function(staffRestaurantRelation,add) {
 			return jQuery.ajax({
-				type: "GET",
-				url: `https://hxehost:51030/xsjs/sequences/NewProductId.xsjs`,
-				contentType: "application/json",
+				type: add ? "POST" : "DELETE",
+				data: JSON.stringify(staffRestaurantRelation),
+				contentType: 'application/json',
+				url: `/xsjs/functions/UpdateRestaurantStaffRelation.xsjs`,
 				dataType: "json"
 			});
-		},
-
-		getProductImageUploadUrl: function(productId) {
-			return `https://hxehost:51030/xsjs/functions/NewProductId.xsjs?ProductId=${productId}`;
-		},
-
-		getProductImageDownloadUrl: function(image) {
-			if (image.ProductId && image.ImageId) {
-				return `https://hxehost:51030/xsjs/functions/GetProductImage.xsjs?ProductId=${image.ProductId}&ImageId=${image.ImageId}`;
-			} else {
-				return "sap-icon://product";
-			}
 		},
 
 		getBase64: function(file) {

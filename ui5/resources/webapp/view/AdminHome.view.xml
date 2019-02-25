@@ -1,0 +1,37 @@
+<mvc:View controllerName="restaurants.ui5.controller.AdminHome" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:tnt="sap.tnt" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f">
+	<tnt:ToolHeader >
+		<ToolbarSpacer/>
+		<Title text="{i18n>title}"/>
+		<ToolbarSpacer/>
+		<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
+	</tnt:ToolHeader>
+	<Page showHeader="false" class="sapUiContentPadding">
+		<OverflowToolbar style="Clear">
+			<Title titleStyle="H2" text="{i18n>Restaurants}" class="sapUiTinyMarginBegin"/>
+			<ToolbarSpacer/>
+			<Button icon="sap-icon://add" press="onAddRestaurant" type="Transparent"/>
+		</OverflowToolbar>
+		<!--	<f:GridList items="{/Restaurants}">
+			<ObjectListItem title="{Name}" press="onPressRestaurant"/>
+		</f:GridList>-->
+		<HBox items="{/Restaurants}">
+			<items>
+				<GenericTile class="sapUiSmallMarginBeginEnd" header="{Name}" press="onPressRestaurant"></GenericTile>
+			</items>
+		</HBox>
+		<OverflowToolbar style="Clear">
+			<Title titleStyle="H2" text="{i18n>Administration}" class="sapUiTinyMarginBegin"/>
+			<ToolbarSpacer/>
+		</OverflowToolbar>
+		<HBox >
+			<items>
+				<GenericTile  class="sapUiSmallMarginBeginEnd" header="{i18n>Staff}" subheader="{i18n>AdminYourStaff}" press="onPressStaff">
+					<TileContent>
+						<NumericContent value="{= ${/Employees}.length }" icon="sap-icon://group"/>
+					</TileContent>
+				</GenericTile>
+			</items>
+		</HBox>
+	</Page>
+</mvc:View>

@@ -80,27 +80,32 @@
 				"controlId": "idAppControl"
 			},
 			"routes": [{
-				"name": "RestaurantTiles",
+				"name": "AdminHome",
 				"pattern": "/",
-				"target": "restaurantTiles"
+				"target": "adminHome"
 			}, {
 				"name": "Menu",
 				"pattern": "/Restaurant/{RestaurantId}/Menu",
 				"target": "restaurantFCL"
 			}, {
 				"name": "Staff",
-				"pattern": "/Restaurant/{RestaurantId}/Staff",
-				"target": "restaurantFCL"
+				"pattern": "/Staff",
+				"target": "staff"
 			}],
 			"targets": {
-				"restaurantTiles": {
+				"adminHome": {
 					"viewType": "XML",
-					"viewName": "Restaurants.RestaurantTiles",
+					"viewName": "AdminHome",
 					"viewLevel": 0
 				},
 				"restaurantFCL": {
 					"viewType": "XML",
-					"viewName": "Restaurants.RestaurantFCL",
+					"viewName": "Restaurant.RestaurantFCL",
+					"viewLevel": 1
+				},
+				"staff": {
+					"viewType": "XML",
+					"viewName": "Staff.Staff",
 					"viewLevel": 1
 				}
 			}

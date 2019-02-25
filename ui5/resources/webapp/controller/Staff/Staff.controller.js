@@ -16,26 +16,39 @@ sap.ui.define([
 
 		onInit: function() {
 			this.getRouter().getRoute("Staff").attachMatched(this._onStaffMatched.bind(this));
-			this.setModel(new JSONModel(), "view");
+			this.setModel(new JSONModel({
+				Edit: false
+			}), "view");
 		},
 
 		_onStaffMatched: function() {
 			this._setSectionBlock(false);
 		},
 
-		onEmployeesReceived: function(evt) {
+		onStaffReceived: function(evt) {
 			var data = evt.getParameter("data"),
-				employeeList = this.byId("employeeList");
+				staffList = this.byId("staffList");
 			if (data) {
-				var firstEmployee = employeeList.getItems()[0];
-				employeeList.setSelectedItem(firstEmployee);
-				this.byId("employee").setBindingContext(firstEmployee.getBindingContext());
+				var firstStaff = staffList.getItems()[0];
+				staffList.setSelectedItem(firstStaff);
+				this._bindStaff(firstStaff.getBindingContext().getObject());
+				this.byId("staffList").getBinding("items").detachDataReceived(this.onStaffReceived);
 			}
 		},
 
-		onDeleteEmployee: function(evt) {
+		_bindStaff: function(staff) {
+			this.byId("staff").unbindElement();
+			this.byId("staff").bindElement({
+				path: `/Staff(StaffId=${staff.StaffId})`,
+				parameters: {
+					expand: "Restaurants"
+				}
+			});
+		},
+
+		onDeleteStaff: function(evt) {
 			var staffCtx = evt.getSource().getBindingContext();
-			var staffId = staffCtx.getProperty("EmployeeId");
+			var staffId = staffCtx.getProperty("StaffId");
 			this.getModel().remove(staffCtx.getPath(), {
 				success: function() {
 					this.showMessageToast("StaffDeleted", [staffId]);
@@ -43,36 +56,46 @@ sap.ui.define([
 			});
 		},
 
-		onEditEmployee: function(evt) {
-			this._setSectionBlock(evt.getSource().getPressed());
+		onEditProfile: function() {
+			this._setSectionBlock(true);
 		},
 
 		_setSectionBlock: function(edit) {
-			this.getModel("view").setProperty("/Edit", edit);
 			Fragment.load({
 				name: `restaurants.ui5.view.Staff.fragments.Staff${ edit ? "Change" : "Display" }`
 			}).then(form => this.byId("profileSection").destroyBlocks().addBlock(form));
+
+			this.getModel("view").setProperty("/Edit", edit);
 		},
 
 		onSave: function() {
 			var model = this.getModel();
 			if (Validator.isValid("staffFields", this.getView()) && model.hasPendingChanges()) {
 				model.submitChanges({
-					success: this.success.bind(this)
+					success: this._success.bind(this)
 				});
 			}
 		},
 
-		success: function() {
-			var staffCtx = this.getView().getBindingContext();
-			this.showMessageToast("StaffUpdated", [staffCtx.getProperty("EmployeeId")]);
+		_success: function() {
+			var staff = this.byId("staff").getBindingContext().getObject();
+			this.showMessageToast("StaffUpdated", [staff.StaffId, staff.UserId]);
 			this._setSectionBlock(false);
 		},
 
 		onAddStaff: function() {
-			var ctx = this.getModel().createEntry("/Employees");
-			this.byId("employee").setBindingContext(ctx);
+			var ctx = this.getModel().createEntry("/Staff");
+			this.byId("staff").setBindingContext(ctx);
 			this._setSectionBlock(true);
+		},
+
+		onChangeRestaurantMember: function(evt) {
+			var staff = this.byId("staff").getBindingContext().getObject();
+			var restaurant = evt.getSource().getBindingContext().getObject();
+			models.updateRestaurantStaffRelation({
+				RestaurantId: restaurant.RestaurantId,
+				StaffId: staff.StaffId
+			}, evt.getParameter("state"));
 		}
 
 	});

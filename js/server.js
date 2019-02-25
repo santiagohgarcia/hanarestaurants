@@ -3,7 +3,6 @@
 
 var xsjs  = require("@sap/xsjs");
 var xsenv = require("@sap/xsenv");
-var hdbPromisified = require("sap-hdbext-promisfied");
 
 var port  = process.env.PORT || 3000;
 

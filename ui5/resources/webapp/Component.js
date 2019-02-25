@@ -2,7 +2,7 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
 	"restaurants/ui5/model/models",
-	"restaurants/ui5/controller/Restaurants/RestaurantDialog",
+	"restaurants/ui5/controller/Restaurant/RestaurantDialog",
 	"restaurants/ui5/controller/Menu/Category/CategoryDialog",
 	"restaurants/ui5/controller/Menu/Product/ProductDialog"
 ], function(UIComponent, Device, models, RestaurantDialog, CategoryDialog, ProductDialog) {

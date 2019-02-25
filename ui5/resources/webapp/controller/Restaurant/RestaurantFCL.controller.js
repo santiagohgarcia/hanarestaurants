@@ -3,7 +3,7 @@ sap.ui.define([
 ], function(BaseController) {
 	"use strict";
 
-	return BaseController.extend("restaurants.ui5.controller.Restaurants.RestaurantFCL", {
+	return BaseController.extend("restaurants.ui5.controller.Restaurant.RestaurantFCL", {
 
 		onInit: function() {
 			this.getRouter().getRoute("Menu").attachMatched(this._attachMenuMatched.bind(this));
@@ -33,10 +33,6 @@ sap.ui.define([
 			this.getView().bindElement({
 				path: `/Restaurants(RestaurantId=${args.RestaurantId})`
 			});
-		},
-
-		onPressHome: function() {
-			this.getRouter().navTo("RestaurantTiles");
 		},
 
 		onSelectTab: function(evt) {

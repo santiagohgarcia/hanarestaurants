@@ -21,7 +21,7 @@
 					<core:Title text="{i18n>LoginData}"/>
 				</f:title>
 				<f:FormElement label="{i18n>UserId}">
-					<Input fieldGroupIds="staffFields" editable="{= !Boolean(${EmployeeId}) }" valueLiveUpdate="true" required="true"
+					<Input fieldGroupIds="staffFields" editable="{= !Boolean(${StaffId}) }" valueLiveUpdate="true" required="true"
 						value="{path:'UserId',type:'sap.ui.model.type.String'}"/>
 				</f:FormElement>
 				<f:FormElement label="{i18n>Password}">
