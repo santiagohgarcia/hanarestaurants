@@ -1,7 +1,7 @@
 var conn = $.db.getConnection();
 var restaurantStaffRelation = JSON.parse($.request.body.asString());
 
-if ($.request.method === "POST") {
+if (restaurantStaffRelation.Add) {
 	var insertRestaurantStaffStmt = conn.prepareStatement(
 		`INSERT INTO "restaurants.db::RestaurantsContext.RestaurantStaff" values (?,?)`
 	);
@@ -20,5 +20,5 @@ if ($.request.method === "POST") {
 
 conn.commit();
 
-//$.response.contentType = "text/json";
-//$.response.setBody(JSON.stringify(staff));
+$.response.contentType = "text/json";
+$.response.setBody(JSON.stringify(restaurantStaffRelation));

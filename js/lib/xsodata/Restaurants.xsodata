@@ -55,7 +55,8 @@ service {
 	
 	"restaurants.db::RestaurantsContext.Staff" 
     as "Staff"
-    navigates ("StaffToRestaurant"            as "Restaurants");
+    navigates ("StaffToRestaurant"            as "Restaurants")
+    create events (before "xsjslib:Staff.xsjslib::BeforeCreate");
 	
 	 association "RestaurantToStaff" 
         principal "Restaurants"("RestaurantId") multiplicity "*" 
@@ -67,8 +68,6 @@ service {
         dependent "Restaurants"("RestaurantId") multiplicity "*"
         over "restaurants.db::RestaurantsContext.RestaurantStaff" principal ("Staff.StaffId") dependent ("Restaurant.RestaurantId");
         
-      
-
 	
 	"restaurants.db::RestaurantsContext.RestaurantTable" 
 	as "Tables" navigates ("TableToOrders"     as "Orders")
