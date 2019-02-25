@@ -1,12 +1,14 @@
-var conn = $.db.getConnection();
+var conn = $.db.getConnection(),
+	restaurantId = $.request.parameters.get("RestaurantId");
 
-var stStaffId = conn.prepareStatement(
-	`SELECT (IFNULL(MAX("OrderId"), 0) + 1) as "StaffId" 
-		FROM "restaurants.db::RestaurantsContext.Staff"`
+var stOrderId = conn.prepareStatement(
+	`SELECT (IFNULL(MAX("RestaurantOrderId"), 0) + 1) as "RestaurantOrderId" 
+		FROM "restaurants.db::RestaurantsContext.RestaurantOrder" WHERE "RestaurantId" = ?`
 );
-var resultSet = stStaffId.executeQuery();
+stOrderId.setInteger(1, Number(restaurantId));
+var resultSet = stOrderId.executeQuery();
 
 $.response.contentType = "text/json";
 $.response.setBody(JSON.stringify({
-	StaffId: resultSet._rows[0].StaffId
+	RestaurantOrderId: resultSet._rows[0].RestaurantOrderId
 }));
