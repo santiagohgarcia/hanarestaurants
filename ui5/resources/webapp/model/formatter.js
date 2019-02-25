@@ -3,6 +3,9 @@ sap.ui.define(["sap/ui/core/ValueState"], function(ValueState) {
 
 	return {
 
+		getLength: function(list) {
+			return list && list.length;
+		}
 
 	};
 });

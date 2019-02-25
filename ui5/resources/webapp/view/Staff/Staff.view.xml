@@ -10,7 +10,7 @@
 	</tnt:ToolHeader>
 	<SplitContainer id="staffSplitCont" initialDetail="staff" initialMaster="staffMaster">
 		<masterPages>
-			<Page id="staffMaster" title="{i18n>Staff}" floatingFooter="true" showFooter="{= !${view>/Edit}}">
+			<Page id="staffMaster" title="{i18n>Staff}" floatingFooter="true" showFooter="{= !${view>/Edit} }">
 				<List id="staffList" mode="SingleSelectMaster" selectionChange="onSelectStaff"
 					items="{path: '/Staff', events: {dataReceived: '.onStaffReceived'} }">
 					<items>
@@ -37,6 +37,7 @@
 							</HBox>
 						</ux:heading>
 						<ux:actions>
+							<ToggleButton icon="sap-icon://edit" type="Transparent" press="onEditStaff" pressed="{view>/Edit}"/>
 							<Button icon="sap-icon://delete" type="Transparent" press="onDeleteStaff"/>
 						</ux:actions>
 					</ux:ObjectPageDynamicHeaderTitle>
@@ -44,24 +45,21 @@
 				<ux:sections>
 					<ux:ObjectPageSection showTitle="false" titleUppercase="false" titleLevel="H6">
 						<ux:subSections>
-							<ux:ObjectPageSubSection id="profileSection" title="{i18n>Profile}">
-								<ux:actions>
-									<Button visible="{= !${view>/Edit} }" icon="sap-icon://edit" type="Transparent" press="onEditProfile"/>
-									<Button visible="{view>/Edit}" icon="sap-icon://save" text="{i18n>Save}" type="Emphasized" press="onSave"/>
-								</ux:actions>
+							<ux:ObjectPageSubSection id="profileSection">
 								<core:Fragment fragmentName="restaurants.ui5.view.Staff.fragments.StaffDisplay" type="XML"/>
 							</ux:ObjectPageSubSection>
-							<ux:ObjectPageSubSection title="{i18n>Restaurants}">
-								<f:GridList id="restaurantList" items="{/Restaurants}">
+							<ux:ObjectPageSubSection title="{i18n>Restaurants}" visible="{= Boolean(${StaffId}) }">
+								<f:GridList id="restaurantList" items="{restaurants>/Restaurants}">
 									<f:customLayout>
 										<grid:GridBoxLayout boxWidth="17rem"/>
 									</f:customLayout>
 									<CustomListItem>
 										<VBox class="sapUiSmallMargin">
-											<Title text="{Name}"/>
+											<Title text="{restaurants>Name}"/>
 											<HBox fitContainer="true" justifyContent="End" alignItems="Center">
 												<Text text="{i18n>Member}" class="sapUiSmallMarginEnd"/>
-												<Switch customTextOff="{i18n>NO}" customTextOn="{i18n>YES}" change="onChangeRestaurantMember"/>
+												<Switch customTextOff="{i18n>NO}" customTextOn="{i18n>YES}" change="onChangeRestaurantMember"
+													state="{parts:[{path:'restaurants>RestaurantId'},{path:'Restaurants'}],formatter: '.isRestaurantMember'}"/>
 											</HBox>
 										</VBox>
 									</CustomListItem>
@@ -73,6 +71,7 @@
 				<ux:footer>
 					<Toolbar>
 						<ToolbarSpacer/>
+						<Button visible="{view>/Edit}" icon="sap-icon://save" text="{i18n>Save}" type="Emphasized" press="onSave"/>
 					</Toolbar>
 				</ux:footer>
 			</ux:ObjectPageLayout>

@@ -7,6 +7,8 @@ sap.ui.define([
 ], function(JSONModel, Device, ODataModel) {
 	"use strict";
 
+	var baseURl = "https://hxehost:51030";
+
 	return {
 
 		createDeviceModel: function() {
@@ -20,18 +22,18 @@ sap.ui.define([
 		},
 
 		createRestaurantsModel: function() {
-			return new ODataModel("/xsodata/Restaurants.xsodata", {
+			return new ODataModel(baseURl + "/xsodata/Restaurants.xsodata", {
 				defaultBindingMode: sap.ui.model.BindingMode.TwoWay,
 				defaultUpdateMethod: sap.ui.model.odata.UpdateMethod.Put
 			});
 		},
 
-		updateRestaurantStaffRelation: function(staffRestaurantRelation,add) {
+		updateRestaurantStaffRelation: function(staffRestaurantRelation) {
 			return jQuery.ajax({
-				type: add ? "POST" : "DELETE",
+				type: "POST",
 				data: JSON.stringify(staffRestaurantRelation),
 				contentType: 'application/json',
-				url: `/xsjs/functions/UpdateRestaurantStaffRelation.xsjs`,
+				url: baseURl + `/xsjs/functions/UpdateRestaurantStaffRelation.xsjs`,
 				dataType: "json"
 			});
 		},
