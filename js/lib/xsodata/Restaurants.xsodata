@@ -1,18 +1,11 @@
 service {
     "restaurants.db::RestaurantsContext.Restaurant" 
 	  as "Restaurants"
-	  navigates ("RestaurantToTables"            as "Tables", 
-				"RestaurantToOrders"             as "Orders",
+	  navigates ("RestaurantToOrders"             as "Orders",
 				"RestaurantToCategories" as "Categories",
-				"RestaurantToProducts" as "Products",
 				"RestaurantToStaff" as "Staff")
 	  create events( before "xsjslib:Restaurant.xsjslib::BeforeCreate");
-	
-    association "RestaurantToTables"
-	principal "Restaurants"("RestaurantId")
-	multiplicity "1"
-	dependent "Tables"("RestaurantId")
-	multiplicity "*";
+
 	
 	association "RestaurantToProducts"
 	principal "Restaurants"("RestaurantId")
@@ -37,12 +30,7 @@ service {
 	multiplicity "1"
 	dependent "Orders"("RestaurantId")
 	multiplicity "*";
-	
-	 association "RestaurantToTables"
-	principal "Restaurants"("RestaurantId")
-	multiplicity "1"
-	dependent "Tables"("RestaurantId")
-	multiplicity "*";
+
 	
 	association "RestaurantToCategories"
 	principal "Restaurants"("RestaurantId")
@@ -68,16 +56,7 @@ service {
         dependent "Restaurants"("RestaurantId") multiplicity "*"
         over "restaurants.db::RestaurantsContext.RestaurantStaff" principal ("Staff.StaffId") dependent ("Restaurant.RestaurantId");
         
-	
-	"restaurants.db::RestaurantsContext.RestaurantTable" 
-	as "Tables" navigates ("TableToOrders"     as "Orders")
-	create events (before "xsjslib:RestaurantTable.xsjslib::BeforeCreate");
-	
-	association "TableToOrders"
-	principal "Tables"("RestaurantId","RestaurantTableId")
-	multiplicity "1"
-	dependent "Orders"("RestaurantId","RestaurantTableId")
-	multiplicity "*";
+
 	
 	"restaurants.db::RestaurantsContext.RestaurantOrder" as "Orders" 
 	navigates ("OrderToStatus" as "Status",
@@ -98,20 +77,20 @@ service {
 	multiplicity "1";
 	
 	association "OrderToOrderItems"
-	principal "Orders"("RestaurantId","RestaurantTableId","RestaurantOrderId")
+	principal "Orders"("RestaurantId","RestaurantOrderId")
 	multiplicity "1"
-	dependent "OrderItems"("RestaurantId","RestaurantTableId","RestaurantOrderId")
+	dependent "OrderItems"("RestaurantId","RestaurantOrderId")
 	multiplicity "*";
 	
 	"restaurants.db::RestaurantsContext.RestaurantOrderItem" as "OrderItems" 
 	navigates ("OrderItemToOrder" as "Order",
 	"OrderItemToProduct" as "OrderProduct")
-	create events (before "xsjslib:Restaurants.xsjslib::RestaurantOrderItemBeforeCreate");
+	create events (before "xsjslib:RestaurantOrderItem.xsjslib::BeforeCreate");
 
 	association "OrderItemToOrder"
-	principal "OrderItems"("RestaurantId","RestaurantTableId","RestaurantOrderId")
+	principal "OrderItems"("RestaurantId","RestaurantOrderId")
 	multiplicity "1"
-	dependent "Orders"("RestaurantId","RestaurantTableId","RestaurantOrderId")
+	dependent "Orders"("RestaurantId","RestaurantOrderId")
 	multiplicity "1";
 	
 	association "OrderItemToProduct"
