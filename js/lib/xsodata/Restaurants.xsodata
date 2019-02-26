@@ -61,7 +61,7 @@ service {
 	"restaurants.db::RestaurantsContext.RestaurantOrder" as "Orders" 
 	navigates ("OrderToStatus" as "Status",
 	"OrderToCustomer" as "Customer",
-	"OrderToOrderItems" as "Items")
+	"OrderToOrderItems" as "Items") 
 	create events (before "xsjslib:RestaurantOrder.xsjslib::BeforeCreate");
 	
 	association "OrderToStatus"
@@ -98,7 +98,6 @@ service {
 	multiplicity "1"
 	dependent "Products"("ProductId")
 	multiplicity "1";
-	
 	
 	"restaurants.db::RestaurantsContext.Product" 
 	as "Products" navigates ("ProductToCategory" as "Category")
