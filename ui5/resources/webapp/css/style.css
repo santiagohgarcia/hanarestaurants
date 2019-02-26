@@ -17,12 +17,13 @@
 .item {
     display: inline-block;
     background: #fff;
-   /* margin: 0 0 1.5em; */
+    margin: 0 0 1.5rem;
     width: 100%;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    /* box-shadow: 2px 2px 4px 0 #ccc; */
+    border-style: groove;
+    border-width: 1px;
 }
 
 @media only screen and (min-width: 400px) {
@@ -49,7 +50,6 @@
     }
 }
 
-
 @media only screen and (min-width: 1000px) {
     .masonry {
         -moz-column-count: 3;
@@ -58,12 +58,11 @@
     }
 }
 
-
 @media only screen and (min-width: 1400px) {
     .masonry {
-        -moz-column-count: 4;
-        -webkit-column-count: 4;
-        column-count: 4;
+        -moz-column-count: 3;
+        -webkit-column-count: 3;
+        column-count: 3;
     }
 }
 
@@ -72,6 +71,7 @@
 
 
 /* FOOTER */
+
 .sapMPageFooter {
     bottom: 48px;
 }
@@ -79,13 +79,45 @@
 .sapUxAPObjectPageLayout .sapUxAPObjectPageFooter {
     bottom: 48px;
 }
+
+
 /* END FOOTER */
 
-
 .productNumber .sapMObjectNumberText {
-	font-size: 1.312rem;
+    font-size: 1.312rem;
 }
 
-.sapMSplitContainerMaster {
-	width: 1000px;
+.newOrderSplitCont .sapMSplitContainerMaster {
+    width: 1000px;
 }
+
+:not(.sapMBtnDisabled) .acceptOrderButton .sapMBtnTransparent>.sapMBtnIcon,
+:not(.sapMBtnDisabled) .sapMBtnGhost>.sapMBtnIcon {
+    color: #2b7c2b;
+}
+
+:not(.sapMBtnDisabled) .rejectOrderButton .sapMBtnTransparent>.sapMBtnIcon,
+:not(.sapMBtnDisabled) .sapMBtnGhost>.sapMBtnIcon {
+    color: #bb0000;
+}
+
+.orderItemsBorder {
+    border-top-style: groove;
+    border-top-width: thin;
+    padding-top: 5px;
+}
+
+ .sapMTBStandard .orderToolbar{
+    border-bottom: 0 !important;
+}
+
+.sapFAvatarIcon {
+    background-color: #2f3c48 !important;
+    border-color: #4f667a !important;
+    color: #cae4fb !important;
+}
+
+.orderStatus {
+    font-weight: 550 !important;
+}
+

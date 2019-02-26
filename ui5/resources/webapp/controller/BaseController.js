@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History",
-	"sap/m/MessageToast"
-], function(Controller, History, MessageToast) {
+	"sap/m/MessageToast",
+	"sap/m/MessageBox"
+], function(Controller, History, MessageToast, MessageBox) {
 	"use strict";
 	return Controller.extend("restaurants.ui5.controller.BaseController", {
 
@@ -64,6 +65,16 @@ sap.ui.define([
 		showMessageToast: function(id, args) {
 			MessageToast.show(this.getText(id, args), {
 				closeOnBrowserNavigation: false
+			});
+		},
+
+		confirmPopup: function() {
+			return new Promise((res) => {
+				MessageBox.confirm(this.getText("DoYouWantToLosePendingChanges"), {
+					onClose: function(action) {
+						res(action);
+					}
+				});
 			});
 		}
 	});

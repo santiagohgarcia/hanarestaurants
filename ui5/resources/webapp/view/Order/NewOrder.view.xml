@@ -1,23 +1,32 @@
 <mvc:View controllerName="restaurants.ui5.controller.Order.NewOrder" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
-	displayBlock="true" xmlns="sap.m" height="100%" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid" xmlns:tnt="sap.tnt">
-	<tnt:ToolHeader >
+	xmlns:core="sap.ui.core" displayBlock="true" xmlns="sap.m" height="100%" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:tnt="sap.tnt">
+	<tnt:ToolHeader>
+		<Button icon="sap-icon://nav-back" type="Transparent" press="onNavBack"/>
 		<ToolbarSpacer/>
-		<Title text="{i18n>Name}"/>
+		<Title text="{i18n>NewOrder}"/>
 		<ToolbarSpacer/>
 		<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
 	</tnt:ToolHeader>
-	<SplitContainer id="newOrderSplitCont" initialDetail="detail" initialMaster="categories">
+	<SplitContainer id="newOrderSplitCont" initialDetail="detail" initialMaster="categories" class="newOrderSplitCont">
 		<masterPages>
-			<Page id="categories" title="{i18n>Categories}">
-				<f:GridList items="{Categories}" class="sapUiResponsiveContentPadding">
+			<Page id="categories" title="{i18n>Categories}" class="sapUiStdPage">
+				<f:GridList items="{Categories}" class="sapUiContentPadding">
 					<f:customLayout>
 						<grid:GridBoxLayout boxMinWidth="300px"/>
 					</f:customLayout>
-					<ObjectListItem title="{Description}" type="Navigation" press="onPressCategory"/>
+					<f:items>
+						<CustomListItem type="Navigation" press="onPressCategory">
+							<VBox class="sapUiSmallMargin">
+								<core:Icon src="sap-icon://open-folder" size="50px" color="Default" class="sapUiTinyMarginBottom"/>
+								<Title text="{Description}"/>
+							</VBox>
+						</CustomListItem>
+					</f:items>
 				</f:GridList>
 			</Page>
 			<Page id="categoryProducts" title="{Description}" showNavButton="true" navButtonPress="onNavToCategories">
-				<f:GridList items="{Products}" class="sapUiResponsiveContentPadding">
+				<f:GridList items="{Products}" class="sapUiContentPadding" noDataText="{i18n>NoProductsForThisCategory}">
 					<f:customLayout>
 						<grid:GridBoxLayout boxWidth="15rem"/>
 					</f:customLayout>
@@ -35,26 +44,30 @@
 			</Page>
 		</masterPages>
 		<detailPages>
-			<Page id="order" title="{i18n>NewOrder}">
-				<List items="{Items}">
+			<Page id="order" showHeader="false">
+				<List items="{Items}" noDataText="{i18n>SelectAProduct}">
 					<CustomListItem>
-						<HBox justifyContent="SpaceBetween" class="sapUiSmallMargin">
-							<VBox>
-								<ObjectIdentifier title="{ProductDescription}" class="sapUiTinyMarginBottom"/>
+						<VBox class="sapUiSmallMargin">
+							<ObjectIdentifier title="{ProductDescription}" class="sapUiTinyMarginBottom"/>
+							<HBox justifyContent="SpaceBetween" alignItems="Center">
 								<HBox alignItems="Center">
 									<StepInput min="1" value="{path:'Quantity',type:'sap.ui.model.type.Integer', constraints: {minimum:1} }" change="onChangeQuantity"/>
 									<Text text=" x {path:'UnitPrice',type:'.types.floatType'} ARS" class="sapUiSmallMarginBegin"/>
 								</HBox>
-							</VBox>
-							<VBox justifyContent="Center">
-								<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="productNumber"/>
-							</VBox>
-						</HBox>
+								<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="productNumber" textAlign="End">
+									<layoutData>
+										<FlexItemData growFactor="1" styleClass="sapUiMediumMarginEnd"/>
+									</layoutData>
+								</ObjectNumber>
+								<Button icon="sap-icon://sys-cancel" press="onDeleteOrderItem" type="Transparent"/>
+							</HBox>
+						</VBox>
 					</CustomListItem>
 				</List>
 				<footer>
 					<Toolbar>
-						<Title visible="{= ${orderJSON>/Total} > 0 }" titleStyle="H1" text="TOTAL: {path:'orderJSON>/Total',type:'.types.floatType'} ARS" class="sapUiSmallMarginBegin"/>
+						<Title visible="{= ${orderJSON>/Total} > 0 }" titleStyle="H1" text="TOTAL: {path:'orderJSON>/Total',type:'.types.floatType'} ARS"
+							class="sapUiSmallMarginBegin"/>
 						<ToolbarSpacer/>
 						<Button icon="sap-icon://cart-approval" text="{i18n>Submit}" type="Emphasized" press="onSave"/>
 					</Toolbar>

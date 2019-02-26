@@ -2,7 +2,7 @@
 	displayBlock="true" xmlns="sap.m" height="100%" xmlns:ux="sap.uxap" xmlns:core="sap.ui.core" xmlns:tnt="sap.tnt" xmlns:f="sap.f"
 	xmlns:grid="sap.ui.layout.cssgrid">
 	<tnt:ToolHeader >
-		<Button icon="sap-icon://home" type="Transparent" press="onPressHome"/>
+		<Button icon="sap-icon://nav-back" type="Transparent" press="onPressHome"/>
 		<ToolbarSpacer/>
 		<Title text="{i18n>Staff}"/>
 		<ToolbarSpacer/>

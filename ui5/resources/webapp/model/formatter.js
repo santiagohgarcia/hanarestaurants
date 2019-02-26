@@ -5,6 +5,14 @@ sap.ui.define(["sap/ui/core/ValueState"], function(ValueState) {
 
 		getLength: function(list) {
 			return list && list.length;
+		},
+
+		orderStatusToValueState: function(status) {
+			return {
+				"PENDING": ValueState.Warning,
+				"CANCELLED": ValueState.Error,
+				"PAYED": ValueState.Success
+			}[status];
 		}
 
 	};

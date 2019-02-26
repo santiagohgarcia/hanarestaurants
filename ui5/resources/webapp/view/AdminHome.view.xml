@@ -26,7 +26,12 @@
 		</OverflowToolbar>
 		<HBox >
 			<items>
-				<GenericTile  class="sapUiSmallMarginBeginEnd" header="{i18n>Staff}" subheader="{i18n>AdminYourStaff}" press="onPressStaff">
+				<GenericTile class="sapUiSmallMarginBeginEnd" header="{i18n>Staff}" subheader="{i18n>AdminYourStaff}" press="onPressStaff">
+					<TileContent>
+						<NumericContent value="{ path: '/Staff' , formatter: '.formatter.getLength' }" icon="sap-icon://group"/>
+					</TileContent>
+				</GenericTile>
+				<GenericTile class="sapUiSmallMarginBeginEnd" header="{i18n>ManagerView}" subheader="{i18n>SeePendingOrdersInAllYourRestaurants}" press="onPressStaff">
 					<TileContent>
 						<NumericContent value="{ path: '/Staff' , formatter: '.formatter.getLength' }" icon="sap-icon://group"/>
 					</TileContent>

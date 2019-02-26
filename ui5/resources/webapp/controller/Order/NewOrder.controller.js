@@ -4,8 +4,9 @@ sap.ui.define([
 	"restaurants/ui5/model/types",
 	"restaurants/ui5/model/models",
 	"sap/ui/model/json/JSONModel",
-	"restaurants/ui5/utils/Validator"
-], function(BaseController, formatter, types, models, JSONModel, Validator) {
+	"restaurants/ui5/utils/Validator",
+	"sap/m/MessageBox"
+], function(BaseController, formatter, types, models, JSONModel, Validator, MessageBox) {
 	"use strict";
 
 	return BaseController.extend("restaurants.ui5.controller.Order.NewOrder", {
@@ -24,14 +25,15 @@ sap.ui.define([
 			var args = evt.getParameter("arguments");
 			this._bindRestaurant(args);
 			this._bindNewOrder(args);
+			this.byId("newOrderSplitCont").toMaster(this.byId("categories"));
 		},
 
 		_bindNewOrder: function(restaurant) {
 			models.getNewOrderId(restaurant).then(resp => {
 				var ctx = this.getModel().createEntry("/Orders", {
 					properties: {
-						RestaurantId: restaurant.RestaurantId,
-						OrderId: resp.RestaurantOrderId,
+						RestaurantId: Number(restaurant.RestaurantId),
+						RestaurantOrderId: resp.RestaurantOrderId,
 						Items: []
 					}
 				});
@@ -89,7 +91,7 @@ sap.ui.define([
 		onDeleteOrderItem: function(evt) {
 			var model = this.getModel(),
 				orderCtx = this.byId("order").getBindingContext(),
-				orderItemCtx = evt.getParameter("listItem").getBindingContext(),
+				orderItemCtx = evt.getSource().getBindingContext(),
 				order = orderCtx.getObject();
 			order.Items = order.Items.filter(orderItemPath => orderItemPath !== orderItemCtx.getPath().substring(1));
 			model.setProperty("Items", order.Items, orderCtx);
@@ -100,14 +102,14 @@ sap.ui.define([
 		onChangeQuantity: function(evt) {
 			var itemCtx = evt.getSource().getBindingContext();
 			var item = itemCtx.getObject();
-			this.getModel().setProperty("Price", item.UnitPrice * item.Quantity, itemCtx);
+			this.getModel().setProperty("Price", String(item.UnitPrice * item.Quantity), itemCtx);
 			this.sumOrderTotal();
 		},
 
 		sumOrderTotal: function() {
 			var sum = this.byId("order").getBindingContext().getProperty("Items")
 				.map(i => this.getModel().getObject("/" + i))
-				.map(i => i.Price)
+				.map(i => Number(i.Price))
 				.reduce(((a, b) => a + b), 0);
 			this.getModel("orderJSON").setProperty("/Total", sum);
 		},
@@ -126,9 +128,18 @@ sap.ui.define([
 			}
 		},
 		success: function() {
-			var order = this.getView().getBindingContext();
+			var order = this.byId("order").getBindingContext();
+			this.getView().setBusy(false);
 			this.showMessageToast("OrderSaved", [order.getProperty("RestaurantOrderId")]);
-			BaseController.prototype.onNavBack.apply(this);
+			BaseController.prototype.onNavBack.apply(this, ["ManagerHome"]);
+		},
+
+		onNavBack: function() {
+			this.confirmPopup().then(action => {
+				if (action === MessageBox.Action.OK) {
+					BaseController.prototype.onNavBack.apply(this, ["ManagerHome"]);
+				}
+			});
 		}
 
 	});

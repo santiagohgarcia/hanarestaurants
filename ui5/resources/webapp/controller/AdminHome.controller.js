@@ -4,7 +4,7 @@ sap.ui.define([
 ], function(BaseController, formatter) {
 	"use strict";
 
-	return BaseController.extend("restaurants.ui5.controller.Restaurants.RestaurantTiles", {
+	return BaseController.extend("restaurants.ui5.controller.AdminHome", {
 		formatter: formatter,
 		onPressRestaurant: function(evt) {
 			var restaurant = evt.getSource().getBindingContext().getObject();
