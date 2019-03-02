@@ -1,14 +1,111 @@
 <mvc:View controllerName="restaurants.ui5.controller.Order.NewOrder" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core" displayBlock="true" xmlns="sap.m" height="100%" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:tnt="sap.tnt">
-	<tnt:ToolHeader>
-		<Button icon="sap-icon://nav-back" type="Transparent" press="onNavBack"/>
-		<ToolbarSpacer/>
-		<Title text="{i18n>NewOrder}"/>
-		<ToolbarSpacer/>
-		<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
-	</tnt:ToolHeader>
-	<SplitContainer id="newOrderSplitCont" initialDetail="detail" initialMaster="categories" class="newOrderSplitCont">
+	xmlns:l="sap.ui.layout" xmlns:tnt="sap.tnt">
+	<Page>
+		<customHeader>
+			<tnt:ToolHeader>
+				<Button icon="sap-icon://nav-back" type="Transparent" press="onNavBack"/>
+				<ToolbarSpacer/>
+				<Title text="{i18n>NewOrder}"/>
+				<ToolbarSpacer/>
+				<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
+			</tnt:ToolHeader>
+		</customHeader>
+		<l:ResponsiveSplitter >
+			<l:PaneContainer>
+				<l:SplitPane requiredParentWidth="400">
+					<NavContainer id="categoriesProductsNavCont">
+						<Page id="categories">
+							<customHeader>
+								<Toolbar>
+									<ToolbarSpacer/>
+									<core:Icon src="sap-icon://activity-items" size="30px"/>
+									<ToolbarSpacer/>
+								</Toolbar>
+							</customHeader>
+							<f:GridList items="{Categories}" class="sapUiContentPadding">
+								<f:customLayout>
+									<grid:GridBoxLayout boxMinWidth="300px"/>
+								</f:customLayout>
+								<f:items>
+									<CustomListItem type="Navigation" press="onPressCategory">
+										<VBox class="sapUiSmallMargin">
+											<core:Icon src="sap-icon://open-folder" size="50px" color="Default" class="sapUiTinyMarginBottom"/>
+											<Title text="{Description}"/>
+										</VBox>
+									</CustomListItem>
+								</f:items>
+							</f:GridList>
+						</Page>
+						<Page id="categoryProducts"  >
+							<customHeader>
+								<Toolbar>
+									<Button icon="sap-icon://undo" press="onNavToCategories"/>
+									<ToolbarSpacer/>
+									<Title text="{Description}" />
+									<ToolbarSpacer/>
+								</Toolbar>
+							</customHeader>
+							<f:GridList usyIndicatorDelay="0" items="{Products}" class="sapUiContentPadding" noDataText="{i18n>NoProductsForThisCategory}">
+								<f:customLayout>
+									<grid:GridBoxLayout boxWidth="15rem"/>
+								</f:customLayout>
+								<CustomListItem type="Active" press="onPressProduct">
+									<VBox justifyContent="SpaceBetween">
+										<ObjectIdentifier title="{Description}" class="sapUiSmallMargin"/>
+										<Image src="{= ${Image} || './img/placeholder.png' }" width="100%" height="200px"></Image>
+										<OverflowToolbar design="Transparent">
+											<ToolbarSpacer/>
+											<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="sapUiTinyMarginEnd productNumber"/>
+										</OverflowToolbar>
+									</VBox>
+								</CustomListItem>
+							</f:GridList>
+						</Page>
+					</NavContainer>
+				</l:SplitPane>
+				<l:SplitPane >
+					<Page id="order" floatingFooter="true">
+						<customHeader>
+							<Toolbar>
+								<ToolbarSpacer/>
+								<core:Icon src="sap-icon://cart" size="30px"/>
+								<ToolbarSpacer/>
+							</Toolbar>
+						</customHeader>
+						<List items="{Items}" noDataText="{i18n>SelectAProduct}">
+							<CustomListItem>
+								<VBox class="sapUiSmallMargin">
+									<ObjectIdentifier title="{ProductDescription}" class="sapUiTinyMarginBottom"/>
+									<HBox justifyContent="SpaceBetween" alignItems="Center">
+										<HBox alignItems="Center">
+											<StepInput min="1" value="{path:'Quantity',type:'sap.ui.model.type.Integer', constraints: {minimum:1} }" change="onChangeQuantity"/>
+											<Text text=" x {path:'UnitPrice',type:'.types.floatType'} ARS" class="sapUiSmallMarginBegin"/>
+										</HBox>
+										<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="productNumber" textAlign="End">
+											<layoutData>
+												<FlexItemData growFactor="1" styleClass="sapUiMediumMarginEnd"/>
+											</layoutData>
+										</ObjectNumber>
+										<Button icon="sap-icon://sys-cancel" press="onDeleteOrderItem" type="Transparent"/>
+									</HBox>
+								</VBox>
+							</CustomListItem>
+						</List>
+						<footer>
+							<Toolbar>
+								<Title visible="{= ${orderJSON>/Total} > 0 }" titleStyle="H1" text="TOTAL: {path:'orderJSON>/Total',type:'.types.floatType'} ARS"
+									class="sapUiSmallMarginBegin"/>
+								<ToolbarSpacer/>
+								<Button icon="sap-icon://cart-approval" text="{i18n>Submit}" type="Emphasized" press="onSave"/>
+							</Toolbar>
+						</footer>
+					</Page>
+				</l:SplitPane>
+			</l:PaneContainer>
+		</l:ResponsiveSplitter>
+	</Page>
+	<!--	<SplitContainer id="newOrderSplitCont" initialDetail="detail" initialMaster="categories" class="newOrderSplitCont">
 		<masterPages>
 			<Page id="categories" title="{i18n>Categories}" class="sapUiStdPage">
 				<f:GridList items="{Categories}" class="sapUiContentPadding">
@@ -74,5 +171,5 @@
 				</footer>
 			</Page>
 		</detailPages>
-	</SplitContainer>
+	</SplitContainer>-->
 </mvc:View>

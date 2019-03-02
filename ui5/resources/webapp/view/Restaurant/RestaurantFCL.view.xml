@@ -1,20 +1,25 @@
 <mvc:View controllerName="restaurants.ui5.controller.Restaurant.RestaurantFCL" xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:mvc="sap.ui.core.mvc" xmlns:tnt="sap.tnt" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f">
-	<tnt:ToolHeader >
-		<Button icon="sap-icon://home" type="Transparent" press="onPressHome"/>
-		<Title text="{Name}"/>
-		<ToolbarSpacer/>
-		<IconTabHeader id="iconTabHeader" select="onSelectTab">
-			<items>
-				<IconTabFilter key="menu" text="{i18n>Menu}"/>
-			</items>
-		</IconTabHeader>
-		<ToolbarSpacer/>
-		<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
-	</tnt:ToolHeader>
-	<f:FlexibleColumnLayout id="fcl" layout="{view>/layout}" backgroundDesign="Solid" stateChange="onStateChanged">
-		<f:beginColumnPages>
-			<mvc:XMLView id="menu" viewName="restaurants.ui5.view.Menu.Menu"></mvc:XMLView>
-		</f:beginColumnPages>
-	</f:FlexibleColumnLayout>
+	<Page>
+		<customHeader>
+			<tnt:ToolHeader >
+				<Button icon="sap-icon://nav-back" type="Transparent" press="onPressHome"/>
+				<IconTabHeader id="iconTabHeader" select="onSelectTab">
+					<items>
+						<IconTabFilter key="menu" text="{i18n>Menu}"/>
+					</items>
+				</IconTabHeader>
+				<ToolbarSpacer/>
+				<Title text="{Name}"/>
+				<Button icon="sap-icon://edit" press="onEditRestaurant" type="Transparent"/>
+				<ToolbarSpacer/>
+				<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
+			</tnt:ToolHeader>
+		</customHeader>
+		<f:FlexibleColumnLayout id="fcl" layout="{view>/layout}" backgroundDesign="Solid" stateChange="onStateChanged">
+			<f:beginColumnPages>
+				<mvc:XMLView id="menu" viewName="restaurants.ui5.view.Menu.Menu"></mvc:XMLView>
+			</f:beginColumnPages>
+		</f:FlexibleColumnLayout>
+	</Page>
 </mvc:View>

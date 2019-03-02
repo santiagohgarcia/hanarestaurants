@@ -25,7 +25,7 @@ sap.ui.define([
 			var args = evt.getParameter("arguments");
 			this._bindRestaurant(args);
 			this._bindNewOrder(args);
-			this.byId("newOrderSplitCont").toMaster(this.byId("categories"));
+			this.byId("categoriesProductsNavCont").to(this.byId("categories"));
 		},
 
 		_bindNewOrder: function(restaurant) {
@@ -54,11 +54,11 @@ sap.ui.define([
 			var categoryCtx = evt.getSource().getBindingContext(),
 				categoryProductsPage = this.byId("categoryProducts");
 			categoryProductsPage.setBindingContext(categoryCtx);
-			this.byId("newOrderSplitCont").toMaster(categoryProductsPage);
+			this.byId("categoriesProductsNavCont").to(categoryProductsPage);
 		},
 
 		onNavToCategories: function() {
-			this.byId("newOrderSplitCont").backMaster();
+			this.byId("categoriesProductsNavCont").back();
 		},
 
 		onPressProduct: function(evt) {
@@ -115,18 +115,13 @@ sap.ui.define([
 		},
 
 		onSave: function() {
-			var restaurantModel = this.getModel();
-			if (Validator.isValid("orderFields", this.getView())) {
-				if (restaurantModel.hasPendingChanges()) {
-					this.getView().setBusy(true);
-					restaurantModel.submitChanges({
-						success: this.success.bind(this)
-					});
-				} else {
-					this.onCloseDialog();
-				}
+			var model = this.getModel();
+			if (Validator.isValid("orderFields", this.getView()) && model.hasPendingChanges()) {
+				this.getView().setBusy(true);
+				model.submitChanges().then(this.success.bind(this));
 			}
 		},
+
 		success: function() {
 			var order = this.byId("order").getBindingContext();
 			this.getView().setBusy(false);

@@ -70,7 +70,7 @@
 /*END MANSORY*/
 
 
-/* FOOTER */
+/* FOOTER 
 
 .sapMPageFooter {
     bottom: 48px;
@@ -81,7 +81,7 @@
 }
 
 
-/* END FOOTER */
+ END FOOTER */
 
 .productNumber .sapMObjectNumberText {
     font-size: 1.312rem;
@@ -107,7 +107,7 @@
     padding-top: 5px;
 }
 
- .sapMTBStandard .orderToolbar{
+.sapMTBStandard .orderToolbar {
     border-bottom: 0 !important;
 }
 
@@ -121,3 +121,11 @@
     font-weight: 550 !important;
 }
 
+.headerBackgroundColor {
+    background-color: #3f5161;
+}
+
+.todayRevenue {
+    border-top-style: solid;
+    border-top-width: thin;
+}
