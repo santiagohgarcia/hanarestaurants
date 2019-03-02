@@ -7,15 +7,16 @@ function BeforeCreate(param) {
 	utils.trucateAfter(param);
 	var pStmt = param.connection.prepareStatement(
 		`insert into "${param.afterTableName}"
-		("RestaurantId","RestaurantOrderId","Status.StatusId","Customer.CustomerId","ModifiedAt")
-		values (?,?,?,?,?)`
+		("RestaurantId","RestaurantOrderId","Status.StatusId","Customer.CustomerId","ModifiedAt","PaymentMethod")
+		values (?,?,?,?,?,?)`
 	);
 	pStmt.setInteger(1, newObject.RestaurantId);
 	//pStmt.setInteger(2, newObject.RestaurantTableId || 0);
 	pStmt.setInteger(2, newObject.RestaurantOrderId);
-	pStmt.setString(3, newObject["Status.StatusId"] || 'PENDING'); //In Preparation 
+	pStmt.setString(3, newObject["Status.StatusId"] || 'PENDING'); //PENDING
 	pStmt.setInteger(4, newObject["Customer.CustomerId"] || 0); //Anonym
 	pStmt.setTimestamp(5, new Date());
+	pStmt.setString(6, newObject.PaymentMethod || 'CASH'); //CASH
 	pStmt.executeUpdate();
 	pStmt.close();
 }
