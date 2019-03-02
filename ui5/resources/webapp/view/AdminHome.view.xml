@@ -1,43 +1,107 @@
 <mvc:View controllerName="restaurants.ui5.controller.AdminHome" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:tnt="sap.tnt" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core">
-	<tnt:ToolHeader >
-		<ToolbarSpacer/>
-		<Title text="{i18n>title}"/>
-		<ToolbarSpacer/>
-		<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
-	</tnt:ToolHeader>
-	<Page showHeader="false" class="sapUiContentPadding">
-		<OverflowToolbar style="Clear">
-			<Title titleStyle="H2" text="{i18n>Restaurants}" class="sapUiTinyMarginBegin"/>
-			<ToolbarSpacer/>
-			<Button icon="sap-icon://add" press="onAddRestaurant" type="Transparent"/>
-		</OverflowToolbar>
-		<!--	<f:GridList items="{/Restaurants}">
-			<ObjectListItem title="{Name}" press="onPressRestaurant"/>
-		</f:GridList>-->
-		<HBox items="{/Restaurants}">
-			<items>
-				<GenericTile class="sapUiSmallMarginBeginEnd" header="{Name}" press="onPressRestaurant"></GenericTile>
-			</items>
-		</HBox>
-		<OverflowToolbar style="Clear">
+	xmlns:tnt="sap.tnt" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:grid="sap.ui.layout.cssgrid">
+	<Page class="sapUiResponsiveContentPadding">
+		<customHeader>
+			<tnt:ToolHeader >
+				<ToolbarSpacer/>
+				<Title text="{i18n>title}"/>
+				<ToolbarSpacer/>
+				<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
+			</tnt:ToolHeader>
+		</customHeader>
+		<OverflowToolbar class="sapUiSmallMarginBottom">
 			<Title titleStyle="H2" text="{i18n>Administration}" class="sapUiTinyMarginBegin"/>
 			<ToolbarSpacer/>
 		</OverflowToolbar>
-		<HBox >
-			<items>
-				<GenericTile class="sapUiSmallMarginBeginEnd" header="{i18n>Staff}" subheader="{i18n>AdminYourStaff}" press="onPressStaff">
-					<TileContent>
-						<NumericContent value="{ path: '/Staff' , formatter: '.formatter.getLength' }" icon="sap-icon://group"/>
-					</TileContent>
-				</GenericTile> 
-				<GenericTile class="sapUiSmallMarginBeginEnd" header="{i18n>ManagerView}" subheader="{i18n>SeeRealTimeOrderStatus}"
-					press="onPressManagerView" >
-					<TileContent frameType="TwoByOne">
-						<ImageContent src="sap-icon://activity-individual"/>
-					</TileContent>
-				</GenericTile>
-			</items>
-		</HBox>
+		<f:GridList>
+			<f:customLayout>
+				<grid:GridBoxLayout boxWidth="22.5rem"/>
+			</f:customLayout>
+			<f:items>
+				<CustomListItem press="onPressStaff" type="Active">
+					<VBox height="100%">
+						<VBox class="sapUiSmallMargin">
+							<layoutData>
+								<FlexItemData growFactor="1" shrinkFactor="0"/><!-- Don't shrink below minimum size. Fill space if available. --></layoutData>
+							<core:Icon src="sap-icon://group" size="2.625rem" color="Default" class="sapUiTinyMarginBottom"/>
+							<Title text="{i18n>Staff}" wrapping="true"/>
+							<Text text="{i18n>AdminYourStaff}" wrapping="true"/>
+						</VBox>
+					</VBox>
+				</CustomListItem>
+				<CustomListItem press="onPressManagerView" type="Active">
+					<VBox height="100%">
+						<VBox class="sapUiSmallMargin">
+							<layoutData>
+								<FlexItemData growFactor="1" shrinkFactor="0"/><!-- Don't shrink below minimum size. Fill space if available. --></layoutData>
+							<core:Icon src="sap-icon://activity-individual" size="2.625rem" color="Default" class="sapUiTinyMarginBottom"/>
+							<Title text="{i18n>ManagerView}" wrapping="true"/>
+							<Text text="{i18n>SeeRealTimeOrderStatus}" wrapping="true"/>
+						</VBox>
+					</VBox>
+				</CustomListItem>
+				<CustomListItem press="onPressMenus" type="Active">
+					<VBox height="100%">
+						<VBox class="sapUiSmallMargin">
+							<layoutData>
+								<FlexItemData growFactor="1" shrinkFactor="0"/><!-- Don't shrink below minimum size. Fill space if available. --></layoutData>
+							<core:Icon src="sap-icon://activity-items" size="2.625rem" color="Default" class="sapUiTinyMarginBottom"/>
+							<Title text="{i18n>Menus}" wrapping="true"/>
+							<Text text="{i18n>EditMenusForYourRestaurants}" wrapping="true"/>
+						</VBox>
+					</VBox>
+				</CustomListItem>
+			</f:items>
+		</f:GridList>
+		<OverflowToolbar class="sapUiSmallMarginBottom">
+			<Title titleStyle="H2" text="{i18n>Restaurants}" class="sapUiTinyMarginBegin"/>
+			<ToolbarSpacer/>
+			<Button icon="sap-icon://add" press="onAddRestaurant" text="{i18n>AddRestaurant}" type="Transparent"/>
+		</OverflowToolbar>
+		<f:GridList items="{/Restaurants}">
+			<f:customLayout>
+				<grid:GridBoxLayout boxWidth="22.5rem"/>
+			</f:customLayout>
+			<CustomListItem >
+				<VBox class="sapUiSmallMarginBottom sapUiSmallMarginBeginEnd">
+					<HBox justifyContent="SpaceBetween" alignItems="Center">
+						<Title text="{Name}" wrapping="true"/>
+						<Button icon="sap-icon://edit" press="onEditRestaurant" type="Transparent"/>
+					</HBox>
+					<HBox justifyContent="SpaceBetween" fitContainer="true">
+						<Label text="{i18n>TodayRevenue}" wrapping="true">
+							<layoutData>
+								<FlexItemData growFactor="1"/>
+							</layoutData>
+						</Label>
+					<!--	<Label text="{i18n>Orders}" wrapping="true">
+							<layoutData>
+								<FlexItemData growFactor="3" maxWidth="150px"/>
+							</layoutData>
+						</Label>-->
+					</HBox>
+					<HBox>
+						<VBox justifyContent="SpaceBetween" fitContainer="true">
+							<layoutData>
+								<FlexItemData growFactor="1"/>
+							</layoutData>
+							<NumericContent truncateValueTo="6" binding="{TodayRevenue}" value="{path:'TodayRevenue',type:'.types.floatType'}" scale="ARS" withMargin="false"></NumericContent>
+						</VBox>
+					<!--<VBox justifyContent="Center" fitContainer="true">
+							<layoutData>
+								<FlexItemData growFactor="3" maxWidth="150px"/>
+							</layoutData>
+							<HBox justifyContent="SpaceBetween" alignItems="Center"
+								items="{path:'TodayOrdersCount', events: { dataReceived: '.onReceiveOrdersCount' } }" fitContainer="true">
+								<items>
+									<ObjectStatus icon="{path:'StatusId',formatter: '.formatter.orderStatusToIcon'}" visible="{= ${StatusId} !== 'ALL'}" text="{OrderCount}"
+										state="{path:'StatusId',formatter: '.formatter.orderStatusToValueState'}"/>
+								</items>
+							</HBox>
+						</VBox>-->
+					</HBox>
+				</VBox>
+			</CustomListItem>
+		</f:GridList>
 	</Page>
 </mvc:View>

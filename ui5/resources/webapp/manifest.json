@@ -88,9 +88,9 @@
 				"pattern": "ManagerHome",
 				"target": "managerHome"
 			}, {
-				"name": "Menu",
-				"pattern": "Restaurant/{RestaurantId}/Menu",
-				"target": "restaurantFCL"
+				"name": "Menus",
+				"pattern": "/Menus",
+				"target": "menu"
 			}, {
 				"name": "Staff",
 				"pattern": "Staff",
@@ -111,10 +111,10 @@
 					"viewName": "ManagerHome",
 					"viewLevel": 0
 				},
-				"restaurantFCL": {
+				"menu": {
 					"viewType": "XML",
-					"viewName": "Restaurant.RestaurantFCL",
-					"viewLevel": 1
+					"viewName": "Menu.Menu",
+					"viewLevel": 0
 				},
 				"staff": {
 					"viewType": "XML",

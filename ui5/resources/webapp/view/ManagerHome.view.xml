@@ -34,7 +34,7 @@
 					</VBox>-->
 					<VBox alignItems="Center">
 						<Label design="Bold" text="{i18n>TodayRevenue}"/>
-						<NumericContent binding="{TodayRevenue}" value="{TodayRevenue}" scale="ARS" withMargin="false" class="todayRevenue"/>
+						<NumericContent truncateValueTo="6" id="todayRevenueNumericContent" binding="{TodayRevenue}" value="{path:'TodayRevenue',type:'.types.floatType'}" scale="ARS" withMargin="false" class="todayRevenue"/>
 					</VBox>
 				</HBox>
 			</HBox>

@@ -25,6 +25,11 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+
+			// set the restaurants model
+			var restaurantModel = models.createRestaurantsModel();
+			this.setModel(restaurantModel);
+			sap.ui.getCore().setModel(restaurantModel);
 		}
 	});
 });

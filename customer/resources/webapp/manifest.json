@@ -80,16 +80,15 @@
 				"controlId": "idAppControl"
 			},
 			"routes": [{
-				"name": "RouteView1",
-				"pattern": "RouteView1",
-				"target": ["TargetView1"]
+				"name": "RestaurantMenu",
+				"pattern": "/RestaurantMenu/{RestaurantId}",
+				"target": "restaurantMenu"
 			}],
 			"targets": {
-				"TargetView1": {
+				"restaurantMenu": {
 					"viewType": "XML",
 					"transition": "slide",
-					"clearAggregation": true,
-					"viewName": "View1"
+					"viewName": "RestaurantMenu.RestaurantMenu"
 				}
 			}
 		}

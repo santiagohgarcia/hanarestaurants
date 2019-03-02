@@ -22,11 +22,15 @@ sap.ui.define([
 		_updateOrderBindings: function() {
 			var todayOrdersCountBinding = this.byId("orderStatusTabHeader").getBinding("items");
 			var todayOrdersBinding = this.byId("orderList").getBinding("items");
+			var todayRevenueBinding = this.byId("todayRevenueNumericContent").getElementBinding();
 			if (todayOrdersCountBinding) {
 				todayOrdersCountBinding.refresh();
 			}
 			if (todayOrdersBinding) {
 				todayOrdersBinding.refresh();
+			}
+			if (todayRevenueBinding) {
+				todayRevenueBinding.refresh();
 			}
 		},
 

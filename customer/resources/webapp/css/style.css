@@ -1,1 +1,5 @@
 /* Enter your custom styles here */
+
+.productNumber .sapMObjectNumberText {
+    font-size: 1.312rem;
+}

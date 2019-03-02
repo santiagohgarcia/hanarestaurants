@@ -11,6 +11,19 @@ sap.ui.define([
 		formatter: formatter,
 		models: models,
 
+		onReceiveRestaurants: function(evt) {
+			var bindingContext = this.getView().getBindingContext(),
+				data = evt.getParameter("data");
+			if (data && !bindingContext) {
+				this.getView().bindElement(`/Restaurants(RestaurantId=${data.results[0].RestaurantId})`);
+			}
+		},
+
+		onSelectRestaurant: function(evt) {
+			var restaurant = evt.getParameter("item").getBindingContext().getObject();
+			this.getView().bindElement(`/Restaurants(RestaurantId=${restaurant.RestaurantId})`);
+		},
+
 		onCategoriesReceived: function(evt) {
 			var data = evt.getParameter("data"),
 				categoryList = this.byId("categoryList");
