@@ -1,0 +1,42 @@
+<mvc:View controllerName="customer.customer.controller.Login.Login" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns:tnt="sap.tnt" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f" xmlns:l="sap.ui.layout">
+	<Page >
+		<customHeader>
+			<tnt:ToolHeader>
+				<core:Icon class="sapUiTinyMarginBegin" size="25px" src="sap-icon://meal"/>
+				<Title class="sapUiTinyMarginBegin" text="{Name}"/>
+				<ToolbarSpacer/>
+			</tnt:ToolHeader>
+		</customHeader>
+		<l:BlockLayout background="Light">
+			<l:BlockLayoutRow>
+				<l:BlockLayoutCell title="Welcome to {Name}!">
+					<HBox justifyContent="SpaceBetween" alignItems="Center">
+						<Text text="Please select a login method to continue"/>
+						<core:Icon src="sap-icon://meal" size="50px" color="Default"/>
+					</HBox>
+				</l:BlockLayoutCell>
+			</l:BlockLayoutRow>
+		</l:BlockLayout>
+		<List>
+			<CustomListItem type="Navigation">
+				<HBox alignItems="Center" class="sapUiSmallMargin">
+					<f:Avatar src="./img/facebook.png" initials="F" displaySize="L"/>
+					<Title text="Facebook" class="sapUiSmallMarginBegin"/>
+				</HBox>
+			</CustomListItem>
+			<CustomListItem type="Navigation">
+				<HBox alignItems="Center" class="sapUiSmallMargin">
+					<f:Avatar src="./img/google-plus.png" initials="G" displaySize="L"/>
+					<Title text="Google" class="sapUiSmallMarginBegin"/>
+				</HBox>
+			</CustomListItem>
+			<CustomListItem type="Navigation">
+				<HBox alignItems="Center" class="sapUiSmallMargin">
+					<f:Avatar initials="?" displaySize="L"/>
+					<Title text="Anónimo" class="sapUiSmallMarginBegin"/>
+				</HBox>
+			</CustomListItem>
+		</List>
+	</Page>
+</mvc:View>

@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:fi="sap.f" xmlns:f="sap.ui.layout.form">
-	<Dialog id="addToCartDialog" showHeader="false">
+	<Dialog id="addToCartDialog" title="{i18n>AddToCart}">
 		<content>
 			<VBox alignItems="Center">
 				<fi:Avatar src="{= ${Image} || './img/placeholder.png' }" displaySize="XL" class="sapUiSmallMarginTopBottom">

@@ -4,8 +4,10 @@ sap.ui.define([
 	"customer/customer/model/models",
 	"customer/customer/model/formatter",
 	"sap/ui/core/Fragment",
-	"sap/ui/model/json/JSONModel"
-], function(BaseController, types, models, formatter, Fragment, JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
+], function(BaseController, types, models, formatter, Fragment, JSONModel, Filter, FO) {
 	"use strict";
 
 	return BaseController.extend("customer.customer.controller.RestaurantMenu.RestaurantMenu", {
@@ -97,9 +99,36 @@ sap.ui.define([
 				.reduce(((a, b) => a + b), 0);
 			this.getModel("orderJSON").setProperty("/Total", sum);
 		},
-		
-		onCartToolbarPress:function(evt){
-			alert("crearOrder");
+
+		onCartToolbarPress: function(evt) {
+
+		},
+
+		onReceiveCategories: function(evt) {
+			var data = evt.getParameter("data");
+			if (data) {
+				this.byId("categoryMenuButton").setText(this.getText("All"));
+				this.byId("categoryMenu").insertItem(new sap.m.MenuItem({
+					text: this.getText("All")
+				}), 0);
+			}
+		},
+
+		getCategoryDescription: function(ctx) {
+			return ctx.getProperty("Category/Description");
+		},
+
+		onSelectCategory: function(evt) {
+			var category = evt.getParameter("item").getBindingContext().getObject(),
+				productBinding = this.byId("productsList").getBinding("items");
+			if (category.CategoryId) {
+				this.byId("categoryMenuButton").setText(category.Description);
+				productBinding.filter(new Filter("Category.CategoryId", FO.EQ, category.CategoryId));
+			} else {
+				this.byId("categoryMenuButton").setText(evt.getParameter("item").getText());
+				productBinding.filter([]);
+			}
+
 		}
 
 	});
