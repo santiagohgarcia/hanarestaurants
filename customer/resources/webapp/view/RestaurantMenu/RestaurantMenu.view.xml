@@ -6,28 +6,28 @@
 				<core:Icon class="sapUiTinyMarginBegin" size="25px" src="sap-icon://meal"/>
 				<Title class="sapUiTinyMarginBegin" text="{Name}"/>
 				<ToolbarSpacer/>
-				<!--	<MenuButton type="Transparent" text="{Description}">
-					<Menu items="{path:'Categories',events:{dataReceived: '.onReceiveCategories'}}" itemSelected="onSelectRestaurant">
+				<MenuButton id="categoryMenuButton" type="Transparent">
+					<Menu id="categoryMenu" items="{path:'Categories',events:{ dataReceived: '.onReceiveCategories'}}" itemSelected="onSelectCategory">
 						<MenuItem icon="sap-icon://open-folder" text="{Description}"/>
 					</Menu>
-				</MenuButton>-->
+				</MenuButton>
 			</tnt:ToolHeader>
 		</customHeader>
 		<content>
-			<List items="{Products}" class="sapUiTinyMarginTop">
+			<List id="productsList" growing="true" growingScrollToLoad="true" 
+				items="{path:'Products', parameters: {expand: 'Category' }, sorter: { path: 'Category.CategoryId', group: '.getCategoryDescription' } }">
 				<items>
-					<!--<ObjectListItem icon="{= ${Image} || './img/placeholder.png' }" title="{Description}" number="{path:'Price',type:'.types.floatType'}" unit="ARS"></ObjectListItem>-->
 					<CustomListItem type="Active" press="onPressProduct">
 						<HBox justifyContent="Start" alignItems="Center" class="sapUiTinyMarginTopBottom sapUiSmallMarginEnd sapUiTinyMarginBegin"
 							fitContainer="true">
-							<f:Avatar src="{= ${Image} || './img/placeholder.png' }" displaySize="M"/>
+							<f:Avatar displayShape="Square" src="{= ${Image} || './img/placeholder.png' }" displaySize="M"/>
 							<VBox justifyContent="Center" alignItems="SpaceBetween" fitContainer="true" class="sapUiTinyMarginBegin">
 								<layoutData>
 									<FlexItemData growFactor="10"/>
 								</layoutData>
-								<HBox justifyContent="SpaceBetween">
-									<Title text="{Description}"/>
-									<Title text="{path:'Price',type:'.types.floatType'} ARS" class="productNumber"/>
+								<HBox justifyContent="SpaceBetween" alignItems="Center">
+									<Title text="{Description}" wrapping="true"/> 
+									<Title text="{path:'Price',type:'.types.floatType'} ARS" class="productNumber" />
 								</HBox>
 								<Label text="descripcion del plato"/>
 							</VBox>

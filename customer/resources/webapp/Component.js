@@ -26,6 +26,9 @@ sap.ui.define([
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
 
+			//Set core models
+			sap.ui.getCore().setModel(this.getModel("i18n"), "i18n");
+
 			// set the restaurants model
 			var restaurantModel = models.createRestaurantsModel();
 			this.setModel(restaurantModel);
