@@ -28,7 +28,7 @@ sap.ui.define([
 
 		success: function() {
 			var restaurantCtx = this._dialog.getBindingContext();
-			BaseController.prototype.showMessageToast("RestaurantDialog_RestaurantSaved", [restaurantCtx.getProperty("RestaurantId")]);
+			BaseController.prototype.showMessageToast("RestaurantSaved", [restaurantCtx.getProperty("RestaurantId")]);
             BaseDialog.prototype.success.apply(this);
 		}
     

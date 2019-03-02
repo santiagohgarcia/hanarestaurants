@@ -19,6 +19,10 @@ sap.ui.define([
 
 		onAddRestaurant: function() {
 			this.openRestaurantDialog();
+		},
+
+		onPressManagerView: function() {
+			this.getRouter().navTo("ManagerHome");
 		}
 
 	});

@@ -1,37 +1,57 @@
 <mvc:View controllerName="restaurants.ui5.controller.ManagerHome" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:tnt="sap.tnt" displayBlock="true" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:grid="sap.ui.layout.cssgrid">
-	<tnt:ToolHeader >
-		<Title text="{i18n>Orders}" class="sapUiSmallMarginBegin"/>
-		<ToolbarSpacer/>
-		<MenuButton type="Transparent" icon="sap-icon://home" text="{Name}">
-			<Menu items="{path:'/Restaurants',events:{dataReceived: '.onReceiveRestaurants'}}"><MenuItem text="{Name}"/></Menu>
-		</MenuButton>
-		<ToolbarSpacer/>
-		<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
-	</tnt:ToolHeader>
-	<Page showHeader="false" class="sapUiNoContentPadding">
-		<IconTabHeader tabDensityMode="Cozy" applyContentPadding="true" expandable="false" enableTabReordering="true" selectedKey="PENDING" select="onSelectStatusTab">
-			<items>
-				<IconTabFilter key="ALL" showAll="true" count="2" text="ALL"/>
-				<IconTabSeparator/>
-				<IconTabFilter key="PAYED" iconColor="Positive" icon="sap-icon://accept" count="3"/>
-				<IconTabFilter key="PENDING" iconColor="Critical" icon="sap-icon://pending" count="3"/>
-				<IconTabFilter key="CANCELLED" iconColor="Negative" icon="sap-icon://decline" count="3"/>
-			</items>
-		</IconTabHeader>
-		<f:GridList id="orderList" class="sapUiResponsiveContentPadding"
-			items="{path:'Orders', parameters: {expand: 'Status,Customer,Items'}, sorter: { path:'ModifiedAt', descending: true }, filters: { path:'Status.StatusId', operator: 'EQ',value1: 'PENDING' } }">
-			<f:customLayout>
-				<grid:GridBoxLayout boxMinWidth="400px"/>
-			</f:customLayout>
-			<f:items>
-				<core:Fragment fragmentName="restaurants.ui5.view.Order.OrderItem" type="XML"/>
-			</f:items>
-		</f:GridList>
+	<Page class="sapUiNoContentPadding" floatingFooter="true" xmlns:mc="sap.suite.ui.microchart">
+		<customHeader>
+			<tnt:ToolHeader >
+				<Button icon="sap-icon://nav-back" type="Transparent" press="onNavBack"/>
+				<Title text="{i18n>Orders}" class="sapUiSmallMarginBegin"/>
+				<ToolbarSpacer/>
+				<MenuButton type="Transparent" icon="sap-icon://home" text="{Name}">
+					<Menu items="{path:'/Restaurants',events:{dataReceived: '.onReceiveRestaurants'}}" itemSelected="onSelectRestaurant"><MenuItem text="{Name}"/></Menu>
+				</MenuButton>
+				<ToolbarSpacer/>
+				<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
+			</tnt:ToolHeader>
+		</customHeader>
+		<content>
+			<HBox alignItems="End" class="headerBackgroundColor">
+				<IconTabHeader id="orderStatusTabHeader" tabDensityMode="Cozy" applyContentPadding="true" expandable="false" enableTabReordering="true"
+					selectedKey="PENDING" select="onSelectStatusTab" items="{path:'TodayOrdersCount', events: { dataReceived: '.onReceiveOrdersCount' } }">
+					<items>
+						<IconTabFilter key="{StatusId}" showAll="{= ${StatusId} === 'ALL' }" count="{OrderCount}" text="{StatusDescription}"
+							icon="{path:'StatusId',formatter: '.formatter.orderStatusToIcon'}"
+							iconColor="{path:'StatusId',formatter: '.formatter.orderStatusToIconColor'}"/>
+					</items>
+				</IconTabHeader>
+				<HBox class="sapContrastPlus sapMITH sapUiSmallMarginTop sapUiMediumMarginEnd" fitContainer="true" justifyContent="End"
+					alignItems="Baseline">
+					<layoutData>
+						<FlexItemData growFactor="10"/>
+					</layoutData>
+					<!--	<VBox class="sapUiSmallMarginTop sapUiSmallMarginEnd" alignItems="Start" justifyContent="Start">
+						<ObjectIdentifier title="{i18n>Today}"/>
+						<NumericContent value="1232454" scale="ARS" withMargin="false"/>
+					</VBox>-->
+					<VBox alignItems="Center">
+						<Label design="Bold" text="{i18n>TodayRevenue}"/>
+						<NumericContent binding="{TodayRevenue}" value="{TodayRevenue}" scale="ARS" withMargin="false" class="todayRevenue"/>
+					</VBox>
+				</HBox>
+			</HBox>
+			<f:GridList id="orderList" class="sapUiResponsiveContentPadding" growingScrollToLoad="true" growing="true" growingThreshold="12"
+				items="{path:'TodayOrders', parameters: {expand: 'Status,Items,AggregatedItems'}, sorter: { path:'ModifiedAt', descending: true }, filters: { path:'Status.StatusId', operator: 'EQ',value1: 'PENDING' } }">
+				<f:customLayout>
+					<grid:GridBoxLayout boxMinWidth="400px"/>
+				</f:customLayout>
+				<f:items>
+					<core:Fragment fragmentName="restaurants.ui5.view.Order.OrderItem" type="XML"/>
+				</f:items>
+			</f:GridList>
+		</content>
 		<footer>
 			<OverflowToolbar >
 				<ToolbarSpacer/>
-				<Button icon="sap-icon://add" text="{i18n>NewOrder}" press="onAddOrder" type="Transparent"/>
+				<Button icon="sap-icon://add" text="{i18n>NewOrder}" press="onAddOrder"/>
 			</OverflowToolbar>
 		</footer>
 	</Page>

@@ -1,10 +1,8 @@
 sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/Device",
-	"sap/ui/model/odata/v2/ODataModel",
-	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function(JSONModel, Device, ODataModel) {
+	"restaurants/ui5/utils/PromisifiedODataModel"
+], function(JSONModel, Device, PromisifiedODataModel) {
 	"use strict";
 
 	var baseURl = "https://hxehost:51030";
@@ -22,7 +20,7 @@ sap.ui.define([
 		},
 
 		createRestaurantsModel: function() {
-			return new ODataModel(baseURl + "/xsodata/Restaurants.xsodata", {
+			return new PromisifiedODataModel(baseURl + "/xsodata/Restaurants.xsodata", {
 				defaultBindingMode: sap.ui.model.BindingMode.TwoWay,
 				defaultUpdateMethod: sap.ui.model.odata.UpdateMethod.Put
 			});

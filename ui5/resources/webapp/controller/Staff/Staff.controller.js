@@ -74,9 +74,7 @@ sap.ui.define([
 		onSave: function() {
 			var model = this.getModel();
 			if (Validator.isValid("staffFields", this.getView()) && model.hasPendingChanges()) {
-				model.submitChanges({
-					success: this._success.bind(this)
-				});
+				model.submitChanges().then(this.success.bind(this));
 			}
 		},
 
@@ -112,7 +110,7 @@ sap.ui.define([
 					RestaurantId: restaurant.RestaurantId,
 					StaffId: staff.StaffId,
 					Add: evt.getParameter("state")
-				} )
+				})
 				.then(() => {
 					this.showMessageToast("StaffUpdated", [staff.StaffId, staff.UserId]);
 				});

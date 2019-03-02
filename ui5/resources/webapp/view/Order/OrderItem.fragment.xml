@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f">
 	<CustomListItem class="orderItem">
-		<VBox fitContainer="true">
+		<VBox fitContainer="true" justifyContent="SpaceBetween">
 			<HBox class="sapUiSmallMarginTop sapUiSmallMarginBeginEnd">
 				<VBox alignItems="Begin" class="sapUiSmallMarginEnd">
 					<layoutData>
@@ -15,9 +15,7 @@
 					<layoutData>
 						<FlexItemData growFactor="8"/>
 					</layoutData>
-					<HBox justifyContent="SpaceBetween"><Label text="{i18n>ORDER} #{RestaurantOrderId}" design="Bold"/>
-						<Label text="TOTAL: {path:'Total',type:'.types.floatType'} ARS" design="Bold" textAlign="End"/>
-					</HBox>
+					<Label text="{i18n>ORDER} #{RestaurantOrderId}" design="Bold"/>
 					<VBox justifyContent="Start" fitContainer="true" items="{Items}" fieldGroupIds="items" class="orderItemsBorder">
 						<HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom" alignItems="Center">
 							<Text text="{Quantity} x {ProductDescription}"/>
@@ -30,12 +28,15 @@
 					</VBox>
 				</VBox>
 			</HBox>
-			<OverflowToolbar visible="{= ${Status/StatusId} === 'PENDING' }" design="Solid" class="orderToolbar">
+			<OverflowToolbar design="Solid" class="orderToolbar">
+				<Button type="Transparent" visible="{= ${Status/StatusId} === 'PENDING' }" icon="sap-icon://decline" press="onPressOrderCancel"
+					class="rejectOrderButton sapUiSmallMarginBegin"/>
+				<Button type="Transparent" visible="{= ${Status/StatusId} === 'PENDING' }" icon="sap-icon://accept" press="onPressOrderPayed"
+					class="acceptOrderButton"/>
 				<ToolbarSpacer/>
-				<Button type="Transparent" icon="sap-icon://decline" press="onPressOrderCancel" class="rejectOrderButton "/>
-				<Button type="Transparent" icon="sap-icon://accept" press="onPressOrderPayed" class="acceptOrderButton sapUiSmallMarginEnd"/>
+				<Label text="{path:'AggregatedItems/Price',type:'.types.floatType'} ARS" design="Bold" textAlign="End" class="sapUiSmallMarginEnd"/>
 			</OverflowToolbar>
-			<HBox visible="{= ${Status/StatusId} !== 'PENDING' }" class="sapUiSmallMarginBottom"/>
+			<!--<HBox visible="{= ${Status/StatusId} !== 'PENDING' }" class="sapUiSmallMarginBottom"/>-->
 		</VBox>
 	</CustomListItem>
 </core:FragmentDefinition>

@@ -7,7 +7,6 @@ sap.ui.define([
 
 		onInit: function() {
 			this.getRouter().getRoute("Menu").attachMatched(this._attachMenuMatched.bind(this));
-			this.getRouter().getRoute("Staff").attachMatched(this._attachStaffMatched.bind(this));
 		},
 
 		_setSelectedIconTab: function(key) {
@@ -18,13 +17,6 @@ sap.ui.define([
 			this.getModel("view").setProperty("/layout", sap.f.LayoutType.OneColumn);
 			this.byId("fcl").toBeginColumnPage(this.byId("menu").getId(), "fade");
 			this._setSelectedIconTab("menu");
-			this._bindRestaurant(evt);
-		},
-
-		_attachStaffMatched: function(evt) {
-			this.getModel("view").setProperty("/layout", sap.f.LayoutType.OneColumn);
-			this.byId("fcl").toBeginColumnPage(this.byId("staff").getId(), "fade");
-			this._setSelectedIconTab("staff");
 			this._bindRestaurant(evt);
 		},
 
@@ -39,11 +31,6 @@ sap.ui.define([
 			var selectedKey = evt.getParameter("key");
 			var restaurant = this.getView().getBindingContext().getObject();
 			switch (selectedKey) {
-				case "staff":
-					this.getRouter().navTo("Staff", {
-						RestaurantId: restaurant.RestaurantId
-					});
-					break;
 				case "menu":
 					this.getRouter().navTo("Menu", {
 						RestaurantId: restaurant.RestaurantId
@@ -51,6 +38,10 @@ sap.ui.define([
 					break;
 
 			}
+		},
+
+		onEditRestaurant: function() {
+			this.openRestaurantDialog(this.getView().getBindingContext());
 		}
 
 	});
