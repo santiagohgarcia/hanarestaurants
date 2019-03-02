@@ -3,7 +3,7 @@
 	<Page >
 		<customHeader>
 			<tnt:ToolHeader>
-				<core:Icon class="sapUiTinyMarginBegin" size="25px" src="sap-icon://meal"/>
+				<Button icon="sap-icon://meal"/>
 				<Title class="sapUiTinyMarginBegin" text="{Name}"/>
 				<ToolbarSpacer/>
 			</tnt:ToolHeader>

@@ -1,0 +1,60 @@
+<mvc:View controllerName="customer.customer.controller.Cart.Cart" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns:tnt="sap.tnt" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:ux="sap.uxap">
+	<Page >
+		<customHeader>
+			<tnt:ToolHeader>
+				<Button icon="sap-icon://nav-back" press="onNavBack"/>
+				<Title class="sapUiTinyMarginBegin" text="{i18n>CheckYourOrder}"/>
+				<ToolbarSpacer/>
+			</tnt:ToolHeader>
+		</customHeader>
+		<Panel id="orderPanel" class="sapUiNoContentPadding">
+			<VBox class="sapUiSmallMarginBeginEnd sapUiTinyMarginBottom">
+				<HBox justifyContent="SpaceBetween" alignItems="Center">
+					<Title text="Payment Method"/>
+					<SegmentedButton width="180px" selectedKey="{PaymentMethod}" class="sapUiTinyMarginBottom">
+						<items>
+							<SegmentedButtonItem key="CREDIT_CARD" icon="sap-icon://credit-card"/>
+							<SegmentedButtonItem key="CASH" icon="sap-icon://money-bills"/>
+						</items>
+					</SegmentedButton>
+				</HBox>
+				<FormattedText htmlText="{path: 'PaymentMethod', formatter: '.getPaymentMethodDescription'}"/>
+				<!--	<Label text="{= ${PaymentMethod} === 'CREDIT_CARD' ? ${i18n>PayWithCreditCard} : ${i18n>PayWithCash} }" wrapping="true"/>-->
+			</VBox>
+			<List items="{path:'Items', sorter: { path:'CategoryDescription', group:true } }" class="orderItemList">
+				<CustomListItem>
+					<HBox justifyContent="Start" alignItems="Center" class="sapUiTinyMarginTopBottom sapUiSmallMarginEnd sapUiTinyMarginBegin"
+						fitContainer="true">
+						<f:Avatar displayShape="Circle" src="{= ${Image} || './img/placeholder.png' }" displaySize="M"/>
+						<VBox justifyContent="Center" alignItems="SpaceBetween" fitContainer="true" class="sapUiTinyMarginBegin">
+							<layoutData>
+								<FlexItemData growFactor="10"/>
+							</layoutData>
+							<HBox justifyContent="SpaceBetween" alignItems="Center">
+								<Title text="{ProductDescription}" wrapping="true"/>
+								<Button class="deleteOrderItemButton sapUiSizeCompact" icon="sap-icon://decline" type="Transparent" press="onDeleteOrderItem"/>
+							</HBox>
+							<HBox justifyContent="SpaceBetween" alignItems="Center">
+								<StepInput class="sapUiSizeCompact" value="{Quantity}" min="1" textAlign="Center" change="onChangeQuantity">
+									<layoutData>
+										<FlexItemData maxWidth="40px"/>
+									</layoutData>
+								</StepInput>
+								<Title text="{path:'Price',type:'.types.floatType'} ARS"/>
+							</HBox>
+						</VBox>
+					</HBox>
+				</CustomListItem>
+			</List>
+		</Panel>
+		<footer>
+			<Toolbar id="cartToolbar" active="true" press="onApproveCartToolbarPress">
+				<Title titleStyle="H3" text="TOTAL: {path: 'orderJSON>/Total', type:'.types.floatType'} ARS" class="sapUiTinyMarginBegin"/>
+				<ToolbarSpacer/>
+				<core:Icon src="sap-icon://cart-approval" size="25px" color="Positive"/>
+				<core:Icon src="sap-icon://navigation-right-arrow" class="sapUiTinyMarginEnd"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

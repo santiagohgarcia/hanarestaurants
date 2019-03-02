@@ -1,5 +1,5 @@
 <mvc:View controllerName="customer.customer.controller.RestaurantMenu.RestaurantMenu" xmlns:html="http://www.w3.org/1999/xhtml"
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core" xmlns:f="sap.f">
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core" xmlns:f="sap.f" >
 	<Page >
 		<customHeader>
 			<tnt:ToolHeader>
@@ -20,14 +20,14 @@
 					<CustomListItem type="Active" press="onPressProduct">
 						<HBox justifyContent="Start" alignItems="Center" class="sapUiTinyMarginTopBottom sapUiSmallMarginEnd sapUiTinyMarginBegin"
 							fitContainer="true">
-							<f:Avatar displayShape="Square" src="{= ${Image} || './img/placeholder.png' }" displaySize="M"/>
+							<f:Avatar displayShape="Circle" src="{= ${Image} || './img/placeholder.png' }" displaySize="M"/>
 							<VBox justifyContent="Center" alignItems="SpaceBetween" fitContainer="true" class="sapUiTinyMarginBegin">
 								<layoutData>
 									<FlexItemData growFactor="10"/>
 								</layoutData>
 								<HBox justifyContent="SpaceBetween" alignItems="Center">
 									<Title text="{Description}" wrapping="true"/>
-									<Title text="{path:'Price',type:'.types.floatType'} ARS" class="productNumber"/>
+									<Title text="{path:'Price',type:'.types.floatType'} ARS"/>
 								</HBox>
 								<Label text="descripcion del plato"/>
 							</VBox>
@@ -41,7 +41,7 @@
 				<core:Icon src="sap-icon://cart-full" size="25px" class="sapUiTinyMarginBegin"/>
 				<Text class="sapUiTinyMarginBegin" text="{path:'Items',formatter:'.formatter.getLength'}"/>
 				<ToolbarSpacer/>
-				<Title text="{path: 'orderJSON>/Total', type:'.types.floatType'} ARS" class="sapUiTinyMarginEnd"/>
+				<Title titleStyle="H3" text="TOTAL: {path: 'orderJSON>/Total', type:'.types.floatType'} ARS" class="sapUiTinyMarginEnd"/>
 				<core:Icon src="sap-icon://navigation-right-arrow" class="sapUiTinyMarginEnd"/>
 			</Toolbar>
 		</footer>
