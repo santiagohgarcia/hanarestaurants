@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="restaurants.db.views::RestaurantTodayOrdersCount" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="RestaurantOrdersCount"/>
+<localVariables>
+  <variable id="RESTAURANTID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="INTEGER" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="restaurants.db.functions::RestaurantOrdersCount">
+    <targetVariable name="RESTAURANTID" resourceUri="restaurants.db.functions::RestaurantOrdersCount"/>
+    <localVariable>RESTAURANTID</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="restaurants.db.functions::RestaurantOrdersCount" type="TABLE_FUNCTION">
+    <resourceUri>restaurants.db.functions::RestaurantOrdersCount</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="restaurants.db.functions::RestaurantOrdersCount">
+  <attributes>
+    <attribute id="RestaurantId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RestaurantId"/>
+      <keyMapping columnObjectName="RestaurantOrdersCount" columnName="RestaurantId"/>
+    </attribute>
+    <attribute id="StatusId" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="StatusId"/>
+      <keyMapping columnObjectName="RestaurantOrdersCount" columnName="StatusId"/>
+    </attribute>
+    <attribute id="StatusDescription" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="StatusDescription"/>
+      <keyMapping columnObjectName="RestaurantOrdersCount" columnName="StatusDescription"/>
+    </attribute>
+    <attribute id="OrderCount" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OrderCount"/>
+      <keyMapping columnObjectName="RestaurantOrdersCount" columnName="OrderCount"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario> 

@@ -1,0 +1,9 @@
+VIEW "restaurants.db.views::TodayRevenue" 
+AS SELECT "R"."RestaurantId",SUM(RI."Price") as "TodayRevenue"
+	FROM "restaurants.db::RestaurantsContext.Restaurant" AS "R"
+	INNER JOIN "restaurants.db::RestaurantsContext.RestaurantOrder" as RO
+	on "R"."RestaurantId" = RO."RestaurantId"
+	inner join "restaurants.db::RestaurantsContext.RestaurantOrderItem" AS RI
+	ON RI."RestaurantId" = RO."RestaurantId" AND RI."RestaurantOrderId" = RO."RestaurantOrderId"
+	WHERE RO."ModifiedAt" > "restaurants.db.functions::GetLastDateTimeClose"("R"."CloseDayHour").PREVIOUSDATETIMECLOSE
+	GROUP BY "R"."RestaurantId"

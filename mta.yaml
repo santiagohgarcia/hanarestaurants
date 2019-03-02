@@ -34,6 +34,11 @@ modules:
           name: js_api
           url: '~{url}'
           forwardAuthToken: true
+
+  - name: customer
+    type: html5
+    path: customer
+
 resources:
   - name: hdi_db
     properties:

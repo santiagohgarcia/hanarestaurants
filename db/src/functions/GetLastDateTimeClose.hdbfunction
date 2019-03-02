@@ -1,0 +1,17 @@
+FUNCTION "restaurants.db.functions::GetLastDateTimeClose"( CloseHour INTEGER )
+       RETURNS PreviousDateTimeClose TIMESTAMP
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+DECLARE LastDate VARCHAR(20);
+DECLARE CurrentHour INTEGER DEFAULT HOUR(CURRENT_TIME) - 3;/*CHANGE TIMEZONE*/
+
+IF ( CloseHour <  CurrentHour) 
+THEN
+	LastDate = CURRENT_DATE;
+ELSE
+	LastDate = ADD_DAYS( CURRENT_DATE, -1 );
+END IF;
+PreviousDateTimeClose = CAST ( ( LastDate || ' ' || CloseHour ) as TIMESTAMP );
+
+END;

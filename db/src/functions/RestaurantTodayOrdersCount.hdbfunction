@@ -1,0 +1,31 @@
+FUNCTION "restaurants.db.functions::RestaurantOrdersCount"(RestaurantId INTEGER )
+       RETURNS table (
+       	"RestaurantId" INTEGER,
+       	"StatusId" VARCHAR(15), 
+       	"StatusDescription" VARCHAR(15),
+       	"OrderCount" INTEGER
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+
+RETURN SELECT * FROM ( SELECT "R"."RestaurantId", 'ALL' AS "StatusId",'Orders Today' as "StatusDescription", COUNT(RO."RestaurantOrderId") as "OrderCount"
+	FROM "restaurants.db::RestaurantsContext.Restaurant" AS "R"
+	LEFT OUTER JOIN "restaurants.db::RestaurantsContext.RestaurantOrder" AS RO
+	ON "R"."RestaurantId" = RO."RestaurantId" and
+	    RO."ModifiedAt" >= "restaurants.db.functions::GetLastDateTimeClose"("R"."CloseDayHour").PREVIOUSDATETIMECLOSE
+	WHERE "R"."RestaurantId" = RestaurantId
+	GROUP BY "R"."RestaurantId"
+UNION
+SELECT "R"."RestaurantId", S."StatusId",  S."Description" as "StatusDescription", COUNT(O."RestaurantOrderId") as "OrderCount"
+	FROM "restaurants.db::RestaurantsContext.Status" as S
+	LEFT OUTER JOIN "restaurants.db::RestaurantsContext.Restaurant" AS "R"
+	ON "R"."RestaurantId" = RestaurantId 
+	LEFT OUTER JOIN "restaurants.db::RestaurantsContext.RestaurantOrder" AS O
+	on O."Status.StatusId" = S."StatusId" AND
+	 O."RestaurantId" = RestaurantId and
+	 O."ModifiedAt" >= "restaurants.db.functions::GetLastDateTimeClose"("R"."CloseDayHour").PREVIOUSDATETIMECLOSE
+	GROUP BY  "R"."RestaurantId",S."StatusId",S."Description" ) ORDER BY "StatusId";
+
+END;
