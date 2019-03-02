@@ -3,8 +3,8 @@
 	<Page >
 		<customHeader>
 			<tnt:ToolHeader>
-				<core:Icon class="sapUiTinyMarginBegin" size="25px" src="sap-icon://meal"/>
-				<Title class="sapUiTinyMarginBegin" text="{Name}"/>
+				<Button icon="sap-icon://meal"/>
+				<Title text="{Name}"/>
 				<ToolbarSpacer/>
 				<MenuButton id="categoryMenuButton" type="Transparent">
 					<Menu id="categoryMenu" items="{path:'Categories',events:{ dataReceived: '.onReceiveCategories'}}" itemSelected="onSelectCategory">
@@ -14,7 +14,7 @@
 			</tnt:ToolHeader>
 		</customHeader>
 		<content>
-			<List id="productsList" growing="true" growingScrollToLoad="true" 
+			<List id="productsList" growing="true" growingScrollToLoad="true"
 				items="{path:'Products', parameters: {expand: 'Category' }, sorter: { path: 'Category.CategoryId', group: '.getCategoryDescription' } }">
 				<items>
 					<CustomListItem type="Active" press="onPressProduct">
@@ -26,8 +26,8 @@
 									<FlexItemData growFactor="10"/>
 								</layoutData>
 								<HBox justifyContent="SpaceBetween" alignItems="Center">
-									<Title text="{Description}" wrapping="true"/> 
-									<Title text="{path:'Price',type:'.types.floatType'} ARS" class="productNumber" />
+									<Title text="{Description}" wrapping="true"/>
+									<Title text="{path:'Price',type:'.types.floatType'} ARS" class="productNumber"/>
 								</HBox>
 								<Label text="descripcion del plato"/>
 							</VBox>

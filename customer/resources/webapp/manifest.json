@@ -83,12 +83,21 @@
 				"name": "RestaurantMenu",
 				"pattern": "/RestaurantMenu/{RestaurantId}",
 				"target": "restaurantMenu"
+			}, {
+				"name": "Login",
+				"pattern": "/RestaurantMenu/{RestaurantId}/Login",
+				"target": "login"
 			}],
 			"targets": {
 				"restaurantMenu": {
 					"viewType": "XML",
 					"transition": "slide",
 					"viewName": "RestaurantMenu.RestaurantMenu"
+				},
+				"login": {
+					"viewType": "XML",
+					"transition": "slide",
+					"viewName": "Login.Login"
 				}
 			}
 		}
