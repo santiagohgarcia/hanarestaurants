@@ -2,6 +2,7 @@ service {
     "restaurants.db::RestaurantsContext.Restaurant" 
 	  as "Restaurants"
 	  navigates ("RestaurantToCategories"  as "Categories",
+				"RestaurantToProducts"  as "Products",
 				"RestaurantToStaff"       as "Staff",
 				"RestaurantToTodayOrders" as "TodayOrders",
 				"RestaurantToTodayOrdersCount" as "TodayOrdersCount",
@@ -12,6 +13,12 @@ service {
 	principal "Restaurants"("RestaurantId")
 	multiplicity "1"
 	dependent "Categories"("RestaurantId")
+	multiplicity "*";
+	
+	association "RestaurantToProducts"
+	principal "Restaurants"("RestaurantId")
+	multiplicity "1"
+	dependent "Products"("RestaurantId")
 	multiplicity "*";
 	
 	association "RestaurantToOrderItems"
@@ -56,14 +63,15 @@ service {
 	keys generate local "ID"
     aggregates always (SUM of "Price"); 
 	
-	"restaurants.db::RestaurantsContext.Product" 
+	"restaurants.db::RestaurantsContext.Product"  
 	as "Products" navigates ("ProductToCategory" as "Category")
+	
 	create events (before "xsjslib:Product.xsjslib::BeforeCreate");
 	
 	association "ProductToCategory"
-	principal "Products"("Category.CategoryId")
+	principal "Products"("RestaurantId","Category.CategoryId")
 	multiplicity "1"
-	dependent "Categories"("CategoryId")
+	dependent "Categories"("RestaurantId","CategoryId")
 	multiplicity "1";
 	
 	"restaurants.db::RestaurantsContext.Category" 
