@@ -14,7 +14,7 @@ RETURN SELECT * FROM ( SELECT "R"."RestaurantId", 'ALL' AS "StatusId",'Orders To
 	FROM "restaurants.db::RestaurantsContext.Restaurant" AS "R"
 	LEFT OUTER JOIN "restaurants.db::RestaurantsContext.RestaurantOrder" AS RO
 	ON "R"."RestaurantId" = RO."RestaurantId" and
-	    RO."ModifiedAt" >= "restaurants.db.functions::GetLastDateTimeClose"("R"."CloseDayHour").PREVIOUSDATETIMECLOSE
+	    RO."CreatedAt" >= "restaurants.db.functions::GetLastDateTimeClose"("R"."CloseDayHour").PREVIOUSDATETIMECLOSE
 	WHERE "R"."RestaurantId" = RestaurantId
 	GROUP BY "R"."RestaurantId"
 UNION
@@ -25,7 +25,7 @@ SELECT "R"."RestaurantId", S."StatusId",  S."Description" as "StatusDescription"
 	LEFT OUTER JOIN "restaurants.db::RestaurantsContext.RestaurantOrder" AS O
 	on O."Status.StatusId" = S."StatusId" AND
 	 O."RestaurantId" = RestaurantId and
-	 O."ModifiedAt" >= "restaurants.db.functions::GetLastDateTimeClose"("R"."CloseDayHour").PREVIOUSDATETIMECLOSE
+	 O."CreatedAt" >= "restaurants.db.functions::GetLastDateTimeClose"("R"."CloseDayHour").PREVIOUSDATETIMECLOSE
 	GROUP BY  "R"."RestaurantId",S."StatusId",S."Description" ) ORDER BY "StatusId";
 
 END;

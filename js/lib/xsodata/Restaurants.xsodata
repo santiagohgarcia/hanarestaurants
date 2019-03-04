@@ -53,7 +53,8 @@ service {
         over "restaurants.db::RestaurantsContext.RestaurantStaff" principal ("Staff.StaffId") dependent ("Restaurant.RestaurantId");
         
     "restaurants.db::RestaurantsContext.RestaurantOrder" as "Orders"
-	create events (before "xsjslib:RestaurantOrder.xsjslib::BeforeCreate");
+	create events (before "xsjslib:RestaurantOrder.xsjslib::BeforeCreate", postcommit "xsjslib:RestaurantOrder.xsjslib::AfterCreateOrModif")
+	update events (postcommit "xsjslib:RestaurantOrder.xsjslib::AfterCreateOrModif");
 	    
 	"restaurants.db::RestaurantsContext.RestaurantOrderItem" as "OrderItems" 
 	create events (before "xsjslib:RestaurantOrderItem.xsjslib::BeforeCreate");
@@ -96,7 +97,8 @@ service {
 	as "Statuses";
 	
 	"restaurants.db::RestaurantsContext.Customer" 
-	as "Customers";
+	as "Customers"
+	create using "xsjslib:Customer.xsjslib::Create";
 	
 	"restaurants.db.views::TodayOrders" 
 	as "TodayOrders" key ("RestaurantId","RestaurantOrderId") 

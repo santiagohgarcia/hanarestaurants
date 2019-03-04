@@ -28,8 +28,9 @@ context RestaurantsContext {
             Items             : association[*] to RestaurantOrderItem                         on     Items.RestaurantId      = RestaurantId
                                                                                                  and Items.RestaurantOrderId = RestaurantOrderId;
             Price             : Decimal(10, 2) null;
-            ModifiedAt        : UTCTimestamp null;
+            CreatedAt         : UTCTimestamp;
             PaymentMethod     : String(50);
+            ReadyAt           : UTCTimestamp null;
     }
 
     entity RestaurantOrderItem {
@@ -44,8 +45,10 @@ context RestaurantsContext {
     }
 
     entity Customer {
-        key CustomerId : Integer;
-            Name       : String(100);
+        key CustomerId     : String(100);
+            Name           : String(100);
+            ImageUrl       : String(400);
+            MessagingToken : String(1000) null;
     }
 
     entity Status {
@@ -73,6 +76,4 @@ context RestaurantsContext {
             NeedPreparation : Integer; //Boolean
             Image           : LargeString;
     }
-
-    
 };

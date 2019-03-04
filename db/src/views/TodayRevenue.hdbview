@@ -5,6 +5,6 @@ AS SELECT "R"."RestaurantId",SUM(RI."Price") as "TodayRevenue"
 	on "R"."RestaurantId" = RO."RestaurantId"
 	inner join "restaurants.db::RestaurantsContext.RestaurantOrderItem" AS RI
 	ON RI."RestaurantId" = RO."RestaurantId" AND RI."RestaurantOrderId" = RO."RestaurantOrderId"
-	WHERE RO."ModifiedAt" > "restaurants.db.functions::GetLastDateTimeClose"("R"."CloseDayHour").PREVIOUSDATETIMECLOSE and
+	WHERE RO."CreatedAt" > "restaurants.db.functions::GetLastDateTimeClose"("R"."CloseDayHour").PREVIOUSDATETIMECLOSE and
 		  RO."Status.StatusId" != 'CANCELLED'
 	GROUP BY "R"."RestaurantId"
