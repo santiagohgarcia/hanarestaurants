@@ -11,9 +11,19 @@ sap.ui.define([
 		types: types,
 		models: models,
 		formatter: formatter,
-		
-		onPressFinish:function(){
-			
+
+		onInit: function() {
+			this.getRouter().getRoute("OrderCreated").attachMatched(this._onOrderCreatedMatched.bind(this));
+		},
+
+		_onOrderCreatedMatched: function(evt) {
+			this.RestaurantId = evt.getParameter("arguments").RestaurantId;
+		},
+
+		onPressFinish: function() {
+			this.getRouter().navTo("Menu", {
+				RestaurantId: this.RestaurantId
+			}, true);
 		}
 
 	});

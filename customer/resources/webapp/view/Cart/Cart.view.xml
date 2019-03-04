@@ -1,9 +1,10 @@
 <mvc:View controllerName="customer.customer.controller.Cart.Cart" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
 	displayBlock="true" xmlns:tnt="sap.tnt" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:ux="sap.uxap">
-	<Page >
+	<Page floatingFooter="true">
 		<customHeader>
 			<tnt:ToolHeader>
 				<Button icon="sap-icon://nav-back" press="onNavBack"/>
+				<core:Icon src="sap-icon://cart-full" size="25px" color="Default"/>
 				<Title class="sapUiTinyMarginBegin" text="{i18n>CheckYourOrder}"/>
 				<ToolbarSpacer/>
 			</tnt:ToolHeader>

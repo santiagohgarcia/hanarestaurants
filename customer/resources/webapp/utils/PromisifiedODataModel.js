@@ -33,7 +33,23 @@ sap.ui.define([
 					reject(response);
 				};
 
-				ODataModel.prototype.update.apply(this, [sPath,oData,mParameters]);
+				ODataModel.prototype.update.apply(this, [sPath, oData, mParameters]);
+			});
+		},
+		
+		create: function(sPath, oData, mParameters) {
+			mParameters = mParameters || {};
+			return new Promise((resolve, reject) => {
+
+				mParameters.success = function(response) {
+					resolve(response);
+				};
+
+				mParameters.error = function(response) {
+					reject(response);
+				};
+
+				ODataModel.prototype.create.apply(this, [sPath, oData, mParameters]);
 			});
 		}
 

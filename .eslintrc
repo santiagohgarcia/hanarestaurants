@@ -12,7 +12,7 @@
 		"callback-return": 0,
 		"camelcase": 1,
 		"class-methods-use-this": 0,
-		"comma-dangle": [2, "never"],
+		"comma-dangle": [0, "never"],
 		"comma-spacing": 0,
 		"comma-style": 0,
 		"complexity": [0, 11],
@@ -20,14 +20,14 @@
 		"consistent-return": 1,
 		"consistent-this": [0, "that"],
 		"constructor-super": 0,
-		"curly": [2, "all"],
+		"curly": [0, "all"],
 		"default-case": 0,
 		"dot-location": 0,
-		"dot-notation": [1, {
+		"dot-notation": [0, {
 			"allowKeywords": true
 		}],
 		"eol-last": 0,
-		"eqeqeq": [1, "always"],
+		"eqeqeq": [0, "always"],
 		"func-call-spacing": 0,
 		"func-name-matching": 0,
 		"func-names": 0,
@@ -108,7 +108,7 @@
 		"no-implicit-globals": 0,
 		"no-implied-eval": 1,
 		"no-inline-comments": 0,
-		"no-inner-declarations": [2, "functions"],
+		"no-inner-declarations": [0, "functions"],
 		"no-invalid-regexp": 2,
 		"no-invalid-this": 0,
 		"no-irregular-whitespace": 2,
@@ -183,7 +183,7 @@
 		"no-unsafe-negation": 0,
 		"no-unused-expressions": 1,
 		"no-unused-labels": 0,
-		"no-unused-vars": [1, {
+		"no-unused-vars": [0, {
 			"args": "after-used",
 			"vars": "all"
 		}],
@@ -220,7 +220,7 @@
 		"prefer-spread": 0,
 		"prefer-template": 0,
 		"quote-props": 0,
-		"quotes": [1, "double"],
+		"quotes": [0, "double"],
 		"radix": 0,
 		"require-jsdoc": 0,
 		"require-yield": 0,
@@ -237,7 +237,7 @@
 		"space-before-function-paren": [0, "always"],
 		"space-in-parens": [0, "never"],
 		"space-infix-ops": 0,
-		"space-unary-ops": [1, {
+		"space-unary-ops": [0, {
 			"nonwords": false,
 			"words": true
 		}],
@@ -253,7 +253,7 @@
 		"wrap-iife": 0,
 		"wrap-regex": 0,
 		"yield-star-spacing": 0,
-		"yoda": [1, "never"]
+		"yoda": [0, "never"]
 	},
 	"globals": {
 		"require": false,
@@ -470,5 +470,9 @@
 		"es6": true,
 		"mocha": true,
 		"jquery": true
-	}
+	},
+	"parserOptions": {
+        "ecmaVersion": 2016
+    }
+	"customRulesPath": null
 }

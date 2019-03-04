@@ -9,7 +9,7 @@
 					<f:Avatar src="sap-icon://employee" displaySize="S"/>
 					<ObjectStatus text="{Status/Description}" state="{path:'Status/StatusId', formatter:'.formatter.orderStatusToValueState'}"
 						class="sapUiTinyMarginBottom orderStatus"/>
-					<Label text="{path:'ModifiedAt',type:'.types.dateTimeType'}"/>
+					<Label text="{path:'CreatedAt',type:'.types.dateTimeType'}"/>
 				</VBox>
 				<VBox>
 					<layoutData>

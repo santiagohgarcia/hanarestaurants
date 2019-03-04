@@ -4,37 +4,37 @@
 		<customHeader>
 			<tnt:ToolHeader>
 				<Button icon="sap-icon://meal"/>
-				<Title class="sapUiTinyMarginBegin" text="{Name}"/>
+				<Title class="sapUiTinyMarginBegin" text="{i18n>Restaurants}"/>
 				<ToolbarSpacer/>
 			</tnt:ToolHeader>
 		</customHeader>
 		<l:BlockLayout background="Light">
 			<l:BlockLayoutRow>
-				<l:BlockLayoutCell title="Welcome to {Name}!">
+				<l:BlockLayoutCell title="{i18n>Welcome}">
 					<HBox justifyContent="SpaceBetween" alignItems="Center">
-						<Text text="Please select a login method to continue"/>
+						<Text text="{i18n>PleaseSelectALoginMethod}"/>
 						<core:Icon src="sap-icon://meal" size="50px" color="Default"/>
 					</HBox>
 				</l:BlockLayoutCell>
 			</l:BlockLayoutRow>
 		</l:BlockLayout>
 		<List>
-			<CustomListItem type="Navigation">
+			<CustomListItem type="Navigation" press="onFacebookLogin">
 				<HBox alignItems="Center" class="sapUiSmallMargin">
 					<f:Avatar src="./img/facebook.png" initials="F" displaySize="L"/>
 					<Title text="Facebook" class="sapUiSmallMarginBegin"/>
 				</HBox>
 			</CustomListItem>
-			<CustomListItem type="Navigation">
+			<CustomListItem type="Navigation" press="onGoogleLogin">
 				<HBox alignItems="Center" class="sapUiSmallMargin">
 					<f:Avatar src="./img/google-plus.png" initials="G" displaySize="L"/>
 					<Title text="Google" class="sapUiSmallMarginBegin"/>
 				</HBox>
 			</CustomListItem>
-			<CustomListItem type="Navigation">
+			<CustomListItem type="Navigation" press="onAnonymousLogin">
 				<HBox alignItems="Center" class="sapUiSmallMargin">
 					<f:Avatar initials="?" displaySize="L"/>
-					<Title text="Anónimo" class="sapUiSmallMarginBegin"/>
+					<Title text="{i18n>Anonymous}" class="sapUiSmallMarginBegin"/>
 				</HBox>
 			</CustomListItem>
 		</List>

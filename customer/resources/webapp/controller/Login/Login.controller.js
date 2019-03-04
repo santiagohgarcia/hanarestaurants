@@ -12,13 +12,18 @@ sap.ui.define([
 		models: models,
 		formatter: formatter,
 
-		onInit: function() {
-			this.getRouter().getRoute("Login").attachMatched(this._onLoginMatched.bind(this));
+		onGoogleLogin: function() {
+			var provider = new firebase.auth.GoogleAuthProvider();
+			firebase.auth().signInWithPopup(provider);
 		},
 
-		_onLoginMatched: function(evt) {
-			var args = evt.getParameter("arguments");
-			this.getView().bindElement(`/Restaurants(RestaurantId=${args.RestaurantId})`);
+		onFacebookLogin: function() {
+			var provider = new firebase.auth.FacebookAuthProvider();
+			firebase.auth().signInWithPopup(provider);
+		},
+
+		onAnonymousLogin: function() {
+			firebase.auth().signInAnonymously();
 		}
 
 	});
