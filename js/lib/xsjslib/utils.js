@@ -1,6 +1,5 @@
 /*eslint no-console: 0, no-unused-vars: 0, dot-notation: 0, no-use-before-define: 0, no-redeclare: 0*/
 "use strict";
-"use strict";
 
 module.exports = {
 	trucateAfter: function(param) {
