@@ -2,7 +2,9 @@
 	"dependencies": {
 		"@sap/xsjs": "3.7.0",
 		"@sap/xsenv": "1.2.9",
-		"sharp": "0.21.3"
+		"sharp": "0.21.3",
+		"google-auth-library": "^0.10.0",
+		"googleapis": "^20.1.0"
 	},
 	"devDependencies": {
 		"@sap/xsjs-test": "2.0.16"
