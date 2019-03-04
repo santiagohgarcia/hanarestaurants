@@ -16,13 +16,16 @@ module.exports = {
 		pStmt.close();
 		return rs._rows[0];
 	},
-	
+
 	getOldObject: function(param) {
-	//Get Old Record
-	var pStmt = param.connection.prepareStatement(`select * from "${param.beforeTableName}"`);
-	var rs = pStmt.executeQuery();
-	pStmt.close();
-	return rs._rows[0];
+		if (!param.beforeTableName) {
+			return undefined;
+		}
+		//Get Old Record
+		var pStmt = param.connection.prepareStatement(`select * from "${param.beforeTableName}"`);
+		var rs = pStmt.executeQuery();
+		pStmt.close();
+		return rs._rows[0];
 	}
 
 };
