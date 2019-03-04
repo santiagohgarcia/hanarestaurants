@@ -87,6 +87,14 @@
 				"name": "Login",
 				"pattern": "/RestaurantMenu/{RestaurantId}/Login",
 				"target": "login"
+			}, {
+				"name": "Cart",
+				"pattern": "/RestaurantMenu/{RestaurantId}/Cart/{OrderPath}",
+				"target": "cart"
+			}, {
+				"name": "OrderCreated",
+				"pattern": "/OrderCreated",
+				"target": "orderCreated"
 			}],
 			"targets": {
 				"restaurantMenu": {
@@ -98,6 +106,16 @@
 					"viewType": "XML",
 					"transition": "slide",
 					"viewName": "Login.Login"
+				},
+				"cart": {
+					"viewType": "XML",
+					"transition": "slide",
+					"viewName": "Cart.Cart"
+				},
+				"orderCreated": {
+					"viewType": "XML",
+					"transition": "flip",
+					"viewName": "Checkout.OrderCreated"
 				}
 			}
 		}

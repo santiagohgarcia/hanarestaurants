@@ -1,9 +1,8 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History",
-	"sap/m/MessageToast",
-	"sap/m/MessageBox"
-], function(Controller, History, MessageToast, MessageBox) {
+	"sap/m/MessageToast"
+], function(Controller, History, MessageToast) {
 	"use strict";
 	return Controller.extend("restaurants.ui5.controller.BaseController", {
 
@@ -26,7 +25,7 @@ sap.ui.define([
 			if (sPreviousHash !== undefined) {
 				window.history.go(-1);
 			} else {
-				this.getRouter().navTo(defaultNav || "Restaurant", {}, true /*no history*/ );
+				this.getRouter().navTo(defaultNav || "RestaurantMenu", {}, true /*no history*/ );
 			}
 		},
 

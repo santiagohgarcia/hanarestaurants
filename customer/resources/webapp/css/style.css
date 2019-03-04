@@ -3,3 +3,11 @@
 .productNumber .sapMObjectNumberText {
     font-size: 1.312rem;
 }
+
+.deleteOrderItemButton .sapMBtn {
+    height: auto !important;
+}
+
+.orderItemList {
+    border-top: 1px solid #e5e5e5
+}

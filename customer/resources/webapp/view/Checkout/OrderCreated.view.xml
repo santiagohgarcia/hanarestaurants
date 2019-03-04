@@ -1,0 +1,9 @@
+<mvc:View controllerName="customer.customer.controller.Checkout.OrderCreated" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout">
+	<MessagePage showHeader="false" text="{i18n>YourOrderHasBeenSubmited}" 
+		description="{i18n>CheckYourNotifications}" icon="sap-icon://accept">
+		<buttons>
+			<Button text="{i18n>Finish}" type="Emphasized" press="onPressFinish"/>
+		</buttons>
+	</MessagePage>
+</mvc:View>
