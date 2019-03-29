@@ -80,27 +80,27 @@
 				"controlId": "idAppControl"
 			},
 			"routes": [{
-				"name": "RestaurantMenu",
-				"pattern": "/RestaurantMenu/{RestaurantId}",
-				"target": "restaurantMenu"
+				"name": "Menu",
+				"pattern": "/Restaurant/{RestaurantId}/Menu",
+				"target": "menu"
 			}, {
 				"name": "Login",
-				"pattern": "/RestaurantMenu/{RestaurantId}/Login",
+				"pattern": "/Login:?query:",
 				"target": "login"
 			}, {
 				"name": "Cart",
-				"pattern": "/RestaurantMenu/{RestaurantId}/Cart/{OrderPath}",
+				"pattern": "/Restaurant/{RestaurantId}/Cart/{OrderPath}",
 				"target": "cart"
 			}, {
 				"name": "OrderCreated",
-				"pattern": "/OrderCreated",
+				"pattern": "/Restaurant/{RestaurantId}/OrderCreated",
 				"target": "orderCreated"
 			}],
 			"targets": {
-				"restaurantMenu": {
+				"menu": {
 					"viewType": "XML",
 					"transition": "slide",
-					"viewName": "RestaurantMenu.RestaurantMenu"
+					"viewName": "Menu.Menu"
 				},
 				"login": {
 					"viewType": "XML",

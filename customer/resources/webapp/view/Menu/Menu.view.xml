@@ -1,6 +1,6 @@
-<mvc:View controllerName="customer.customer.controller.RestaurantMenu.RestaurantMenu" xmlns:html="http://www.w3.org/1999/xhtml"
+<mvc:View controllerName="customer.customer.controller.Menu.Menu" xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core" xmlns:f="sap.f" >
-	<Page >
+	<Page showFooter="{= ${orderJSON>/Total} > 0 }" floatingFooter="true" modelContextChange="onModelContextChange">
 		<customHeader>
 			<tnt:ToolHeader>
 				<Button icon="sap-icon://meal"/>
@@ -37,7 +37,7 @@
 			</List>
 		</content>
 		<footer>
-			<Toolbar id="cartToolbar" visible="{= ${orderJSON>/Total} > 0 }" active="true" press="onCartToolbarPress">
+			<Toolbar id="cartToolbar"  active="true" press="onCartToolbarPress">
 				<core:Icon src="sap-icon://cart-full" size="25px" class="sapUiTinyMarginBegin"/>
 				<Text class="sapUiTinyMarginBegin" text="{path:'Items',formatter:'.formatter.getLength'}"/>
 				<ToolbarSpacer/>

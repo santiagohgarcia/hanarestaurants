@@ -63,23 +63,56 @@ sap.ui.define([
 			MessageBox.confirm(this.getText("AreYouSureYouWantToSubmitYourOrder"), {
 				onClose: function(action) {
 					if (action === "OK") {
-						this.saveOrder();
+						this._onConfirmOrder();
 					}
 				}.bind(this)
 			});
 		},
 
-		saveOrder: function() {
+		_onConfirmOrder: function() {
+			this._requestMessagingPermission()
+				.then(() => this._submitOrder())
+
+			const messaging = firebase.messaging();
+			messaging.onMessage((message) => {
+				debugger;
+				var a = message;
+			})
+		},
+
+		_modifyCustomerToken: function(token) {
+			var customerCtx = this.getView().getBindingContext("customer");
+			this.getModel("customer").setProperty("MessagingToken", token, customerCtx);
+			if (this.getModel("customer").hasPendingChanges()) {
+				return this.getModel("customer").submitChanges();
+			} else {
+				return Promise.resolve(customerCtx.getObject());
+			}
+		},
+
+		_submitOrder: function() {
 			var order = this.byId("orderPanel").getBindingContext().getObject();
 			if (order.PaymentMethod === "CREDIT_CARD") {
 				alert("falta MP");
 			} else {
-				this.getModel().submitChanges().then(this.success.bind(this));
+				this.getModel().submitChanges().then(this._success.bind(this));
 			}
 		},
 
-		success: function(resp) {
-			this.getRouter().navTo("OrderCreated", true);
+		_requestMessagingPermission: function() {
+			const messaging = firebase.messaging();
+			messaging.onTokenRefresh(() =>
+				messaging.getToken().then((token) => this._modifyCustomerToken(token)));
+			return messaging.requestPermission()
+				.then(() => messaging.getToken())
+				.then((token) => this._modifyCustomerToken(token));
+		},
+
+		_success: function() {
+			var order = this.byId("orderPanel").getBindingContext().getObject();
+			this.getRouter().navTo("OrderCreated", {
+				RestaurantId: order.RestaurantId
+			}, true);
 		}
 	});
 });

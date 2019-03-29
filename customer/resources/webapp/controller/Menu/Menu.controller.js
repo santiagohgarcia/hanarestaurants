@@ -10,14 +10,14 @@ sap.ui.define([
 ], function(BaseController, types, models, formatter, Fragment, JSONModel, Filter, FO) {
 	"use strict";
 
-	return BaseController.extend("customer.customer.controller.RestaurantMenu.RestaurantMenu", {
+	return BaseController.extend("customer.customer.controller.Menu.Menu", {
 
 		types: types,
 		models: models,
 		formatter: formatter,
 
 		onInit: function() {
-			this.getRouter().getRoute("RestaurantMenu").attachMatched(this._onRestaurantMenuMatched.bind(this));
+			this.getRouter().getRoute("Menu").attachMatched(this._onRestaurantMenuMatched.bind(this));
 			this.setModel(new JSONModel({
 				Total: 0
 			}), "orderJSON");
@@ -26,24 +26,29 @@ sap.ui.define([
 		_onRestaurantMenuMatched: function(evt) {
 			var args = evt.getParameter("arguments");
 			this.getView().bindElement(`/Restaurants(RestaurantId=${args.RestaurantId})`);
-			this._bindNewOrder(args);
+			this.sumOrderTotal();
 		},
 
-		_bindNewOrder: function(restaurant) {
+		onModelContextChange: function(evt) {
+			this._bindNewOrder()
+		},
+
+		_bindNewOrder: function() {
 			var cartToolbar = this.byId("cartToolbar");
-			if (!cartToolbar.getBindingContext()) {
+			var customerCtx = this.getView().getBindingContext("customer");
+			var restaurantCtx = this.getView().getBindingContext();
+			var prevCtx = this.byId("cartToolbar").getBindingContext();
+			if (customerCtx && restaurantCtx && prevCtx && !prevCtx.bCreated) {
+				var restaurant = restaurantCtx.getObject();
 				models.getNewOrderId(restaurant).then(resp => {
 					var ctx = this.getModel().createEntry("/Orders", {
 						properties: {
-							RestaurantId: Number(restaurant.RestaurantId),
+							RestaurantId: restaurantCtx.getProperty("RestaurantId"),
 							RestaurantOrderId: resp.RestaurantOrderId,
+							"Customer.CustomerId": customerCtx.getProperty("CustomerId"),
 							PaymentMethod: "CREDIT_CARD",
 							Items: []
-						},
-						success: function() {
-							this.byId("cartToolbar").unbindElement();
-							this.getModel("orderJSON").setProperty("/Total", 0);
-						}.bind(this)
+						}
 					});
 					this.byId("cartToolbar").setBindingContext(ctx);
 				});
@@ -57,7 +62,7 @@ sap.ui.define([
 			if (!addToCartDialog) {
 				Fragment.load({
 					id: this.getView().getId(),
-					name: "customer.customer.view.RestaurantMenu.AddToCartDialog",
+					name: "customer.customer.view.Menu.AddToCartDialog",
 					controller: this
 				}).then(dialog => {
 					this.byId("quantityStepInput").setValue(1);
@@ -105,10 +110,10 @@ sap.ui.define([
 		},
 
 		sumOrderTotal: function() {
-			var sum = this.byId("cartToolbar").getBindingContext().getProperty("Items")
-				.map(i => this.getModel().getObject("/" + i))
+			var items = this.byId("cartToolbar").getBindingContext().getProperty("Items");
+			var sum = items ? items.map(i => this.getModel().getObject("/" + i))
 				.map(i => Number(i.Price))
-				.reduce(((a, b) => a + b), 0);
+				.reduce(((a, b) => a + b), 0) : 0;
 			this.getModel("orderJSON").setProperty("/Total", sum);
 		},
 
