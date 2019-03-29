@@ -53,8 +53,22 @@ service {
         over "restaurants.db::RestaurantsContext.RestaurantStaff" principal ("Staff.StaffId") dependent ("Restaurant.RestaurantId");
         
     "restaurants.db::RestaurantsContext.RestaurantOrder" as "Orders"
+      navigates ("OrderToOrderItems"            as "Items",
+    			 "OrderToStatus"            as "Status")
 	create events (before "xsjslib:RestaurantOrder.xsjslib::BeforeCreate", postcommit "xsjslib:RestaurantOrder.xsjslib::AfterCreateOrModif")
 	update events (postcommit "xsjslib:RestaurantOrder.xsjslib::AfterCreateOrModif");
+	
+		association "OrderToOrderItems"
+	principal "Orders"("RestaurantId","RestaurantOrderId")
+	multiplicity "1"
+	dependent "OrderItems"("RestaurantId","RestaurantOrderId")
+	multiplicity "*";
+	
+		association "OrderToStatus"
+	principal "Orders"("Status.StatusId")
+	multiplicity "1"
+	dependent "Statuses"("StatusId")
+	multiplicity "1";
 	    
 	"restaurants.db::RestaurantsContext.RestaurantOrderItem" as "OrderItems" 
 	create events (before "xsjslib:RestaurantOrderItem.xsjslib::BeforeCreate");
@@ -98,7 +112,14 @@ service {
 	
 	"restaurants.db::RestaurantsContext.Customer" 
 	as "Customers"
+	navigates("CustomerToOrders" as "Orders")
 	create using "xsjslib:Customer.xsjslib::Create";
+	
+	association "CustomerToOrders"
+	principal "Customers"("CustomerId")
+	multiplicity "1"
+	dependent "Orders"("Customer.CustomerId")
+	multiplicity "*";
 	
 	"restaurants.db.views::TodayOrders" 
 	as "TodayOrders" key ("RestaurantId","RestaurantOrderId") 

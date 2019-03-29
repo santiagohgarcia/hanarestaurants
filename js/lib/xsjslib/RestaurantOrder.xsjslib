@@ -1,7 +1,7 @@
 /*eslint no-console: 0, no-unused-vars: 0, dot-notation: 0, no-use-before-define: 0, no-redeclare: 0*/
 "use strict";
 var utils = $.require("./utils.js");
-var messaging = $.import("xsjslib","messaging");
+var messaging = $.import("xsjslib", "messaging");
 
 function BeforeCreate(param) {
 	var newObject = utils.getNewObject(param);
@@ -31,34 +31,38 @@ function BeforeCreate(param) {
 function AfterCreateOrModif(param) {
 	var newOrder = utils.getNewObject(param);
 	var oldOrder = utils.getOldObject(param);
+	var customerId = newOrder["Customer.CustomerId"];
 
-	var getCustomerStmt = param.connection.prepareStatement(
-		`SELECT * FROM "restaurants.db::RestaurantsContext.Customer" WHERE "CustomerId" = ?`
-	);
-	getCustomerStmt.setString(1, newOrder["Customer.CustomerId"]);
-	var customerResult = getCustomerStmt.executeQuery();
-	customerResult.next();
-	var customer = customerResult._row;
+	//Send message to customer if the order is ready
+	if (customerId) {
+		var getCustomerStmt = param.connection.prepareStatement(
+			`SELECT * FROM "restaurants.db::RestaurantsContext.Customer" WHERE "CustomerId" = ?`
+		);
+		getCustomerStmt.setString(1, customerId);
 
-	var message = {
-		message: {
-			token: customer.MessagingToken
+		var customerResult = getCustomerStmt.executeQuery();
+		customerResult.next();
+		var customer = customerResult._row;
+
+		var message = {
+			message: {
+				token: customer.MessagingToken
+			}
+		};
+
+		if (newOrder && !oldOrder) {
+			//Order Created: Send initial notification
+			message.message.notification = {
+				title: "Orden creada",
+				body: "estate atento"
+			};
+		} else if (newOrder["Status.StatusId"] === "PAYED") {
+			//Order READY: Send READY notification
+			message.message.notification = {
+				title: "Orden lista",
+				body: "pasa a retirarla"
+			};
 		}
-	};
-
-	if (newOrder && !oldOrder) {
-		//Order Created: Send initial notification
-		message.message.notification = {
-			title: "Orden creada",
-			body: "estate atento"
-		};
-	} else if (newOrder["Status.StatusId"] === "PAYED") {
-		//Order READY: Send READY notification
-		message.message.notification = {
-			title: "Orden lista",
-			body: "pasa a retirarla"
-		};
+		messaging.sendFcmMessage(message);
 	}
-
-	messaging.sendFcmMessage(message);
 }
