@@ -1,0 +1,36 @@
+<mvc:View controllerName="customer.customer.controller.Orders.Orders" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m" xmlns:tnt="sap.tnt">
+	<Page id="ordersPage" showHeader="false">
+		<List id="ordersList" items="{path: 'Orders', parameters: {expand: 'Items,Status'}, sorter: {path: 'CreatedAt', descending: true}}"
+			type="Navigation" modelContextChange="onModelContextChange">
+			<CustomListItem>
+				<VBox class="sapUiSmallMargin">
+					<HBox justifyContent="SpaceBetween" >
+						<Title titleStyle="H3" text="{i18n>Order} #{RestaurantOrderId}"/>
+						<ObjectStatus class="sapMObjectStatusLarge" state="{path:'Status.StatusId', formatter: '.formatter.orderStatusToValueState'}"
+							icon="{path:'Status.StatusId', formatter: '.formatter.orderStatusToIcon'}" text="{Status/Description}"/>
+						<!--<tnt:InfoLabel  color="1"/>-->
+					</HBox>
+					<HBox justifyContent="SpaceBetween" alignItems="Center">
+						<VBox items="{Items}">
+							<!--<HBox justifyContent="SpaceBetween" alignItems="Center">-->
+							<Label text="{Quantity} x {ProductDescription}" wrapping="true" class="sapUiTinyMarginTop"/>
+							<!--	<ObjectNumber number="{path:'Price',type:'.types.floatType'}" emphasized="false" unit="ARS" textAlign="End">
+								<layoutData>
+									<FlexItemData minWidth="90px"/>
+								</layoutData>
+							</ObjectNumber>-->
+							<!--</HBox>-->
+						</VBox>
+						<ObjectNumber class="sapMObjectNumberLarge" number="1325" emphasized="true" unit="ARS" textAlign="End">
+							<layoutData>
+								<FlexItemData minWidth="90px"/>
+							</layoutData>
+						</ObjectNumber>
+					</HBox>
+					<!--	<HBox justifyContent="End"></HBox>-->
+				</VBox>
+			</CustomListItem>
+		</List>
+	</Page>
+</mvc:View>

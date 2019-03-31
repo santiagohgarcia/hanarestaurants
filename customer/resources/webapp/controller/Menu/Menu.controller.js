@@ -18,45 +18,26 @@ sap.ui.define([
 
 		onInit: function() {
 			this.getRouter().getRoute("Menu").attachMatched(this._onRestaurantMenuMatched.bind(this));
+			this.getRouter().getRoute("NewOrder").attachMatched(this._onRestaurantNewOrderMatched.bind(this));
 			this.setModel(new JSONModel({
 				Total: 0
 			}), "orderJSON");
 		},
 
+		_onRestaurantNewOrderMatched: function(evt) {
+			var args = evt.getParameter("arguments");
+			this.getView().bindElement(`/Restaurants(RestaurantId=${args.RestaurantId})`);
+			this.byId("navBack").setVisible(false);
+		},
+
 		_onRestaurantMenuMatched: function(evt) {
 			var args = evt.getParameter("arguments");
 			this.getView().bindElement(`/Restaurants(RestaurantId=${args.RestaurantId})`);
-			this.sumOrderTotal();
-		},
-
-		onModelContextChange: function(evt) {
-			this._bindNewOrder()
-		},
-
-		_bindNewOrder: function() {
-			var cartToolbar = this.byId("cartToolbar");
-			var customerCtx = this.getView().getBindingContext("customer");
-			var restaurantCtx = this.getView().getBindingContext();
-			var prevCtx = this.byId("cartToolbar").getBindingContext();
-			if (customerCtx && restaurantCtx && prevCtx && !prevCtx.bCreated) {
-				var restaurant = restaurantCtx.getObject();
-				models.getNewOrderId(restaurant).then(resp => {
-					var ctx = this.getModel().createEntry("/Orders", {
-						properties: {
-							RestaurantId: restaurantCtx.getProperty("RestaurantId"),
-							RestaurantOrderId: resp.RestaurantOrderId,
-							"Customer.CustomerId": customerCtx.getProperty("CustomerId"),
-							PaymentMethod: "CREDIT_CARD",
-							Items: []
-						}
-					});
-					this.byId("cartToolbar").setBindingContext(ctx);
-				});
-			}
+			this.byId("navBack").setVisible(true);
 		},
 
 		// ADD TO CART DIALOG
-		onPressProduct: function(evt) {
+		onPressProduct: async function(evt) {
 			var productCtx = evt.getSource().getBindingContext();
 			var addToCartDialog = this.byId("addToCartDialog");
 			if (!addToCartDialog) {
@@ -77,14 +58,17 @@ sap.ui.define([
 			}
 		},
 
-		onAddToCart: function(evt) {
+		onAddToCart: async function(evt) {
 			var model = this.getModel(),
 				qty = this.byId("quantityStepInput").getValue(),
-				orderCtx = this.byId("cartToolbar").getBindingContext(),
-				order = orderCtx.getObject(),
 				product = evt.getSource().getBindingContext().getObject({
 					expand: "Category"
 				});
+			var orderCtx = this.byId("cartToolbar").getBindingContext();
+			if (!orderCtx.bCreated) {
+				orderCtx = await this._bindNewOrder();
+			}
+			var order = orderCtx.getObject();
 			var orderItemCtx = model.createEntry("/OrderItems", {
 				properties: {
 					RestaurantId: order.RestaurantId,
@@ -105,15 +89,35 @@ sap.ui.define([
 			this.byId("addToCartDialog").close();
 		},
 
+		_bindNewOrder: async function() {
+			var cartToolbar = this.byId("cartToolbar");
+			var customer = this.getView().getBindingContext("customer").getObject();
+			var restaurant = this.getView().getBindingContext().getObject();
+			var restaurantOrderId = await models.getNewOrderId(restaurant);
+			var ctx = this.getModel().createEntry("/Orders", {
+				properties: {
+					RestaurantId: restaurant.RestaurantId,
+					RestaurantOrderId: restaurantOrderId.RestaurantOrderId,
+					"Customer.CustomerId": customer.CustomerId,
+					PaymentMethod: "CREDIT_CARD",
+					Items: []
+				},
+				success: function() {
+					this.getModel("orderJSON").setProperty("/Total", 0);
+				}.bind(this)
+			});
+			cartToolbar.setBindingContext(ctx);
+			return ctx;
+		},
+
 		onCancelAddToCart: function() {
 			this.byId("addToCartDialog").close();
 		},
 
 		sumOrderTotal: function() {
-			var items = this.byId("cartToolbar").getBindingContext().getProperty("Items");
-			var sum = items ? items.map(i => this.getModel().getObject("/" + i))
+			var sum = this.byId("cartToolbar").getBindingContext().getProperty("Items").map(i => this.getModel().getObject("/" + i))
 				.map(i => Number(i.Price))
-				.reduce(((a, b) => a + b), 0) : 0;
+				.reduce(((a, b) => a + b), 0);
 			this.getModel("orderJSON").setProperty("/Total", sum);
 		},
 

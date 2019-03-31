@@ -3,7 +3,7 @@
 	<Page showFooter="{= ${orderJSON>/Total} > 0 }" floatingFooter="true" modelContextChange="onModelContextChange">
 		<customHeader>
 			<tnt:ToolHeader>
-				<Button icon="sap-icon://meal"/>
+				<Button id="navBack" icon="sap-icon://nav-back" press="onNavBack"/>
 				<Title text="{Name}"/>
 				<ToolbarSpacer/>
 				<MenuButton id="categoryMenuButton" type="Transparent">

@@ -80,8 +80,16 @@
 				"controlId": "idAppControl"
 			},
 			"routes": [{
+				"name": "Orders",
+				"pattern": "/Orders",
+				"target": "orders"
+			},  {
 				"name": "Menu",
 				"pattern": "/Restaurant/{RestaurantId}/Menu",
+				"target": "menu"
+			}, {
+				"name": "NewOrder",
+				"pattern": "/Restaurant/{RestaurantId}/NewOrder",
 				"target": "menu"
 			}, {
 				"name": "Login",
@@ -111,6 +119,11 @@
 					"viewType": "XML",
 					"transition": "slide",
 					"viewName": "Cart.Cart"
+				},
+				"orders": {
+					"viewType": "XML",
+					"transition": "flip",
+					"viewName": "Orders.Orders"
 				},
 				"orderCreated": {
 					"viewType": "XML",

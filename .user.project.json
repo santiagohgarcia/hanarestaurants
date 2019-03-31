@@ -1,25 +1,6 @@
 {
   "run": [
     {
-      "filePath": "/ui5/resources/webapp/index.html",
-      "previewMode": 1,
-      "dataMode": 1,
-      "workspace": "withoutWorkspace",
-      "ui5ActiveVersion": null,
-      "ui5VerSource": null,
-      "isDefaultVersion": 0,
-      "urlParameters": [],
-      "hashParameter": "",
-      "backendSystem": [],
-      "urlParametersNotNeeded": false,
-      "_metadata": {
-        "id": 9513027,
-        "runnerId": "webapprunner",
-        "displayName": "ui5",
-        "lastRunTimeStamp": 1551725660125
-      }
-    },
-    {
       "filePath": "/customer/resources/webapp/index.html",
       "previewMode": 1,
       "dataMode": 1,
@@ -35,7 +16,26 @@
         "id": 2902235,
         "runnerId": "webapprunner",
         "displayName": "customer",
-        "lastRunTimeStamp": 1551706370677
+        "lastRunTimeStamp": 1553829249759
+      }
+    },
+    {
+      "filePath": "/ui5/resources/webapp/index.html",
+      "previewMode": 1,
+      "dataMode": 1,
+      "workspace": "withoutWorkspace",
+      "ui5ActiveVersion": null,
+      "ui5VerSource": null,
+      "isDefaultVersion": 0,
+      "urlParameters": [],
+      "hashParameter": "",
+      "backendSystem": [],
+      "urlParametersNotNeeded": false,
+      "_metadata": {
+        "id": 9513027,
+        "runnerId": "webapprunner",
+        "displayName": "ui5",
+        "lastRunTimeStamp": 1553829022742
       }
     }
   ]
