@@ -17,7 +17,6 @@ sap.ui.define([
 		formatter: formatter,
 
 		onInit: function() {
-			this.getRouter().getRoute("Menu").attachMatched(this._onRestaurantMenuMatched.bind(this));
 			this.getRouter().getRoute("NewOrder").attachMatched(this._onRestaurantNewOrderMatched.bind(this));
 			this.setModel(new JSONModel({
 				Total: 0
@@ -27,13 +26,6 @@ sap.ui.define([
 		_onRestaurantNewOrderMatched: function(evt) {
 			var args = evt.getParameter("arguments");
 			this.getView().bindElement(`/Restaurants(RestaurantId=${args.RestaurantId})`);
-			this.byId("navBack").setVisible(false);
-		},
-
-		_onRestaurantMenuMatched: function(evt) {
-			var args = evt.getParameter("arguments");
-			this.getView().bindElement(`/Restaurants(RestaurantId=${args.RestaurantId})`);
-			this.byId("navBack").setVisible(true);
 		},
 
 		// ADD TO CART DIALOG

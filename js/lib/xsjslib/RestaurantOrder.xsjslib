@@ -56,7 +56,7 @@ function AfterCreateOrModif(param) {
 				title: "Orden creada",
 				body: "estate atento"
 			};
-		} else if (newOrder["Status.StatusId"] === "PAYED") {
+		} else if (newOrder["Status.StatusId"] === "READY") {
 			//Order READY: Send READY notification
 			message.message.notification = {
 				title: "Orden lista",

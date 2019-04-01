@@ -11,7 +11,7 @@ sap.ui.define(["sap/ui/core/ValueState", "sap/ui/core/IconColor"], function(Valu
 			return {
 				"PENDING": ValueState.Warning,
 				"CANCELLED": ValueState.Error,
-				"PAYED": ValueState.Success
+				"READY": ValueState.Success
 			}[status];
 		},
 
@@ -19,9 +19,16 @@ sap.ui.define(["sap/ui/core/ValueState", "sap/ui/core/IconColor"], function(Valu
 			return {
 				"PENDING": "sap-icon://pending",
 				"CANCELLED": "sap-icon://decline",
-				"PAYED": "sap-icon://accept"
+				"READY": "sap-icon://accept"
 			}[status];
 		},
+
+		paymentMethodToIcon: function(paymentMethod) {
+			return {
+				"CASH": "sap-icon://money-bills",
+				"CREDIT_CARD": "sap-icon://credit-card"
+			}[paymentMethod];
+		}
 
 	};
 });

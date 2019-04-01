@@ -9,7 +9,7 @@
 			</tnt:ToolHeader>
 		</customHeader>
 		<List id="ordersList"
-			items="{path: 'Orders', parameters: {expand: 'Items,Status,AggregatedItems'}, sorter: {path: 'CreatedAt', descending: true, group: '.createdAtSorter' }}"
+			items="{path: 'Orders', parameters: {expand: 'Items,Status,AggregatedItems,PaymentMethod'}, sorter: {path: 'CreatedAt', descending: true, group: '.createdAtSorter' }}"
 			type="Navigation" modelContextChange="onModelContextChange">
 			<ObjectListItem title="{i18n>Order} #{RestaurantOrderId}" attributes="{Items}"
 				number="{path:'AggregatedItems/Price',type:'.types.floatType'} ARS">
@@ -20,6 +20,9 @@
 					<ObjectStatus class="sapMObjectStatusLarge" state="{path:'Status.StatusId', formatter: '.formatter.orderStatusToValueState'}"
 						icon="{path:'Status.StatusId', formatter: '.formatter.orderStatusToIcon'}" text="{Status/Description}"/>
 				</firstStatus>
+				<secondStatus>
+					<ObjectStatus class="sapMObjectStatusLarge" icon="{path:'PaymentMethod.PaymentMethodId', formatter: '.formatter.paymentMethodToIcon'}" text="{PaymentMethod/Description}"/>
+				</secondStatus>
 			</ObjectListItem>
 			<!--	<CustomListItem>
 				<HBox justifyContent="SpaceBetween" class="sapUiSmallMargin">

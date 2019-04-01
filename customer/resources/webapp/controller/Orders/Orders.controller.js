@@ -32,9 +32,9 @@ sap.ui.define([
 		},
 		
 		createdAtSorter: function(orderCtx){
-			this.dateType = this.dateType || new this.types.dateType();
+			this.dateTimeType = this.dateTimeType || new this.types.dateTimeType();
 			var createdAt = orderCtx.getProperty("CreatedAt");
-			return this.dateType.formatValue(createdAt,"string");
+			return this.dateTimeType.formatValue(createdAt,"string");
 		}
 
 	});
