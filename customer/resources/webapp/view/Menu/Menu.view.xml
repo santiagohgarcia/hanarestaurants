@@ -3,8 +3,8 @@
 	<Page showFooter="{= ${orderJSON>/Total} > 0 }" floatingFooter="true" modelContextChange="onModelContextChange">
 		<customHeader>
 			<tnt:ToolHeader>
-				<Button icon="sap-icon://meal"/>
-				<Title text="{Name}"/>
+				<Button id="navBack" icon="sap-icon://nav-back" press="onNavBack"/>
+				<Title class="sapUiTinyMarginBegin" text="{Name}"/>
 				<ToolbarSpacer/>
 				<MenuButton id="categoryMenuButton" type="Transparent">
 					<Menu id="categoryMenu" items="{path:'Categories',events:{ dataReceived: '.onReceiveCategories'}}" itemSelected="onSelectCategory">

@@ -1,0 +1,45 @@
+<mvc:View controllerName="customer.customer.controller.Orders.Orders" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core" displayBlock="true" xmlns="sap.m" xmlns:tnt="sap.tnt">
+	<Page id="ordersPage">
+		<customHeader>
+			<tnt:ToolHeader>
+				<core:Icon src="sap-icon://meal" size="25px" color="Default" class="sapUiTinyMarginBegin"/>
+				<Title text="{i18n>Orders}" class="sapUiTinyMarginBegin"/>
+				<ToolbarSpacer/>
+			</tnt:ToolHeader>
+		</customHeader>
+		<List id="ordersList"
+			items="{path: 'Orders', parameters: {expand: 'Items,Status,AggregatedItems'}, sorter: {path: 'CreatedAt', descending: true, group: '.createdAtSorter' }}"
+			type="Navigation" modelContextChange="onModelContextChange">
+			<ObjectListItem title="{i18n>Order} #{RestaurantOrderId}" attributes="{Items}"
+				number="{path:'AggregatedItems/Price',type:'.types.floatType'} ARS">
+				<attributes>
+					<ObjectAttribute text="{Quantity} x {ProductDescription}"/>
+				</attributes>
+				<firstStatus>
+					<ObjectStatus class="sapMObjectStatusLarge" state="{path:'Status.StatusId', formatter: '.formatter.orderStatusToValueState'}"
+						icon="{path:'Status.StatusId', formatter: '.formatter.orderStatusToIcon'}" text="{Status/Description}"/>
+				</firstStatus>
+			</ObjectListItem>
+			<!--	<CustomListItem>
+				<HBox justifyContent="SpaceBetween" class="sapUiSmallMargin">
+					<VBox>
+						<Title titleStyle="H3" text="{i18n>Order} #{RestaurantOrderId}"/>
+						<ObjectStatus class="sapMObjectStatusLarge" state="{path:'Status.StatusId', formatter: '.formatter.orderStatusToValueState'}"/>
+					</VBox>
+					<VBox alignItems="End">
+						<ObjectNumber class="sapMObjectNumberLarge" number="{path:'AggregatedItems/Price',type:'.types.floatType'}" emphasized="true" unit="ARS"
+							textAlign="End">
+							<layoutData>
+								<FlexItemData minWidth="90px"/>
+							</layoutData>
+						</ObjectNumber>
+						<VBox items="{Items}" alignItems="End">
+							<Label text="{Quantity} x {ProductDescription}" wrapping="true" class="sapUiTinyMarginTop"/>
+						</VBox>
+					</VBox>
+				</HBox>
+			</CustomListItem>-->
+		</List>
+	</Page>
+</mvc:View>

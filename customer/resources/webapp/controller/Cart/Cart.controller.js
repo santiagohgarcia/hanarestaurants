@@ -71,13 +71,7 @@ sap.ui.define([
 
 		_onConfirmOrder: function() {
 			this._requestMessagingPermission()
-				.then(() => this._submitOrder())
-
-			const messaging = firebase.messaging();
-			messaging.onMessage((message) => {
-				debugger;
-				var a = message;
-			})
+				.then(() => this._submitOrder());
 		},
 
 		_modifyCustomerToken: function(token) {
@@ -110,9 +104,7 @@ sap.ui.define([
 
 		_success: function() {
 			var order = this.byId("orderPanel").getBindingContext().getObject();
-			this.getRouter().navTo("OrderCreated", {
-				RestaurantId: order.RestaurantId
-			}, true);
+			this.getRouter().navTo("Orders", true);
 		}
 	});
 });
