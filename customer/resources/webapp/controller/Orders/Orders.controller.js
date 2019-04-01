@@ -29,6 +29,12 @@ sap.ui.define([
 			if (customerCtx) {
 				this.byId("ordersPage").bindElement(`/Customers('${customerCtx.getProperty("CustomerId")}')`)
 			}
+		},
+		
+		createdAtSorter: function(orderCtx){
+			this.dateType = this.dateType || new this.types.dateType();
+			var createdAt = orderCtx.getProperty("CreatedAt");
+			return this.dateType.formatValue(createdAt,"string");
 		}
 
 	});

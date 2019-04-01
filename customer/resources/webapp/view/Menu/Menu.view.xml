@@ -4,7 +4,7 @@
 		<customHeader>
 			<tnt:ToolHeader>
 				<Button id="navBack" icon="sap-icon://nav-back" press="onNavBack"/>
-				<Title text="{Name}"/>
+				<Title class="sapUiTinyMarginBegin" text="{Name}"/>
 				<ToolbarSpacer/>
 				<MenuButton id="categoryMenuButton" type="Transparent">
 					<Menu id="categoryMenu" items="{path:'Categories',events:{ dataReceived: '.onReceiveCategories'}}" itemSelected="onSelectCategory">
