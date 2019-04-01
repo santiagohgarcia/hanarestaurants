@@ -54,9 +54,17 @@ service {
         
     "restaurants.db::RestaurantsContext.RestaurantOrder" as "Orders"
       navigates ("OrderToOrderItems"            as "Items",
-    			 "OrderToStatus"            as "Status")
+    			 "OrderToStatus"        		as "Status",
+    			 "OrderToPaymentMethod"         as "PaymentMethod",
+    			 "OrderToAggregatedOrderItems"  as "AggregatedItems")
 	create events (before "xsjslib:RestaurantOrder.xsjslib::BeforeCreate", postcommit "xsjslib:RestaurantOrder.xsjslib::AfterCreateOrModif")
 	update events (postcommit "xsjslib:RestaurantOrder.xsjslib::AfterCreateOrModif");
+	
+	association "OrderToAggregatedOrderItems"
+	principal "Orders"("RestaurantId","RestaurantOrderId")
+	multiplicity "1"
+	dependent "AggregatedOrderItems"("RestaurantId","RestaurantOrderId")
+	multiplicity "1";
 	
 		association "OrderToOrderItems"
 	principal "Orders"("RestaurantId","RestaurantOrderId")
@@ -68,6 +76,12 @@ service {
 	principal "Orders"("Status.StatusId")
 	multiplicity "1"
 	dependent "Statuses"("StatusId")
+	multiplicity "1";
+	
+		association "OrderToPaymentMethod"
+	principal "Orders"("PaymentMethod.PaymentMethodId")
+	multiplicity "1"
+	dependent "PaymentMethods"("PaymentMethodId")
 	multiplicity "1";
 	    
 	"restaurants.db::RestaurantsContext.RestaurantOrderItem" as "OrderItems" 
@@ -110,6 +124,9 @@ service {
 	"restaurants.db::RestaurantsContext.Status" 
 	as "Statuses";
 	
+		"restaurants.db::RestaurantsContext.PaymentMethod" 
+	as "PaymentMethods";
+	
 	"restaurants.db::RestaurantsContext.Customer" 
 	as "Customers"
 	navigates("CustomerToOrders" as "Orders")
@@ -124,6 +141,7 @@ service {
 	"restaurants.db.views::TodayOrders" 
 	as "TodayOrders" key ("RestaurantId","RestaurantOrderId") 
 	navigates ("TodayOrderToStatus" as "Status",
+	"TodayOrderToPaymentMethod" as "PaymentMethod",
 	"TodayOrderToCustomer" as "Customer",
 	"TodayOrderToOrderItems" as "Items",
 	"TodayOrderToAggregatedOrderItems" as "AggregatedItems") ;
@@ -132,6 +150,12 @@ service {
 	principal "TodayOrders"("Status.StatusId")
 	multiplicity "1"
 	dependent "Statuses"("StatusId")
+	multiplicity "1";
+	
+		association "TodayOrderToPaymentMethod"
+	principal "TodayOrders"("PaymentMethod.PaymentMethodId")
+	multiplicity "1"
+	dependent "PaymentMethods"("PaymentMethodId")
 	multiplicity "1";
 	
 	association "TodayOrderToCustomer"
