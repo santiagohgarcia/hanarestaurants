@@ -25,12 +25,17 @@ context RestaurantsContext {
         key RestaurantOrderId : Integer;
             Status            : association[1] to RestaurantsContext.Status { StatusId };
             Customer          : association[1] to RestaurantsContext.Customer { CustomerId };
-            Items             : association[*] to RestaurantOrderItem                         on     Items.RestaurantId      = RestaurantId
-                                                                                                 and Items.RestaurantOrderId = RestaurantOrderId;
+            Items             : association[*] to RestaurantOrderItem                                   on     Items.RestaurantId      = RestaurantId
+                                                                                                           and Items.RestaurantOrderId = RestaurantOrderId;
             Price             : Decimal(10, 2) null;
             CreatedAt         : UTCTimestamp;
-            PaymentMethod     : String(50);
+            PaymentMethod     : association[1] to RestaurantsContext.PaymentMethod { PaymentMethodId };
             ReadyAt           : UTCTimestamp null;
+    }
+
+    entity PaymentMethod {
+        key PaymentMethodId : String(15);
+            Description     : String(15);
     }
 
     entity RestaurantOrderItem {

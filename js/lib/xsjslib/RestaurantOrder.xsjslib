@@ -8,7 +8,7 @@ function BeforeCreate(param) {
 	utils.trucateAfter(param);
 	var pStmt = param.connection.prepareStatement(
 		`insert into "${param.afterTableName}"
-		("RestaurantId","RestaurantOrderId","Status.StatusId","Customer.CustomerId","CreatedAt","PaymentMethod")
+		("RestaurantId","RestaurantOrderId","Status.StatusId","Customer.CustomerId","CreatedAt","PaymentMethod.PaymentMethodId")
 		values (?,?,?,?,?,?)`
 	);
 	pStmt.setInteger(1, newObject.RestaurantId);
@@ -23,7 +23,7 @@ function BeforeCreate(param) {
 	}
 
 	pStmt.setTimestamp(5, new Date());
-	pStmt.setString(6, newObject.PaymentMethod || 'CASH'); //CASH
+	pStmt.setString(6, newObject["PaymentMethod.PaymentMethodId"] || 'CASH'); //CASH
 	pStmt.executeUpdate();
 	pStmt.close();
 }
