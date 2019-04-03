@@ -46,7 +46,17 @@ function AfterCreateOrModif(param) {
 
 		var message = {
 			message: {
-				token: customer.MessagingToken
+				token: customer.MessagingToken,
+				webpush: {
+					headers: {
+						Urgency: "high"
+					},
+					notification: {
+						body: "This is a message from FCM to web",
+						requireInteraction: "true",
+						badge: "/badge-icon.png"
+					}
+				}
 			}
 		};
 

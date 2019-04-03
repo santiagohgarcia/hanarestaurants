@@ -106,7 +106,8 @@ service {
 	"restaurants.db::RestaurantsContext.Category" 
 	as "Categories" 
 	navigates ("CategoryToCategories" as "Categories",
-			   "CategoryToProducts" as "Products")
+			   "CategoryToProducts" as "Products",
+			   "CategoryToIcon" as "Icon")
 			   create events( before "xsjslib:Category.xsjslib::BeforeCreate" );
 	
 	association "CategoryToCategories"
@@ -121,11 +122,20 @@ service {
 	dependent "Products"("RestaurantId","Category.CategoryId")
 	multiplicity "*";
 	
+		association "CategoryToIcon"
+	principal "Categories"("Icon.IconId")
+	multiplicity "1"
+	dependent "Icons"("IconId")
+	multiplicity "1";
+	
 	"restaurants.db::RestaurantsContext.Status" 
 	as "Statuses";
 	
-		"restaurants.db::RestaurantsContext.PaymentMethod" 
+	"restaurants.db::RestaurantsContext.PaymentMethod" 
 	as "PaymentMethods";
+	
+	"restaurants.db::RestaurantsContext.Icons" 
+	as "Icons";
 	
 	"restaurants.db::RestaurantsContext.Customer" 
 	as "Customers"
