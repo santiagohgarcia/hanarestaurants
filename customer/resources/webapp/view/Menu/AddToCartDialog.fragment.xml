@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:fi="sap.f" xmlns:f="sap.ui.layout.form">
-	<Dialog id="addToCartDialog" title="{i18n>AddToCart}">
+	<Dialog id="addToCartDialog" title="{i18n>AddToCart}" icon="sap-icon://cart">
 		<content>
 			<VBox alignItems="Center">
 				<fi:Avatar src="{= ${Image} || './img/placeholder.png' }" displaySize="XL" class="sapUiSmallMarginTopBottom">
@@ -7,8 +7,8 @@
 						<FlexItemData alignSelf="Center"/>
 					</fi:layoutData>
 				</fi:Avatar>
-				<Title text="{Description}"/>
-				<Label text="descripcion de la cosa esta"/>
+				<Title titleStyle="H4" text="{Name}" wrapping="true"/>
+				<Label textAlign="Center" text="{Description}" wrapping="true"/>
 			</VBox>
 			<f:Form editable="true">
 				<f:layout>

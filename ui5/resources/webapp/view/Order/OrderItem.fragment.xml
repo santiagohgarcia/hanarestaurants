@@ -6,11 +6,15 @@
 					<layoutData>
 						<FlexItemData growFactor="0"/>
 					</layoutData>
-					<f:Avatar src="{Customer/ImageUrl}" displaySize="S" class="sapUiTinyMarginBottom"/>
+					<f:Avatar src="{Customer/ImageUrl}" displaySize="S" class="sapUiTinyMarginBottom">
+						<f:layoutData>
+							<FlexItemData alignSelf="Center"/>
+						</f:layoutData>
+					</f:Avatar>
 					<ObjectStatus text="{Status/Description}" state="{path:'Status/StatusId', formatter:'.formatter.orderStatusToValueState'}"
 						class="sapUiTinyMarginBottom sapMObjectStatusLarge" icon="{path:'Status.StatusId', formatter: '.formatter.orderStatusToIcon'}"/>
-					<ObjectStatus class="sapMObjectStatusLarge sapUiTinyMarginBottom" icon="{path:'PaymentMethod.PaymentMethodId', formatter: '.formatter.paymentMethodToIcon'}"
-						text="{PaymentMethod/Description}"/>
+					<ObjectStatus class="sapMObjectStatusLarge sapUiTinyMarginBottom"
+						icon="{path:'PaymentMethod.PaymentMethodId', formatter: '.formatter.paymentMethodToIcon'}" text="{PaymentMethod/Description}"/>
 				</VBox>
 				<VBox>
 					<layoutData>
@@ -22,7 +26,7 @@
 					</HBox>
 					<VBox justifyContent="Start" fitContainer="true" items="{Items}" fieldGroupIds="items" class="orderItemsBorder">
 						<HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom" alignItems="Center">
-							<Text text="{Quantity} x {ProductDescription}"/>
+							<Text text="{Quantity} x {ProductName}"/>
 							<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" emphasized="false" textAlign="End">
 								<layoutData>
 									<FlexItemData minWidth="60px"/>
@@ -38,7 +42,7 @@
 				<Button type="Transparent" visible="{= ${Status/StatusId} === 'PENDING' }" icon="sap-icon://accept" press="onPressOrderReady"
 					class="acceptOrderButton"/>
 				<ToolbarSpacer/>
-				<Label text="{path:'AggregatedItems/Price',type:'.types.floatType'} ARS" design="Bold" textAlign="End" class="sapUiSmallMarginEnd"/>
+				<ObjectNumber number="{path:'AggregatedItems/Price',type:'.types.floatType'}" unit="ARS" class="sapMObjectNumberLarge sapUiSmallMarginEnd"/>
 			</OverflowToolbar>
 			<!--<HBox visible="{= ${Status/StatusId} !== 'PENDING' }" class="sapUiSmallMarginBottom"/>-->
 		</VBox>

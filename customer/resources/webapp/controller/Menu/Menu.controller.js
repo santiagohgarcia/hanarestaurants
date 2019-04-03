@@ -65,8 +65,8 @@ sap.ui.define([
 				properties: {
 					RestaurantId: order.RestaurantId,
 					RestaurantOrderId: order.RestaurantOrderId,
-					Product: product.ProductId,
-					ProductDescription: product.Description,
+					ProductId: product.ProductId,
+					ProductName: product.Name,
 					Quantity: qty,
 					UnitPrice: product.Price,
 					Price: product.Price * qty,

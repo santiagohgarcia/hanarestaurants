@@ -8,13 +8,13 @@
 				<ToolbarSpacer/>
 			</tnt:ToolHeader>
 		</customHeader>
-		<List id="ordersList"
+		<List id="ordersList" growingScrollToLoad="true" growingDirection="Upwards"
 			items="{path: 'Orders', parameters: {expand: 'Items,Status,AggregatedItems,PaymentMethod'}, sorter: {path: 'CreatedAt', descending: true, group: '.createdAtSorter' }}"
 			type="Navigation" modelContextChange="onModelContextChange">
 			<ObjectListItem title="{i18n>Order} #{RestaurantOrderId}" attributes="{Items}"
 				number="{path:'AggregatedItems/Price',type:'.types.floatType'} ARS">
 				<attributes>
-					<ObjectAttribute text="{Quantity} x {ProductDescription}"/>
+					<ObjectAttribute text="{Quantity} x {ProductName}"/>
 				</attributes>
 				<firstStatus>
 					<ObjectStatus class="sapMObjectStatusLarge" state="{path:'Status.StatusId', formatter: '.formatter.orderStatusToValueState'}"

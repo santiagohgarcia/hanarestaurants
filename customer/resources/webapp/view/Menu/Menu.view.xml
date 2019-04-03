@@ -3,12 +3,13 @@
 	<Page showFooter="{= ${orderJSON>/Total} > 0 }" floatingFooter="true" modelContextChange="onModelContextChange">
 		<customHeader>
 			<tnt:ToolHeader>
-				<core:Icon src="sap-icon://meal" size="25px" color="Default" class="sapUiTinyMarginBegin"/>
-				<Title class="sapUiTinyMarginBegin" text="{Name}"/>
+				<core:Icon src="sap-icon://meal" size="25px" color="Default" class="sapUiSmallMarginBegin"/>
+				<Title class="sapUiSmallMarginBegin" text="{Name}"/>
 				<ToolbarSpacer/>
 				<MenuButton id="categoryMenuButton" type="Transparent">
-					<Menu id="categoryMenu" items="{path:'Categories',events:{ dataReceived: '.onReceiveCategories'}}" itemSelected="onSelectCategory">
-						<MenuItem icon="sap-icon://open-folder" text="{Description}"/>
+					<Menu id="categoryMenu" items="{path:'Categories',parameters:{expand:'Icon'},events:{ dataReceived: '.onReceiveCategories'}}"
+						itemSelected="onSelectCategory">
+						<MenuItem icon="{Icon/Icon}" text="{Description}"/>
 					</Menu>
 				</MenuButton>
 			</tnt:ToolHeader>
@@ -20,16 +21,16 @@
 					<CustomListItem type="Active" press="onPressProduct">
 						<HBox justifyContent="Start" alignItems="Center" class="sapUiTinyMarginTopBottom sapUiSmallMarginEnd sapUiTinyMarginBegin"
 							fitContainer="true">
-							<f:Avatar displayShape="Circle" src="{= ${Image} || './img/placeholder.png' }" displaySize="M"/>
+							<f:Avatar src="{= ${Image} || './img/placeholder.png' }" displaySize="M"/>
 							<VBox justifyContent="Center" alignItems="SpaceBetween" fitContainer="true" class="sapUiTinyMarginBegin">
 								<layoutData>
 									<FlexItemData growFactor="10"/>
 								</layoutData>
 								<HBox justifyContent="SpaceBetween" alignItems="Center">
-									<Title text="{Description}" wrapping="true"/>
-									<Title text="{path:'Price',type:'.types.floatType'} ARS"/>
+									<Title titleStyle="H4" text="{Name}" wrapping="true"/>
+									<ObjectNumber class="sapMObjectNumberLarge" number="{path:'Price',type:'.types.floatType'}" unit="ARS"/>
 								</HBox>
-								<Label text="descripcion del plato"/>
+								<Label text="{Description}" wrapping="true"/>
 							</VBox>
 						</HBox>
 					</CustomListItem>

@@ -14,8 +14,8 @@ function BeforeCreate(param) {
 	pStmt.setInteger(2, newObject.RestaurantOrderId);
 	pStmt.setInteger(3, newObject.RestaurantId);
 	pStmt.setInteger(4, newObject.RestaurantOrderId);
-	pStmt.setInteger(5, newObject.Product);
-	pStmt.setString(6, newObject.ProductDescription);
+	pStmt.setInteger(5, newObject.ProductId);
+	pStmt.setString(6, newObject.ProductName);
 	pStmt.setInteger(7, newObject.Quantity);
 	pStmt.setDecimal(8, newObject.Quantity * newObject.UnitPrice);
 	pStmt.setDecimal(9, newObject.UnitPrice);

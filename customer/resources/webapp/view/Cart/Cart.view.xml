@@ -33,7 +33,7 @@
 								<FlexItemData growFactor="10"/>
 							</layoutData>
 							<HBox justifyContent="SpaceBetween" alignItems="Center">
-								<Title text="{ProductDescription}" wrapping="true"/>
+								<Title text="{ProductName}" wrapping="true"/>
 								<Button class="deleteOrderItemButton sapUiSizeCompact" icon="sap-icon://decline" type="Transparent" press="onDeleteOrderItem"/>
 							</HBox>
 							<HBox justifyContent="SpaceBetween" alignItems="Center">

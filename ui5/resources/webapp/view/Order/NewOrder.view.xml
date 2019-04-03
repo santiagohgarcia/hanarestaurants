@@ -37,28 +37,38 @@
 								</f:items>
 							</f:GridList>
 						</Page>
-						<Page id="categoryProducts"  >
+						<Page id="categoryProducts">
 							<customHeader>
 								<Toolbar>
 									<Button icon="sap-icon://undo" press="onNavToCategories"/>
 									<ToolbarSpacer/>
-									<Title text="{Description}" />
+									<Title text="{Description}"/>
 									<ToolbarSpacer/>
 								</Toolbar>
 							</customHeader>
 							<f:GridList usyIndicatorDelay="0" items="{Products}" class="sapUiContentPadding" noDataText="{i18n>NoProductsForThisCategory}">
 								<f:customLayout>
-									<grid:GridBoxLayout boxWidth="15rem"/>
+									<grid:GridBoxLayout boxMinWidth="300px"/>
 								</f:customLayout>
 								<CustomListItem type="Active" press="onPressProduct">
-									<VBox justifyContent="SpaceBetween">
-										<ObjectIdentifier title="{Description}" class="sapUiSmallMargin"/>
-										<Image src="{= ${Image} || './img/placeholder.png' }" width="100%" height="200px"></Image>
-										<OverflowToolbar design="Transparent">
-											<ToolbarSpacer/>
-											<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="sapUiTinyMarginEnd productNumber"/>
-										</OverflowToolbar>
-									</VBox>
+									<HBox justifyContent="SpaceBetween">
+										<f:Avatar src="{= ${Image} || './img/placeholder.png' }" displaySize="L" class="sapUiSmallMargin">
+											<f:layoutData>
+												<FlexItemData growFactor="0"/>
+											</f:layoutData>
+										</f:Avatar>
+										<VBox justifyContent="SpaceBetween" alignItems="Begin" class="sapUiSmallMargin">
+											<layoutData>
+												<FlexItemData growFactor="8"/>
+											</layoutData>
+											<ObjectIdentifier title="{Name}"/>
+											<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="sapMObjectNumberLarge">
+												<layoutData>
+													<FlexItemData alignSelf="End"/>
+												</layoutData>
+											</ObjectNumber>
+										</VBox>
+									</HBox>
 								</CustomListItem>
 							</f:GridList>
 						</Page>
@@ -75,21 +85,31 @@
 						</customHeader>
 						<List items="{Items}" noDataText="{i18n>SelectAProduct}">
 							<CustomListItem>
-								<VBox class="sapUiSmallMargin">
-									<ObjectIdentifier title="{ProductDescription}" class="sapUiTinyMarginBottom"/>
-									<HBox justifyContent="SpaceBetween" alignItems="Center">
-										<HBox alignItems="Center">
-											<StepInput min="1" value="{path:'Quantity',type:'sap.ui.model.type.Integer', constraints: {minimum:1} }" change="onChangeQuantity"/>
-											<Text text=" x {path:'UnitPrice',type:'.types.floatType'} ARS" class="sapUiSmallMarginBegin"/>
+								<HBox>
+									<f:Avatar src="{= ${Image} || './img/placeholder.png' }" displaySize="L" class="sapUiSmallMargin">
+										<f:layoutData>
+											<FlexItemData growFactor="0"/>
+										</f:layoutData>
+									</f:Avatar>
+									<VBox class="sapUiSmallMargin">
+										<layoutData>
+											<FlexItemData growFactor="8"/>
+										</layoutData>
+										<ObjectIdentifier title="{ProductName}" class="sapUiTinyMarginBottom"/>
+										<HBox justifyContent="SpaceBetween" alignItems="Center">
+											<HBox alignItems="Center">
+												<StepInput min="1" value="{path:'Quantity',type:'sap.ui.model.type.Integer', constraints: {minimum:1} }" change="onChangeQuantity"/>
+												<Text text=" x {path:'UnitPrice',type:'.types.floatType'} ARS" class="sapUiSmallMarginBegin"/>
+											</HBox>
+											<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="productNumber" textAlign="End">
+												<layoutData>
+													<FlexItemData growFactor="1" styleClass="sapUiMediumMarginEnd"/>
+												</layoutData>
+											</ObjectNumber>
+											<Button icon="sap-icon://sys-cancel" press="onDeleteOrderItem" type="Transparent"/>
 										</HBox>
-										<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="productNumber" textAlign="End">
-											<layoutData>
-												<FlexItemData growFactor="1" styleClass="sapUiMediumMarginEnd"/>
-											</layoutData>
-										</ObjectNumber>
-										<Button icon="sap-icon://sys-cancel" press="onDeleteOrderItem" type="Transparent"/>
-									</HBox>
-								</VBox>
+									</VBox>
+								</HBox>
 							</CustomListItem>
 						</List>
 						<footer>
@@ -145,7 +165,7 @@
 				<List items="{Items}" noDataText="{i18n>SelectAProduct}">
 					<CustomListItem>
 						<VBox class="sapUiSmallMargin">
-							<ObjectIdentifier title="{ProductDescription}" class="sapUiTinyMarginBottom"/>
+							<ObjectIdentifier title="{ProductName}" class="sapUiTinyMarginBottom"/>
 							<HBox justifyContent="SpaceBetween" alignItems="Center">
 								<HBox alignItems="Center">
 									<StepInput min="1" value="{path:'Quantity',type:'sap.ui.model.type.Integer', constraints: {minimum:1} }" change="onChangeQuantity"/>
