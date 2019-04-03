@@ -7,7 +7,7 @@ function  BeforeCreate(param) {
 	var newObject = utils.getNewObject(param);
 	utils.trucateAfter(param);
 	var pStmt = param.connection.prepareStatement(
-		`insert into "${param.afterTableName}" values(?,?,(SELECT IFNULL(MAX("ProductId"), 0) + 1 FROM "restaurants.db::RestaurantsContext.Product" WHERE "RestaurantId" = ? ),?,?,?,?)`
+		`insert into "${param.afterTableName}" values(?,?,(SELECT IFNULL(MAX("ProductId"), 0) + 1 FROM "restaurants.db::RestaurantsContext.Product" WHERE "RestaurantId" = ? ),?,?,?,?,?)`
 	);
 	pStmt.setInteger(1, newObject.RestaurantId);
 	pStmt.setInteger(2, newObject["Category.CategoryId"]);
@@ -21,6 +21,7 @@ function  BeforeCreate(param) {
 	} else {
 		pStmt.setNull(7);
 	}
+	pStmt.setString(8, newObject.Name);
 
 	pStmt.executeUpdate();
 	pStmt.close();

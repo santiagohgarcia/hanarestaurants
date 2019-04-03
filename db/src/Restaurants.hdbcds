@@ -42,8 +42,8 @@ context RestaurantsContext {
         key RestaurantId          : Integer;
         key RestaurantOrderId     : Integer;
         key RestaurantOrderItemId : Integer;
-            Product               : Integer;
-            ProductDescription    : String(100);
+            ProductId             : Integer;
+            ProductName           : String(100);
             Quantity              : Integer;
             Price                 : Decimal(10, 2);
             UnitPrice             : Decimal(10, 2);
@@ -70,15 +70,23 @@ context RestaurantsContext {
                                                                                                 and SubCategories.ParentCategory.CategoryId = CategoryId;
             Products       : association[0..*] to Product                                    on     Products.RestaurantId        = RestaurantId
                                                                                                 and Products.Category.CategoryId = CategoryId;
+            Icon           : association[1]    to RestaurantsContext.Icons { IconId };
     }
 
     entity Product {
         key RestaurantId    : Integer;
         key Category        : association[1] to RestaurantsContext.Category { CategoryId };
         key ProductId       : Integer;
-            Description     : String(100);
+            Description     : String(500);
             Price           : Decimal(10, 2);
             NeedPreparation : Integer; //Boolean
             Image           : LargeString;
+            Name            : String(100);
+    }
+
+    entity Icons {
+        key IconId      : String(50);
+            Description : String(100);
+            Icon        : LargeString;
     }
 };
