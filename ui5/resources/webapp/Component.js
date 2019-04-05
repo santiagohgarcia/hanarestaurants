@@ -44,6 +44,7 @@ sap.ui.define([
 			this._restaurantDialog = new RestaurantDialog(this.getRootControl());
 			this._categoryDialog = new CategoryDialog(this.getRootControl());
 			this._productDialog = new ProductDialog(this.getRootControl());
+			
 		},
 
 		getContentDensityClass: function() {

@@ -18,7 +18,9 @@ sap.ui.define([
 				var ordersBinding = this.byId("ordersList").getBinding("items");
 				if (ordersBinding) {
 					ordersBinding.refresh();
-					this.showMessageToast("orderUpdated");
+					if (message.data.action === "MODIFIED") {
+						this.showMessageToast("OrderUpdated",[message.data.RestaurantOrderId]);
+					}
 				}
 			});
 		},
@@ -30,11 +32,11 @@ sap.ui.define([
 				this.byId("ordersPage").bindElement(`/Customers('${customerCtx.getProperty("CustomerId")}')`)
 			}
 		},
-		
-		createdAtSorter: function(orderCtx){
+
+		createdAtSorter: function(orderCtx) {
 			this.dateTimeType = this.dateTimeType || new this.types.dateTimeType();
 			var createdAt = orderCtx.getProperty("CreatedAt");
-			return this.dateTimeType.formatValue(createdAt,"string");
+			return this.dateTimeType.formatValue(createdAt, "string");
 		}
 
 	});

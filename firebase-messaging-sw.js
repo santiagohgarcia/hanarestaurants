@@ -1,13 +1,8 @@
-importScripts('https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/3.5.2/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js');
 
 // Initialize Firebase
 var config = {
-	apiKey: "AIzaSyBqfxKgMJMYESECE9FmoxiuMOgBbG-TvXc",
-	authDomain: "hana-firebase.firebaseapp.com",
-	databaseURL: "https://hana-firebase.firebaseio.com",
-	projectId: "hana-firebase",
-	storageBucket: "hana-firebase.appspot.com",
 	messagingSenderId: "660137965979"
 };
 firebase.initializeApp(config);
@@ -15,14 +10,21 @@ firebase.initializeApp(config);
 const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload) {
-  console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  // Customize notification here
-  var notificationTitle = 'Background Message Title';
-  var notificationOptions = {
-    body: 'Background Message body.', 
-    icon: '/firebase-logo.png'
-  };
 
-  return self.registration.showNotification(notificationTitle,
-    notificationOptions);
+	if (payload.data.action === "READY") {
+		var notificationTitle = `Order #(${payload.data.RestaurantOrderId}) ready!`;
+		var notificationOptions = {
+			body: `You can pick your order now! Enjoy!`,
+			icon: `customer/resources/webapp/img/ready.png`
+		};
+	} else {
+		var notificationTitle = `Order #(${payload.data.RestaurantOrderId}) created!`;
+		var notificationOptions = {
+			body: `Check your notifications to know when the order is ready!`,
+			icon: `customer/resources/webapp/img/pending.png`
+		};
+	}
+
+	return self.registration.showNotification(notificationTitle,
+		notificationOptions);
 });
