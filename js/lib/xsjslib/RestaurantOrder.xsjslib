@@ -32,6 +32,7 @@ function AfterCreateOrModif(param) {
 	var newOrder = utils.getNewObject(param);
 	var oldOrder = utils.getOldObject(param);
 	var customerId = newOrder["Customer.CustomerId"];
+	var title, body, action, icon;
 
 	//Send message to customer if the order is ready
 	if (customerId) {
@@ -44,35 +45,32 @@ function AfterCreateOrModif(param) {
 		customerResult.next();
 		var customer = customerResult._row;
 
+		if (newOrder && !oldOrder) {
+			action = "CREATED";
+			title = `Order #(${newOrder.RestaurantOrderId}) created!`;
+			body = `Check your notifications to know when the order is ready!`;
+			icon = `/img/pending.png`;
+		} else if (newOrder["Status.StatusId"] === "READY") {
+			action = "READY";
+			title = `Order #(${newOrder.RestaurantOrderId}) ready!`;
+			body = `You can pick your order now! Enjoy!`;
+			icon = `/img/pending.png`;
+		}
+
 		var message = {
 			message: {
 				token: customer.MessagingToken,
-				webpush: {
-					headers: {
-						Urgency: "high"
-					},
-					notification: {
-						body: "This is a message from FCM to web",
-						requireInteraction: "true",
-						badge: "/badge-icon.png"
-					}
+			/*	notification: {
+					title: title,
+					body: body
+				},*/
+				data: {
+					action: action,
+					RestaurantOrderId: String(newOrder.RestaurantOrderId)
 				}
 			}
 		};
 
-		if (newOrder && !oldOrder) {
-			//Order Created: Send initial notification
-			message.message.notification = {
-				title: "Orden creada",
-				body: "estate atento"
-			};
-		} else if (newOrder["Status.StatusId"] === "READY") {
-			//Order READY: Send READY notification
-			message.message.notification = {
-				title: "Orden lista",
-				body: "pasa a retirarla"
-			};
-		}
 		messaging.sendFcmMessage(message);
 	}
 }
