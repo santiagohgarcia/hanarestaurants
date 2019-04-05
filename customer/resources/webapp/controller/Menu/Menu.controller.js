@@ -136,15 +136,37 @@ sap.ui.define([
 		},
 
 		onSelectCategory: function(evt) {
-			var category = evt.getParameter("item").getBindingContext().getObject(),
-				productBinding = this.byId("productsList").getBinding("items");
+			var category = evt.getParameter("item").getBindingContext().getObject({
+					expand: "Icon"
+				}),
+				productBinding = this.byId("productsList").getBinding("items"),
+				categoryMenuButton = this.byId("categoryMenuButton");
 			if (category.CategoryId) {
-				this.byId("categoryMenuButton").setText(category.Description);
+				//categoryMenuButton.setIcon(category.Icon.Icon);
+				categoryMenuButton.setText(category.Description);
 				productBinding.filter(new Filter("Category.CategoryId", FO.EQ, category.CategoryId));
 			} else {
-				this.byId("categoryMenuButton").setText(evt.getParameter("item").getText());
+				//categoryMenuButton.setIcon();
+				categoryMenuButton.setText(evt.getParameter("item").getText());
 				productBinding.filter([]);
 			}
+		},
+
+		resizeIcon: function(iconBase64Url) {
+			// We create a canvas and get its context.
+			var canvas = document.createElement('canvas');
+			var ctx = canvas.getContext('2d');
+			// We set the dimensions at the wanted size.
+			canvas.width = "40px";
+			canvas.height = "40px";
+			iconBase64Url = iconBase64Url.replace("data:image/png;base64,","")
+			var img = new Blob(iconBase64Url, 'base64');
+
+			// We resize the image with the canvas method drawImage();
+			ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+			return canvas.toDataURL();
+
 		}
 
 	});

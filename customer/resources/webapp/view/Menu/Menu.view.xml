@@ -8,8 +8,8 @@
 				<ToolbarSpacer/>
 				<MenuButton id="categoryMenuButton" type="Transparent">
 					<Menu id="categoryMenu" items="{path:'Categories',parameters:{expand:'Icon'},events:{ dataReceived: '.onReceiveCategories'}}"
-						itemSelected="onSelectCategory">
-						<MenuItem icon="{Icon/Icon}" text="{Description}"/>
+						itemSelected="onSelectCategory" iconDensityAware="false">
+						<MenuItem text="{Description}" />
 					</Menu>
 				</MenuButton>
 			</tnt:ToolHeader>
