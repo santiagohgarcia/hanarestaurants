@@ -23,11 +23,24 @@ sap.ui.define([
 					}
 				});
 			}
+			this._view.byId("iconList").getBinding("items").refresh();
 			return ctx;
 		},
 
 		getFieldGroup: function() {
 			return "categoryFields";
+		},
+
+		onIconSelectionChange: function(evt) {
+			var icon = evt.getSource().getSelectedItem().getBindingContext().getObject();
+			this._dialog.getModel().setProperty("Icon.IconId", icon.IconId, this._dialog.getBindingContext());
+		},
+		
+		onIconListUpdateFinish: function(evt){
+			var currentIconId = this._dialog.getBindingContext().getProperty("Icon.IconId");
+			var iconList = this._view.byId("iconList")
+			var selItem = iconList.getItems().find( i => i.getBindingContext().getProperty("IconId") === currentIconId );
+			iconList.setSelectedItem(selItem);
 		},
 
 		success: function() {

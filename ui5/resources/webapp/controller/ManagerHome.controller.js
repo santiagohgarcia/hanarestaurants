@@ -63,9 +63,9 @@ sap.ui.define([
 			this._changeOrderStatus(order, "CANCELLED");
 		},
 
-		onPressOrderPayed: function(evt) {
+		onPressOrderReady: function(evt) {
 			var order = evt.getSource().getBindingContext().getObject();
-			this._changeOrderStatus(order, "PAYED");
+			this._changeOrderStatus(order, "READY");
 		},
 
 		_changeOrderStatus: function(order, status) {

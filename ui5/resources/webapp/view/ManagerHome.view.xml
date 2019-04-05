@@ -39,7 +39,7 @@
 				</HBox>
 			</HBox>
 			<f:GridList id="orderList" class="sapUiResponsiveContentPadding" growingScrollToLoad="true" growing="true" growingThreshold="12"
-				items="{path:'TodayOrders', parameters: {expand: 'Status,Items,AggregatedItems'}, sorter: { path:'CreatedAt', descending: true }, filters: { path:'Status.StatusId', operator: 'EQ',value1: 'PENDING' } }">
+				items="{path:'TodayOrders', parameters: {expand: 'Status,Items,AggregatedItems,PaymentMethod,Customer'}, sorter: { path:'CreatedAt', descending: true }, filters: { path:'Status.StatusId', operator: 'EQ',value1: 'PENDING' } }">
 				<f:customLayout>
 					<grid:GridBoxLayout boxMinWidth="400px"/>
 				</f:customLayout>

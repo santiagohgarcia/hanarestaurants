@@ -74,11 +74,12 @@ sap.ui.define([
 					properties: {
 						RestaurantId: order.RestaurantId,
 						RestaurantOrderId: order.RestaurantOrderId,
-						Product: product.ProductId,
-						ProductDescription: product.Description,
+						ProductId: product.ProductId,
+						ProductName: product.Name,
 						Quantity: 1,
 						UnitPrice: product.Price,
-						Price: product.Price
+						Price: product.Price,
+						Image: product.Image
 					},
 					context: orderCtx
 				});

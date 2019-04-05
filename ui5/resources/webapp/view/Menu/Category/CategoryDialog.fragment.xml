@@ -1,18 +1,33 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
-    <Dialog id="categoryDialog" title="{i18n>Category}">
-        <f:Form editable="true">
-            <f:layout>
-                <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false" /> </f:layout>
-            <f:formContainers>
-                <f:FormContainer>
-                    <f:FormElement label="{i18n>Description}">
-                        <Input fieldGroupIds="categoryFields" required="true" value="{path: 'Description', type: 'sap.ui.model.type.String' }" /> </f:FormElement>
-                </f:FormContainer>
-            </f:formContainers>
-        </f:Form>
-        <beginButton>
-            <Button icon="sap-icon://save" press="onSave" /> </beginButton>
-        <endButton>
-            <Button icon="sap-icon://decline" press="onCloseDialog" /> </endButton>
-    </Dialog>
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:fi="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid">
+	<Dialog id="categoryDialog" title="{i18n>Category}" contentWidth="40%">
+		<f:Form editable="true">
+			<f:layout>
+				<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4"
+					emptySpanM="2" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer>
+					<f:FormElement label="{i18n>Description}">
+						<Input fieldGroupIds="categoryFields" required="true" value="{path: 'Description', type: 'sap.ui.model.type.String' }"/>
+					</f:FormElement>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<ScrollContainer vertical="true" height="300px" horizontal="false">
+			<fi:GridList id="iconList" sticky="HeaderToolbar" headerText="{i18n>Icon}" mode="SingleSelectMaster" items="{/Icons}"
+				class="sapUiSmallMarginBegin" selectionChange="onIconSelectionChange" updateFinished="onIconListUpdateFinish">
+				<fi:customLayout>
+					<grid:GridBoxLayout boxWidth="80px"/>
+				</fi:customLayout>
+				<ObjectListItem icon="{Icon}"/>
+			</fi:GridList>
+		</ScrollContainer>
+		<beginButton>
+			<Button icon="sap-icon://save" press="onSave"/>
+		</beginButton>
+		<endButton>
+			<Button icon="sap-icon://decline" press="onCloseDialog"/>
+		</endButton>
+	</Dialog>
 </core:FragmentDefinition>
