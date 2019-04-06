@@ -35,7 +35,7 @@ function AfterCreateOrModif(param) {
 		baseMessage = {
 			message: {
 				data: {
-					Status: String(newOrder.RestaurantId),
+					Status: String(newOrder["Status.StatusId"]),
 					RestaurantId: String(newOrder.RestaurantId),
 					RestaurantOrderId: String(newOrder.RestaurantOrderId)
 				}

@@ -1,4 +1,7 @@
 service {
+	/*
+		RESTAURANT
+	*/
     "restaurants.db::RestaurantsContext.Restaurant" 
 	  as "Restaurants"
 	  navigates ("RestaurantToCategories"  as "Categories",
@@ -33,14 +36,15 @@ service {
 	dependent "Categories"("RestaurantId")
 	multiplicity "*";
 
+	/*
+		STAFF
+	*/
+	"restaurants.db::RestaurantsContext.Staff" as "Staff"
+    navigates ("StaffToRestaurant"            as "Restaurants")
+    create events (before "xsjslib:Staff.xsjslib::BeforeCreate");
 	
 	"restaurants.db::RestaurantsContext.RestaurantStaff" 
     as "RestaurantStaff";
-	
-	"restaurants.db::RestaurantsContext.Staff" 
-    as "Staff"
-    navigates ("StaffToRestaurant"            as "Restaurants")
-    create events (before "xsjslib:Staff.xsjslib::BeforeCreate");
 	
 	association "RestaurantToStaff" 
         principal "Restaurants"("RestaurantId") multiplicity "*" 
@@ -52,6 +56,9 @@ service {
         dependent "Restaurants"("RestaurantId") multiplicity "*"
         over "restaurants.db::RestaurantsContext.RestaurantStaff" principal ("Staff.StaffId") dependent ("Restaurant.RestaurantId");
         
+    /*
+		RESTAURANT ORDER
+	*/
     "restaurants.db::RestaurantsContext.RestaurantOrder" as "Orders"
       navigates ("OrderToOrderItems"            as "Items",
     			 "OrderToStatus"        		as "Status",
@@ -66,24 +73,28 @@ service {
 	dependent "AggregatedOrderItems"("RestaurantId","RestaurantOrderId")
 	multiplicity "1";
 	
-		association "OrderToOrderItems"
+	association "OrderToOrderItems"
 	principal "Orders"("RestaurantId","RestaurantOrderId")
 	multiplicity "1"
 	dependent "OrderItems"("RestaurantId","RestaurantOrderId")
 	multiplicity "*";
 	
-		association "OrderToStatus"
+	association "OrderToStatus"
 	principal "Orders"("Status.StatusId")
 	multiplicity "1"
 	dependent "Statuses"("StatusId")
 	multiplicity "1";
 	
-		association "OrderToPaymentMethod"
+	association "OrderToPaymentMethod"
 	principal "Orders"("PaymentMethod.PaymentMethodId")
 	multiplicity "1"
 	dependent "PaymentMethods"("PaymentMethodId")
 	multiplicity "1";
-	    
+	   
+	   
+	/*
+		RESTAURANT ORDER ITEM
+	*/   
 	"restaurants.db::RestaurantsContext.RestaurantOrderItem" as "OrderItems" 
 	create events (before "xsjslib:RestaurantOrderItem.xsjslib::BeforeCreate");
 	
@@ -92,9 +103,11 @@ service {
 	keys generate local "ID"
     aggregates always (SUM of "Price"); 
 	
+	/*
+		PRODUCT
+	*/
 	"restaurants.db::RestaurantsContext.Product"  
 	as "Products" navigates ("ProductToCategory" as "Category")
-	
 	create events (before "xsjslib:Product.xsjslib::BeforeCreate");
 	
 	association "ProductToCategory"
@@ -103,6 +116,9 @@ service {
 	dependent "Categories"("RestaurantId","CategoryId")
 	multiplicity "1";
 	
+	/*
+		CATEGORY
+	*/
 	"restaurants.db::RestaurantsContext.Category" 
 	as "Categories" 
 	navigates ("CategoryToCategories" as "Categories",
@@ -122,21 +138,33 @@ service {
 	dependent "Products"("RestaurantId","Category.CategoryId")
 	multiplicity "*";
 	
-		association "CategoryToIcon"
+	association "CategoryToIcon"
 	principal "Categories"("Icon.IconId")
 	multiplicity "1"
 	dependent "Icons"("IconId")
 	multiplicity "1";
 	
+	/*
+		STATUS
+	*/
 	"restaurants.db::RestaurantsContext.Status" 
 	as "Statuses";
 	
+	/*
+		PAYMENT METHOD
+	*/
 	"restaurants.db::RestaurantsContext.PaymentMethod" 
 	as "PaymentMethods";
 	
+	/*
+		ICONS
+	*/
 	"restaurants.db::RestaurantsContext.Icons" 
 	as "Icons";
 	
+	/*
+		CUSTOMER
+	*/
 	"restaurants.db::RestaurantsContext.Customer" 
 	as "Customers"
 	navigates("CustomerToOrders" as "Orders")
@@ -148,6 +176,9 @@ service {
 	dependent "Orders"("Customer.CustomerId")
 	multiplicity "*";
 	
+	/*
+		TODAY ORDERS
+	*/
 	"restaurants.db.views::TodayOrders" 
 	as "TodayOrders" key ("RestaurantId","RestaurantOrderId") 
 	navigates ("TodayOrderToStatus" as "Status",
