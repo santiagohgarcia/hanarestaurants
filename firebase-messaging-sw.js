@@ -11,13 +11,13 @@ const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload) {
 
-	if (payload.data.action === "READY") {
+	if (payload.data.Status === "READY") {
 		var notificationTitle = `Order #(${payload.data.RestaurantOrderId}) ready!`;
 		var notificationOptions = {
 			body: `You can pick your order now! Enjoy!`,
 			icon: `customer/resources/webapp/img/ready.png`
 		};
-	} else {
+	} else if(payload.data.Status === "PENDING") {
 		var notificationTitle = `Order #(${payload.data.RestaurantOrderId}) created!`;
 		var notificationOptions = {
 			body: `Check your notifications to know when the order is ready!`,
