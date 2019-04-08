@@ -11,17 +11,20 @@ sap.ui.define([
 		formatter: formatter,
 		models: models,
 
-		onReceiveRestaurants: function(evt) {
-			var bindingContext = this.getView().getBindingContext(),
-				data = evt.getParameter("data");
-			if (data && !bindingContext) {
-				this.getView().bindElement(`/Restaurants(RestaurantId=${data.results[0].RestaurantId})`);
-			}
+		onInit: function() {
+			this.getRouter().getRoute("Menu").attachMatched(this._onMenuMatched.bind(this));
+		},
+
+		_onMenuMatched: function(evt) {
+			var params = evt.getParameter("arguments");
+			this.getView().bindElement(`/Restaurants(RestaurantId=${params.RestaurantId})`);
 		},
 
 		onSelectRestaurant: function(evt) {
 			var restaurant = evt.getParameter("item").getBindingContext().getObject();
-			this.getView().bindElement(`/Restaurants(RestaurantId=${restaurant.RestaurantId})`);
+			this.getRouter().navTo("Menu", {
+				RestaurantId: restaurant.RestaurantId
+			},true);
 		},
 
 		onCategoriesReceived: function(evt) {

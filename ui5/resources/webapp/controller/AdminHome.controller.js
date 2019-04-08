@@ -2,19 +2,13 @@ sap.ui.define([
 	"restaurants/ui5/controller/BaseController",
 	"restaurants/ui5/model/formatter",
 	"restaurants/ui5/model/types"
-], function(BaseController, formatter,types) {
+], function(BaseController, formatter, types) {
 	"use strict";
 
 	return BaseController.extend("restaurants.ui5.controller.AdminHome", {
 		formatter: formatter,
-		types:types,
-		/*	onPressRestaurant: function(evt) {
-				var restaurant = evt.getSource().getBindingContext().getObject();
-				this.getRouter().navTo("Menu", {
-					RestaurantId: restaurant.RestaurantId
-				});
-			},*/
-
+		types: types,
+		
 		onAddRestaurant: function() {
 			this.openRestaurantDialog();
 		},
@@ -22,12 +16,16 @@ sap.ui.define([
 			this.getRouter().navTo("Staff");
 		},
 
-		onPressManagerView: function() {
-			this.getRouter().navTo("ManagerHome");
+		onPressManagerView: function(evt) {
+			this.getRouter().navTo("ManagerHome", {
+				RestaurantId: evt.getSource().getBindingContext().getProperty("RestaurantId")
+			});
 		},
 
-		onPressMenus: function() {
-			this.getRouter().navTo("Menus");
+		onPressMenus: function(evt) {
+			this.getRouter().navTo("Menu", {
+				RestaurantId: evt.getSource().getBindingContext().getProperty("RestaurantId")
+			});
 		},
 
 		onEditRestaurant: function(evt) {

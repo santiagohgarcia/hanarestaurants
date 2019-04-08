@@ -85,11 +85,11 @@
 				"target": "adminHome"
 			}, {
 				"name": "ManagerHome",
-				"pattern": "ManagerHome",
+				"pattern": "ManagerHome/{RestaurantId}",
 				"target": "managerHome"
 			}, {
-				"name": "Menus",
-				"pattern": "/Menus",
+				"name": "Menu",
+				"pattern": "Menu/{RestaurantId}",
 				"target": "menu"
 			}, {
 				"name": "Staff",

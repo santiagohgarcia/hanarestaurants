@@ -3,8 +3,9 @@ sap.ui.define([
 	"restaurants/ui5/model/formatter",
 	"restaurants/ui5/model/types",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function(BaseController, formatter, types, Filter, FO) {
+	"sap/ui/model/FilterOperator",
+	"restaurants/ui5/model/models",
+], function(BaseController, formatter, types, Filter, FO, models) {
 	"use strict";
 
 	return BaseController.extend("restaurants.ui5.controller.ManagerHome", {
@@ -15,8 +16,32 @@ sap.ui.define([
 			this.getRouter().getRoute("ManagerHome").attachMatched(this._onManagerHomeMatched.bind(this));
 		},
 
-		_onManagerHomeMatched: function() {
+		_onManagerHomeMatched: function(evt) {
+			var params = evt.getParameter("arguments");
+			this.getView().bindElement(`/Restaurants(RestaurantId=${params.RestaurantId})`);
 			this._updateOrderBindings();
+		},
+
+		_attachNotificationHandler: function(restaurants) {
+			const messaging = firebase.messaging();
+
+			messaging.onTokenRefresh(() =>
+				messaging.getToken().then((token) => this._subscribeToRestaurantsNotifications(token, restaurants)));
+
+			messaging.onMessage(message => {
+				var currentRestaurantCtx = this.getView().getBindingContext();
+				if (currentRestaurantCtx && (Number(message.data.RestaurantId) === currentRestaurantCtx.getProperty("RestaurantId"))) {
+					this._updateOrderBindings();
+				}
+			});
+
+			return messaging.requestPermission()
+				.then(() => messaging.getToken())
+				.then((token) => this._subscribeToRestaurantsNotifications(token, restaurants));
+		},
+
+		_subscribeToRestaurantsNotifications: function(topic, restaurants) {
+			restaurants.forEach(r => models.subscribeToRestaurantTopic(topic, r));
 		},
 
 		_updateOrderBindings: function() {
@@ -39,6 +64,7 @@ sap.ui.define([
 				data = evt.getParameter("data");
 			if (data && !bindingContext) {
 				this.getView().bindElement(`/Restaurants(RestaurantId=${data.results[0].RestaurantId})`);
+				this._attachNotificationHandler(data.results);
 			}
 		},
 
@@ -48,7 +74,9 @@ sap.ui.define([
 
 		onSelectRestaurant: function(evt) {
 			var restaurant = evt.getParameter("item").getBindingContext().getObject();
-			this.getView().bindElement(`/Restaurants(RestaurantId=${restaurant.RestaurantId})`);
+			this.getRouter().navTo("ManagerHome", {
+				RestaurantId: restaurant.RestaurantId
+			}, true);
 		},
 
 		onAddOrder: function(evt) {

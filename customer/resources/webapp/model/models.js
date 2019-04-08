@@ -21,6 +21,7 @@ sap.ui.define([
 				defaultUpdateMethod: sap.ui.model.odata.UpdateMethod.Put
 			});
 		},
+
 		getNewOrderId: function(restaurant) {
 			return jQuery.ajax({
 				type: "GET",

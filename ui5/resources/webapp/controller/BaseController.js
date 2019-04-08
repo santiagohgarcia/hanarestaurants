@@ -62,6 +62,10 @@ sap.ui.define([
 			return this.getOwnerComponent().openProductDialog(ctx);
 		},
 
+		openMessageDialog: function(response) {
+			return this.getOwnerComponent().openMessageDialog();
+		},
+
 		showMessageToast: function(id, args) {
 			MessageToast.show(this.getText(id, args), {
 				closeOnBrowserNavigation: false

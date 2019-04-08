@@ -17,7 +17,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
 			body: `You can pick your order now! Enjoy!`,
 			icon: `customer/resources/webapp/img/ready.png`
 		};
-	} else {
+	} else if (payload.data.Status === "PENDING") {
 		var notificationTitle = `Order #(${payload.data.RestaurantOrderId}) created!`;
 		var notificationOptions = {
 			body: `Check your notifications to know when the order is ready!`,

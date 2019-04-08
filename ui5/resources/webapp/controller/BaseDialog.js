@@ -27,7 +27,11 @@ sap.ui.define([
 			if (Validator.isValid(this.getFieldGroup(), this._dialog)) {
 				if (restaurantModel.hasPendingChanges()) {
 					this._dialog.setBusy(true);
-					restaurantModel.submitChanges().then(this.success.bind(this));
+					restaurantModel.submitChanges().then(this.success.bind(this))
+						.catch(resp => {
+							this._dialog.setBusy(false);
+							this._view.getController().openMessageDialog(resp);
+						});
 				} else {
 					this.onCloseDialog();
 				}

@@ -74,7 +74,12 @@ sap.ui.define([
 		onSave: function() {
 			var model = this.getModel();
 			if (Validator.isValid("staffFields", this.getView()) && model.hasPendingChanges()) {
-				model.submitChanges().then(this.success.bind(this));
+				model.submitChanges()
+					.then(this._success.bind(this))
+					.catch(resp => {
+						this._dialog.setBusy(false);
+						this.openMessageDialog(resp);
+					});
 			}
 		},
 

@@ -29,11 +29,11 @@
 						</VBox>
 					</VBox>
 				</CustomListItem>
-				<CustomListItem press="onPressManagerView" type="Active">
+				<!--	<CustomListItem press="onPressManagerView" type="Active">
 					<VBox height="100%">
 						<VBox class="sapUiSmallMargin">
 							<layoutData>
-								<FlexItemData growFactor="1" shrinkFactor="0"/><!-- Don't shrink below minimum size. Fill space if available. --></layoutData>
+								<FlexItemData growFactor="1" shrinkFactor="0"/></layoutData>
 							<core:Icon src="sap-icon://activity-individual" size="2.625rem" color="Default" class="sapUiTinyMarginBottom"/>
 							<Title text="{i18n>ManagerView}" wrapping="true"/>
 							<Text text="{i18n>SeeRealTimeOrderStatus}" wrapping="true"/>
@@ -44,13 +44,13 @@
 					<VBox height="100%">
 						<VBox class="sapUiSmallMargin">
 							<layoutData>
-								<FlexItemData growFactor="1" shrinkFactor="0"/><!-- Don't shrink below minimum size. Fill space if available. --></layoutData>
+								<FlexItemData growFactor="1" shrinkFactor="0"/></layoutData>
 							<core:Icon src="sap-icon://activity-items" size="2.625rem" color="Default" class="sapUiTinyMarginBottom"/>
 							<Title text="{i18n>Menus}" wrapping="true"/>
 							<Text text="{i18n>EditMenusForYourRestaurants}" wrapping="true"/>
 						</VBox>
 					</VBox>
-				</CustomListItem>
+				</CustomListItem>-->
 			</f:items>
 		</f:GridList>
 		<OverflowToolbar class="sapUiSmallMarginBottom">
@@ -63,43 +63,34 @@
 				<grid:GridBoxLayout boxWidth="22.5rem"/>
 			</f:customLayout>
 			<CustomListItem >
-				<VBox class="sapUiSmallMarginBottom sapUiSmallMarginBeginEnd">
-					<HBox justifyContent="SpaceBetween" alignItems="Center">
-						<Title text="{Name}" wrapping="true"/>
-						<Button icon="sap-icon://edit" press="onEditRestaurant" type="Transparent"/>
-					</HBox>
-					<HBox justifyContent="SpaceBetween" fitContainer="true">
-						<Label text="{i18n>TodayRevenue}" wrapping="true">
-							<layoutData>
-								<FlexItemData growFactor="1"/>
-							</layoutData>
-						</Label>
-					<!--	<Label text="{i18n>Orders}" wrapping="true">
-							<layoutData>
-								<FlexItemData growFactor="3" maxWidth="150px"/>
-							</layoutData>
-						</Label>-->
-					</HBox>
-					<HBox>
-						<VBox justifyContent="SpaceBetween" fitContainer="true">
-							<layoutData>
-								<FlexItemData growFactor="1"/>
-							</layoutData>
-							<NumericContent truncateValueTo="6" binding="{TodayRevenue}" value="{path:'TodayRevenue',type:'.types.floatType'}" scale="ARS" withMargin="false"></NumericContent>
-						</VBox>
-					<!--<VBox justifyContent="Center" fitContainer="true">
-							<layoutData>
-								<FlexItemData growFactor="3" maxWidth="150px"/>
-							</layoutData>
-							<HBox justifyContent="SpaceBetween" alignItems="Center"
-								items="{path:'TodayOrdersCount', events: { dataReceived: '.onReceiveOrdersCount' } }" fitContainer="true">
-								<items>
-									<ObjectStatus icon="{path:'StatusId',formatter: '.formatter.orderStatusToIcon'}" visible="{= ${StatusId} !== 'ALL'}" text="{OrderCount}"
-										state="{path:'StatusId',formatter: '.formatter.orderStatusToValueState'}"/>
-								</items>
-							</HBox>
-						</VBox>-->
-					</HBox>
+				<VBox>
+					<VBox class="sapUiSmallMarginBeginEnd">
+						<HBox justifyContent="SpaceBetween" alignItems="Center">
+							<Title text="{Name}" wrapping="true"/>
+							<Button icon="sap-icon://edit" press="onEditRestaurant" type="Transparent"/>
+						</HBox>
+						<HBox justifyContent="SpaceBetween" fitContainer="true">
+							<Label text="{i18n>TodayRevenue}" wrapping="true">
+								<layoutData>
+									<FlexItemData growFactor="1"/>
+								</layoutData>
+							</Label>
+						</HBox>
+						<HBox>
+							<VBox justifyContent="SpaceBetween" fitContainer="true">
+								<layoutData>
+									<FlexItemData growFactor="1"/>
+								</layoutData>
+								<NumericContent truncateValueTo="6" binding="{TodayRevenue}" value="{path:'TodayRevenue',type:'.types.floatType'}" scale="ARS"
+									withMargin="false"></NumericContent>
+							</VBox>
+						</HBox>
+					</VBox>
+					<OverflowToolbar design="Solid" class="orderToolbar">
+						<ToolbarSpacer/>
+						<Button text="{i18n>ManagerView}" icon="sap-icon://activity-individual" type="Transparent" press="onPressManagerView"/>
+						<Button text="{i18n>Menu}" icon="sap-icon://activity-items" type="Transparent" press="onPressMenus"/>
+					</OverflowToolbar>
 				</VBox>
 			</CustomListItem>
 		</f:GridList>

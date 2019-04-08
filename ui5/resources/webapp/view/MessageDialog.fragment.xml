@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f">
+	<Dialog id="messageDialog" state="Error" contentHeight="300px" contentWidth="500px" verticalScrolling="false" title="Error">
+		<content>
+			<MessageView items="{messages>/}">
+				<items>
+					<MessageItem type="{messages>type}" title="{messages>message}" subtitle="{messages>additionalText}" description="{messages>description}"/>
+				</items>
+			</MessageView>
+		</content>
+		<endButton>
+			<Button icon="sap-icon://decline" press="onCloseDialog"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

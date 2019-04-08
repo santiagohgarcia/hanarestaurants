@@ -52,6 +52,19 @@ sap.ui.define([
 				reader.onload = () => resolve(reader.result);
 				reader.onerror = error => reject(error);
 			});
+		},
+
+		subscribeToRestaurantTopic: function(token, restaurant) {
+			return jQuery.ajax({
+				type: "POST",
+				contentType: 'application/json',
+				url: baseURl + `/xsjs/SubscribeToRestaurantTopic.xsjs`,
+				dataType: "json",
+				data: JSON.stringify({
+					Token: token,
+					RestaurantId: restaurant.RestaurantId
+				})
+			});
 		}
 
 	};

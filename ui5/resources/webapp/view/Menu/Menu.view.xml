@@ -63,7 +63,7 @@
 															<FlexItemData growFactor="0"/>
 														</f:layoutData>
 													</f:Avatar>
-													<VBox justifyContent="SpaceBetween" alignItems="Begin">
+													<VBox justifyContent="SpaceBetween">
 														<layoutData>
 															<FlexItemData growFactor="8"/>
 														</layoutData>
@@ -78,18 +78,6 @@
 													</VBox>
 												</HBox>
 											</CustomListItem>
-											<!--	<CustomListItem>
-												<VBox justifyContent="SpaceBetween">
-													<ObjectIdentifier title="{Name}" class="sapUiSmallMargin"/>
-													<Image src="{= ${Image} || './img/placeholder.png' }" width="100%" height="200px"></Image>
-													<OverflowToolbar design="Transparent">
-														<Button icon="sap-icon://edit" type="Transparent" press="onEditProduct"/>
-														<Button icon="sap-icon://delete" type="Transparent" press="onDeleteProduct"/>
-														<ToolbarSpacer/>
-														<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="sapUiTinyMarginEnd productNumber"/>
-													</OverflowToolbar>
-												</VBox>
-											</CustomListItem>-->
 										</f:items>
 									</f:GridList>
 								</ux:ObjectPageSubSection>

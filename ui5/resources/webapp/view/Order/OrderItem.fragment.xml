@@ -2,7 +2,7 @@
 	<CustomListItem class="orderItem">
 		<VBox fitContainer="true" justifyContent="SpaceBetween">
 			<HBox class="sapUiSmallMarginTop sapUiSmallMarginBeginEnd">
-				<VBox alignItems="Begin" class="sapUiSmallMarginEnd">
+				<VBox  class="sapUiSmallMarginEnd">
 					<layoutData>
 						<FlexItemData growFactor="0"/>
 					</layoutData>

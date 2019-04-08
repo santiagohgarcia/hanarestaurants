@@ -25,6 +25,7 @@ sap.ui.define([
 			var args = evt.getParameter("arguments");
 			this._bindRestaurant(args);
 			this._bindNewOrder(args);
+			this.getModel("orderJSON").setProperty("/Total", 0);
 			this.byId("categoriesProductsNavCont").to(this.byId("categories"));
 		},
 
@@ -119,7 +120,12 @@ sap.ui.define([
 			var model = this.getModel();
 			if (Validator.isValid("orderFields", this.getView()) && model.hasPendingChanges()) {
 				this.getView().setBusy(true);
-				model.submitChanges().then(this.success.bind(this));
+				model.submitChanges()
+					.then(this.success.bind(this))
+					.catch(resp => {
+						this.getView().setBusy(false);
+						this.openMessageDialog(resp);
+					});
 			}
 		},
 

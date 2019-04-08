@@ -15,7 +15,7 @@
 		</customHeader>
 		<content>
 			<HBox alignItems="End" class="headerBackgroundColor">
-				<IconTabHeader id="orderStatusTabHeader" tabDensityMode="Cozy" applyContentPadding="true" expandable="false" enableTabReordering="true"
+				<IconTabHeader id="orderStatusTabHeader" tabDensityMode="Cozy" enableTabReordering="true"
 					selectedKey="PENDING" select="onSelectStatusTab" items="{path:'TodayOrdersCount', events: { dataReceived: '.onReceiveOrdersCount' } }">
 					<items>
 						<IconTabFilter key="{StatusId}" showAll="{= ${StatusId} === 'ALL' }" count="{OrderCount}" text="{StatusDescription}"
