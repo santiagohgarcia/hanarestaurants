@@ -23,14 +23,14 @@
 									<ToolbarSpacer/>
 								</Toolbar>
 							</customHeader>
-							<f:GridList items="{Categories}" class="sapUiContentPadding">
+							<f:GridList items="{path:'Categories', parameters: {expand: 'Icon'}}" class="sapUiContentPadding">
 								<f:customLayout>
 									<grid:GridBoxLayout boxMinWidth="300px"/>
 								</f:customLayout>
 								<f:items>
 									<CustomListItem type="Navigation" press="onPressCategory">
 										<VBox class="sapUiSmallMargin">
-											<core:Icon src="sap-icon://open-folder" size="50px" color="Default" class="sapUiTinyMarginBottom"/>
+											<Image src="{Icon/Icon}" height="70px" color="Default" class="sapUiTinyMarginBottom"/>
 											<Title text="{Description}"/>
 										</VBox>
 									</CustomListItem>

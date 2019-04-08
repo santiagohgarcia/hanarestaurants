@@ -26,17 +26,6 @@ sap.ui.define([
 			this._setSectionBlock(false);
 		},
 
-		onStaffReceived: function(evt) {
-			var data = evt.getParameter("data"),
-				staffList = this.byId("staffList");
-			if (data && !this.byId("staff").getElementBinding()) {
-				var firstStaff = staffList.getItems()[0];
-				staffList.setSelectedItem(firstStaff);
-				this._bindStaff(firstStaff.getBindingContext().getObject());
-				this.byId("staffList").getBinding("items").detachDataReceived(this.onStaffReceived);
-			}
-		},
-
 		_bindStaff: function(staff) {
 			this.byId("staff").bindElement({
 				path: `/Staff(StaffId=${staff.StaffId})`,
@@ -77,7 +66,6 @@ sap.ui.define([
 				model.submitChanges()
 					.then(this._success.bind(this))
 					.catch(resp => {
-						this._dialog.setBusy(false);
 						this.openMessageDialog(resp);
 					});
 			}

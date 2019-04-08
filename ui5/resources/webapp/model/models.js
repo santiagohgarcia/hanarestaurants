@@ -5,8 +5,8 @@ sap.ui.define([
 ], function(JSONModel, Device, PromisifiedODataModel) {
 	"use strict";
 
-	var baseURl = "https://hxehost:51030";
-
+	//var baseURl = "https://hxehost:51030";
+	var baseURl = "";
 	return {
 
 		createDeviceModel: function() {

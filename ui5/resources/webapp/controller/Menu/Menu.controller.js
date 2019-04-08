@@ -27,16 +27,6 @@ sap.ui.define([
 			},true);
 		},
 
-		onCategoriesReceived: function(evt) {
-			var data = evt.getParameter("data"),
-				categoryList = this.byId("categoryList");
-			if (data) {
-				var category = data.results[0];
-				this._bindCategory(category);
-				categoryList.setSelectedItem(categoryList.getItems()[0]);
-			}
-		},
-
 		onSelectCategory: function(evt) {
 			var category = evt.getParameter("listItem").getBindingContext().getObject();
 			this._bindCategory(category);

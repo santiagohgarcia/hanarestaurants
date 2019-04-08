@@ -1,0 +1,13 @@
+PROCEDURE "restaurants.db.procedures::CreateStaffUser"( 
+	 IN I_USERNAME VARCHAR(30)
+)
+   LANGUAGE SQLSCRIPT
+  SQL SECURITY DEFINER 
+   --DEFAULT SCHEMA <default_schema_name>
+   AS
+  
+BEGIN
+
+EXEC ( 'CREATE USER ' || I_USERNAME || ' PASSWORD HanaAdmin1 ' );
+	
+END

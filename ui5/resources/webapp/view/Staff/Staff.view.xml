@@ -15,7 +15,7 @@
 			<masterPages>
 				<Page id="staffMaster" title="{i18n>Staff}" floatingFooter="true" showFooter="{= !${view>/Edit} }">
 					<List id="staffList" mode="SingleSelectMaster" selectionChange="onSelectStaff"
-						items="{path: '/Staff', events: {dataReceived: '.onStaffReceived'} }">
+						items="{/Staff}">
 						<items>
 							<ObjectListItem icon="sap-icon://employee" title="{Name} {LastName}"/>
 						</items>

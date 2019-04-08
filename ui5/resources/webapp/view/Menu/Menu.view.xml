@@ -18,7 +18,7 @@
 			<masterPages>
 				<Page id="categories" title="{i18n>Categories}" floatingFooter="true">
 					<List id="categoryList" mode="SingleSelectMaster" selectionChange="onSelectCategory"
-						items="{path: 'Categories', parameters: {expand: 'Icon'}, filters: {path: 'ParentCategory.CategoryId', operator: 'EQ', value1: null }, events: {dataReceived: '.onCategoriesReceived'}}">
+						items="{path: 'Categories', parameters: {expand: 'Icon'}, filters: {path: 'ParentCategory.CategoryId', operator: 'EQ', value1: null }}">
 						<items>
 							<StandardListItem icon="{Icon/Icon}" title="{Description}"/>
 						</items>
