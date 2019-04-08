@@ -16,4 +16,10 @@ function BeforeCreate(param) {
 
 	pStmt.executeUpdate();
 	pStmt.close();
+
+	var createUserStmt = param.connection.prepareCall(`CALL "restaurants.db.procedures::CreateStaffUser"(I_USERNAME => ?)`);
+	createUserStmt.setString(1, newObject.UserId);
+	createUserStmt.execute();
+	createUserStmt.close();
+	
 }
