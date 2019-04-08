@@ -1,5 +1,5 @@
 VIEW "restaurants.db.views::TodayOrders" 
-AS SELECT RO.* FROM "restaurants.db::RestaurantsContext.RestaurantOrder" as RO
+AS SELECT RO.*, current_user FROM "restaurants.db::RestaurantsContext.RestaurantOrder" as RO
 	inner join "restaurants.db::RestaurantsContext.Restaurant" AS "R"
 	on "R"."RestaurantId" = RO."RestaurantId"
 	WHERE RO."CreatedAt" > "restaurants.db.functions::GetLastDateTimeClose"("R"."CloseDayHour").PREVIOUSDATETIMECLOSE

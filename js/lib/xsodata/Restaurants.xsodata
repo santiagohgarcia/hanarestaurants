@@ -2,14 +2,15 @@ service {
 	/*
 		RESTAURANT
 	*/
-    "restaurants.db::RestaurantsContext.Restaurant" 
-	  as "Restaurants"
+     "restaurants.db::RestaurantsContext.RestaurantView" 
+	  as "Restaurants" 
 	  navigates ("RestaurantToCategories"  as "Categories",
 				"RestaurantToProducts"  as "Products",
 				"RestaurantToStaff"       as "Staff",
 				"RestaurantToTodayOrders" as "TodayOrders",
 				"RestaurantToTodayOrdersCount" as "TodayOrdersCount",
 				"RestaurantToTodayRevenue" as "TodayRevenue")
+	
 	  create events( before "xsjslib:Restaurant.xsjslib::BeforeCreate");
 	
 	association "RestaurantToCategories"

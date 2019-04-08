@@ -11,7 +11,7 @@
 						<Input fieldGroupIds="restaurantFields" required="true" value="{path: 'Name', type: 'sap.ui.model.type.String' }"/>
 					</f:FormElement>
 					<f:FormElement label="{i18n>CloseDayHour}">
-						<TimePicker fieldGroupIds="restaurantFields" required="true" value="{CloseDayHour}"
+						<TimePicker fieldGroupIds="restaurantFields" required="true" value="{path: 'CloseDayHour', type: 'sap.ui.model.type.String' }"
 							valueFormat="HH" displayFormat="HH"/>
 					</f:FormElement>
 				</f:FormContainer>

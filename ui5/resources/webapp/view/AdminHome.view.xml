@@ -19,7 +19,7 @@
 			</f:customLayout>
 			<f:items>
 				<CustomListItem press="onPressStaff" type="Active">
-					<VBox height="100%">
+					<VBox justifyContent="SpaceBetween" fitContainer="true">
 						<VBox class="sapUiSmallMargin">
 							<layoutData>
 								<FlexItemData growFactor="1" shrinkFactor="0"/><!-- Don't shrink below minimum size. Fill space if available. --></layoutData>
@@ -63,7 +63,7 @@
 				<grid:GridBoxLayout boxWidth="22.5rem"/>
 			</f:customLayout>
 			<CustomListItem >
-				<VBox>
+				<VBox justifyContent="SpaceBetween" fitContainer="true">
 					<VBox class="sapUiSmallMarginBeginEnd">
 						<HBox justifyContent="SpaceBetween" alignItems="Center">
 							<Title text="{Name}" wrapping="true"/>

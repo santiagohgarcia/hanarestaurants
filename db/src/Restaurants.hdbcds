@@ -6,6 +6,7 @@ context RestaurantsContext {
             Name         : String(50);
             CloseDayHour : Integer;
             Orders       : association[*] to RestaurantOrder on Orders.RestaurantId = RestaurantId;
+            Creator      : String(50);
     }
 
     entity RestaurantStaff {
@@ -89,4 +90,14 @@ context RestaurantsContext {
             Description : String(100);
             Icon        : LargeString;
     }
+
+    view RestaurantView as
+        select from Restaurant
+        {
+            RestaurantId,
+            Name,
+            CloseDayHour,
+            Creator
+        }
+        with structured privilege check;
 };
