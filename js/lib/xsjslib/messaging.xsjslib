@@ -5,8 +5,9 @@ const https = $.require('https');
 var fs = $.require('fs');
 var google = $.require('googleapis');
 var PROJECT_ID = 'hana-firebase';
-var HOST = 'fcm.googleapis.com';
-var PATH = '/v1/projects/' + PROJECT_ID + '/messages:send';
+var SEND_MESSAGE_HOST = 'fcm.googleapis.com';
+var SEND_MESSAGE_PATH = '/v1/projects/' + PROJECT_ID + '/messages:send';
+var SUBSCRIBE_HOST = 'iid.googleapis.com';
 var MESSAGING_SCOPE = 'https://www.googleapis.com/auth/firebase.messaging';
 var SCOPES = [MESSAGING_SCOPE];
 
@@ -34,14 +35,45 @@ function getAccessToken() {
 }
 
 /*
+ * Send HTTP request to subscribe to topic
+ */
+function subscribeToTopic(token, topic) {
+	this.getAccessToken()
+		.then(function(accessToken) {
+			var options = {
+				hostname: SUBSCRIBE_HOST,
+				path: `/iid/v1/${token}/rel/topics/${topic}`,
+				method: 'POST',
+				headers: {
+					'Authorization': 'key=AIzaSyAI1UyzFEnM9ABYmF_mNjVQN3-l13NnL4I'
+				}
+			};
+
+			var request = https.request(options, function(resp) {
+				resp.setEncoding('utf8');
+				resp.on('data', function(data) {
+					console.log('Subscribed OK, response:');
+					console.log(data);
+				});
+			});
+
+			request.on('error', function(err) {
+				console.log('Unable to subscribe to Firebase');
+				console.log(err);
+			});
+			request.end();
+		});
+}
+
+/*
  * Send HTTP request to FCM with given message.
  */
 function sendFcmMessage(fcmMessage) {
 	this.getAccessToken()
 		.then(function(accessToken) {
 			var options = {
-				hostname: HOST,
-				path: PATH,
+				hostname: SEND_MESSAGE_HOST,
+				path: SEND_MESSAGE_PATH,
 				method: 'POST',
 				headers: {
 					'Authorization': 'Bearer ' + accessToken

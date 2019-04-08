@@ -5,14 +5,6 @@ var utils = $.require("./utils.js");
 function BeforeCreate(param) {
 	var newObject = utils.getNewObject(param);
 
-	//Create new User
-	/*	var pStmtCreateUser = param.connection.prepareStatement(
-			`CALL "restaurants.db.procedures::CreateUser"(I_USERNAME => ?,I_PASSWORD => ?)`
-		);
-		pStmtCreateUser.setString(1, newObject.UserId);
-		pStmtCreateUser.setString(2, newObject.Password);
-		pStmtCreateUser.executeUpdate();*/
-
 	utils.trucateAfter(param);
 	var pStmt = param.connection.prepareStatement(
 		`insert into "${param.afterTableName}" values(

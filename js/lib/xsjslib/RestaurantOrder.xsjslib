@@ -29,9 +29,18 @@ function BeforeCreate(param) {
 }
 
 function AfterCreateOrModif(param) {
-	var newOrder = utils.getNewObject(param);
-	var oldOrder = utils.getOldObject(param);
-	var customerId = newOrder["Customer.CustomerId"];
+	var newOrder = utils.getNewObject(param),
+		oldOrder = utils.getOldObject(param),
+		customerId = newOrder["Customer.CustomerId"],
+		baseMessage = {
+			message: {
+				data: {
+					Status: String(newOrder["Status.StatusId"]),
+					RestaurantId: String(newOrder.RestaurantId),
+					RestaurantOrderId: String(newOrder.RestaurantOrderId)
+				}
+			}
+		};
 
 	//Send message to customer if the order is ready
 	if (customerId) {
@@ -44,35 +53,13 @@ function AfterCreateOrModif(param) {
 		customerResult.next();
 		var customer = customerResult._row;
 
-		var message = {
-			message: {
-				token: customer.MessagingToken,
-				webpush: {
-					headers: {
-						Urgency: "high"
-					},
-					notification: {
-						body: "This is a message from FCM to web",
-						requireInteraction: "true",
-						badge: "/badge-icon.png"
-					}
-				}
-			}
-		};
-
-		if (newOrder && !oldOrder) {
-			//Order Created: Send initial notification
-			message.message.notification = {
-				title: "Orden creada",
-				body: "estate atento"
-			};
-		} else if (newOrder["Status.StatusId"] === "READY") {
-			//Order READY: Send READY notification
-			message.message.notification = {
-				title: "Orden lista",
-				body: "pasa a retirarla"
-			};
-		}
-		messaging.sendFcmMessage(message);
+		var customerMessage = JSON.parse(JSON.stringify(baseMessage));
+		customerMessage.message.token = customer.MessagingToken;
+		messaging.sendFcmMessage(customerMessage);
 	}
+
+	var restaurantMessage = JSON.parse(JSON.stringify(baseMessage));
+	restaurantMessage.message.topic = "restaurant-" + newOrder.RestaurantId;
+	messaging.sendFcmMessage(restaurantMessage);
+
 }

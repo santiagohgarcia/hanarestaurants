@@ -11,7 +11,7 @@ const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload) {
 
-	if (payload.data.action === "READY") {
+	if (payload.data.Status === "READY") {
 		var notificationTitle = `Order #(${payload.data.RestaurantOrderId}) ready!`;
 		var notificationOptions = {
 			body: `You can pick your order now! Enjoy!`,
