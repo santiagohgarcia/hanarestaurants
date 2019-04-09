@@ -3,7 +3,7 @@ service {
 		RESTAURANT
 	*/
      "restaurants.db::RestaurantsContext.RestaurantView" 
-	  as "Restaurants" 
+	  as "Restaurants" key("RestaurantId")
 	  navigates ("RestaurantToCategories"  as "Categories",
 				"RestaurantToProducts"  as "Products",
 				"RestaurantToStaff"       as "Staff",
