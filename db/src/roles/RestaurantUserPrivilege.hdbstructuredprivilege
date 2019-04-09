@@ -1,0 +1,9 @@
+STRUCTURED PRIVILEGE  "restaurants.db.roles::RestaurantUserPrivilege"
+FOR SELECT ON "restaurants.db::RestaurantsContext.RestaurantView" 
+WHERE "Creator" = SESSION_CONTEXT('APPLICATIONUSER') OR
+	  "RestaurantId" IN ( SELECT R."Restaurant.RestaurantId" 
+								FROM "restaurants.db::RestaurantsContext.Staff" AS S
+								INNER JOIN "restaurants.db::RestaurantsContext.RestaurantStaff" AS R
+								ON S."StaffId" = R."Staff.StaffId"
+								WHERE S."UserId" = SESSION_CONTEXT('APPLICATIONUSER') )
+				

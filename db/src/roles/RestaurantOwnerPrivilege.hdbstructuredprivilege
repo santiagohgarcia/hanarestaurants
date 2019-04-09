@@ -1,3 +1,0 @@
-STRUCTURED PRIVILEGE  "restaurants.db.roles::RestaurantOwnerPrivilege"
-FOR SELECT ON "restaurants.db::RestaurantsContext.RestaurantView" 
-WHERE "Creator" = 'XSA_DEV'
