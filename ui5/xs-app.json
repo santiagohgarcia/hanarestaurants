@@ -10,7 +10,6 @@
 		"source": "(.*)(.xsodata)",
 		"destination": "js_api",
 		"authenticationType": "xsuaa"
-
 	}]
 
 }

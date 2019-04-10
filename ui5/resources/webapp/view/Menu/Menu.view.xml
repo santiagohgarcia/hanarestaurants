@@ -33,7 +33,7 @@
 			</masterPages>
 			<detailPages>
 				<ux:ObjectPageLayout id="category" showTitleInHeaderContent="true" alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false"
-					isChildPage="true" enableLazyLoading="true" showFooter="true">
+					isChildPage="true" enableLazyLoading="true" showFooter="{= Boolean(${CategoryId})}">
 					<ux:headerTitle>
 						<ux:ObjectPageDynamicHeaderTitle >
 							<ux:heading>
@@ -42,8 +42,8 @@
 								</Toolbar>
 							</ux:heading>
 							<ux:actions>
-								<Button icon="sap-icon://edit" type="Transparent" press="onEditCategory"/>
-								<Button icon="sap-icon://delete" type="Transparent" press="onDeleteCategory"/>
+								<Button icon="sap-icon://edit" type="Transparent" press="onEditCategory" visible="{= Boolean(${CategoryId})}"/>
+								<Button icon="sap-icon://delete" type="Transparent" press="onDeleteCategory" visible="{= Boolean(${CategoryId})}"/>
 							</ux:actions>
 						</ux:ObjectPageDynamicHeaderTitle>
 					</ux:headerTitle>
@@ -87,7 +87,7 @@
 					<ux:footer>
 						<Toolbar>
 							<ToolbarSpacer/>
-							<Button icon="sap-icon://add" press="onAddProduct" text="{i18n>AddProduct}" type="Transparent"/>
+							<Button icon="sap-icon://add" press="onAddProduct" text="{i18n>AddProduct}" type="Transparent" />
 						</Toolbar>
 					</ux:footer>
 				</ux:ObjectPageLayout>

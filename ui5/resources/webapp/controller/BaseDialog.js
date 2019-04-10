@@ -1,5 +1,5 @@
 sap.ui.define([
-	"sap/ui/base/ManagedObject", "restaurants/ui5/utils/Validator"
+	"sap/ui/base/ManagedObject","restaurants/ui5/utils/Validator"
 ], function(ManagedObject, Validator) {
 	"use strict";
 	return ManagedObject.extend("restaurants.ui5.controller.BaseDialog", {
