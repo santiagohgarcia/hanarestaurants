@@ -1,0 +1,4 @@
+STRUCTURED PRIVILEGE  "restaurants.db.roles::StaffView"
+FOR SELECT ON "restaurants.db::RestaurantsContext.StaffView" 
+WHERE "Creator" = SESSION_CONTEXT('APPLICATIONUSER')
+				

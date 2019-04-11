@@ -1,65 +1,33 @@
 {
 	"xsappname": "hanarestaurants",
 	"scopes": [{
-		"name": "$XSAPPNAME.Display",
-		"description": "display"
+		"name": "$XSAPPNAME.AdminHome",
+		"description": "Access Admin Home"
 	}, {
-		"name": "$XSAPPNAME.Create",
-		"description": "create"
+		"name": "$XSAPPNAME.Staff",
+		"description": "Access Staff"
 	}, {
-		"name": "$XSAPPNAME.Edit",
-		"description": "edit"
+		"name": "$XSAPPNAME.Menu",
+		"description": "Access Menu"
 	}, {
-		"name": "$XSAPPNAME.Delete",
-		"description": "delete"
-	}, {
-		"name": "$XSAPPNAME.DataGenerator",
-		"description": "data generator"
-	}, {
-		"name": "xs_authorization.read",
-		"description": "Read authorization information from UAA"
-	}, {
-		"name": "xs_authorization.write",
-		"description": "Write authorization information to UAA"
-	}, {
-		"name": "$XSAPPNAME.ODATASERVICEUSER",
-		"description": "Enter"
-	}, {
-		"name": "$XSAPPNAME.ODATASERVICEADMIN",
-		"description": "Enter"
-	}],
-	"attributes": [{
-		"name": "client",
-		"description": "Session Client",
-		"valueType": "int"
-	}, {
-		"name": "country",
-		"description": "country",
-		"valueType": "s"
+		"name": "$XSAPPNAME.ManagerHome",
+		"description": "Access Manager Home"
 	}],
 	"role-templates": [{
-		"name": "Viewer",
-		"description": "View all records",
+		"name": "Admin",
+		"description": "Admin Role",
 		"scope-references": [
-			"$XSAPPNAME.Display"
-		],
-		"attribute-references": [
-			"client", "country"
+			"$XSAPPNAME.AdminHome",
+			"$XSAPPNAME.Staff",
+			"$XSAPPNAME.Menu",
+			"$XSAPPNAME.ManagerHome",
+			"$XSAPPNAME.NewOrder"
 		]
 	}, {
-		"name": "Editor",
+		"name": "Manager",
 		"description": "Edit and Delete records",
 		"scope-references": [
-			"$XSAPPNAME.Create",
-			"$XSAPPNAME.Edit",
-			"$XSAPPNAME.Delete",
-			"$XSAPPNAME.Display",
-			"$XSAPPNAME.DataGenerator",
-			"$XSAPPNAME.ODATASERVICEUSER",
-			"$XSAPPNAME.ODATASERVICEADMIN"
-		],
-		"attribute-references": [
-			"client"
+			"$XSAPPNAME.ManagerHome"
 		]
 	}]
 }

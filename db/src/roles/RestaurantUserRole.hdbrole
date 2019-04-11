@@ -15,7 +15,7 @@
 		}],
 		"schema_analytic_privileges": [
             {
-                "privileges":[ "restaurants.db.roles::RestaurantUserPrivilege" ]
+                "privileges":[ "restaurants.db.roles::RestaurantUserPrivilege" ,"restaurants.db.roles::StaffView"]
             }
         ]
 	}

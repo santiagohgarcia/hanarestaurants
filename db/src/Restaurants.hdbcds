@@ -19,6 +19,7 @@ context RestaurantsContext {
             Name     : String(50);
             LastName : String(50);
             UserId   : String(50);
+            Creator  : String(50);
     }
 
     entity RestaurantOrder {
@@ -97,6 +98,17 @@ context RestaurantsContext {
             RestaurantId,
             Name,
             CloseDayHour,
+            Creator
+        }
+        with structured privilege check;
+
+    view StaffView as
+        select from Staff
+        {
+            StaffId,
+            Name,
+            LastName,
+            UserId,
             Creator
         }
         with structured privilege check;

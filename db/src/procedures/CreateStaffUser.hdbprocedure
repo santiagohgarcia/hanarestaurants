@@ -9,5 +9,5 @@ PROCEDURE "restaurants.db.procedures::CreateStaffUser"(
 BEGIN
 
 EXEC ( 'CREATE USER ' || I_USERNAME || ' PASSWORD HanaAdmin1 ' );
-
+EXEC ( 'ALTER USER ' || I_USERNAME || ' SET PARAMETER XS_RC_RESTAURANT_MANAGER = ''RESTAURANT_MANAGER''' );
 END

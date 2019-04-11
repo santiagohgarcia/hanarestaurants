@@ -10,7 +10,6 @@ service {
 				"RestaurantToTodayOrders" as "TodayOrders",
 				"RestaurantToTodayOrdersCount" as "TodayOrdersCount",
 				"RestaurantToTodayRevenue" as "TodayRevenue")
-	
 	  create events( before "xsjslib:Restaurant.xsjslib::BeforeCreate");
 	
 	association "RestaurantToCategories"
@@ -40,7 +39,8 @@ service {
 	/*
 		STAFF
 	*/
-	"restaurants.db::RestaurantsContext.Staff" as "Staff"
+	"restaurants.db::RestaurantsContext.StaffView" as "Staff"
+	key("StaffId")
     navigates ("StaffToRestaurant"            as "Restaurants")
     create events (before "xsjslib:Staff.xsjslib::BeforeCreate");
 	
