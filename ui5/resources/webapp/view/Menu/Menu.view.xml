@@ -7,10 +7,10 @@
 				<Button icon="sap-icon://nav-back" type="Transparent" press="onNavBack"/>
 				<Title text="{i18n>Menus}" class="sapUiSmallMarginBegin"/>
 				<ToolbarSpacer/>
-				<MenuButton type="Transparent" icon="sap-icon://home" text="{Name}">
+			<!--	<MenuButton type="Transparent" icon="sap-icon://home" text="{Name}">
 					<Menu items="{path:'/Restaurants',events:{dataReceived: '.onReceiveRestaurants'}}" itemSelected="onSelectRestaurant"><MenuItem text="{Name}"/></Menu>
 				</MenuButton>
-				<ToolbarSpacer/>
+				<ToolbarSpacer/>-->
 				<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
 			</tnt:ToolHeader>
 		</customHeader>

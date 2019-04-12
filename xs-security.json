@@ -20,8 +20,7 @@
 			"$XSAPPNAME.AdminHome",
 			"$XSAPPNAME.Staff",
 			"$XSAPPNAME.Menu",
-			"$XSAPPNAME.ManagerHome",
-			"$XSAPPNAME.NewOrder"
+			"$XSAPPNAME.ManagerHome"
 		]
 	}, {
 		"name": "Manager",

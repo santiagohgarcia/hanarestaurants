@@ -467,8 +467,11 @@
 		"browser": true,
 		"node": true,
 		"amd": true,
-		"es6": true,
+		"es8": true,
 		"mocha": true,
 		"jquery": true
-	}
+	},
+	 "parserOptions": {
+        "ecmaVersion": 2018
+    }
 }

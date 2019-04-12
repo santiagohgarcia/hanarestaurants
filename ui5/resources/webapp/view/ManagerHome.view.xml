@@ -6,9 +6,9 @@
 				<Button icon="sap-icon://nav-back" type="Transparent" press="onNavBack"/>
 				<Title text="{i18n>Orders}" class="sapUiSmallMarginBegin"/>
 				<ToolbarSpacer/>
-				<MenuButton type="Transparent" icon="sap-icon://home" text="{Name}">
+			<!--	<MenuButton type="Transparent" icon="sap-icon://home" text="{Name}">
 					<Menu items="{path:'/Restaurants',events:{dataReceived: '.onReceiveRestaurants'}}" itemSelected="onSelectRestaurant"><MenuItem text="{Name}"/></Menu>
-				</MenuButton>
+				</MenuButton>-->
 				<ToolbarSpacer/>
 				<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
 			</tnt:ToolHeader>
@@ -18,7 +18,7 @@
 				<IconTabHeader id="orderStatusTabHeader" tabDensityMode="Cozy" enableTabReordering="true"
 					selectedKey="PENDING" select="onSelectStatusTab" items="{path:'TodayOrdersCount', events: { dataReceived: '.onReceiveOrdersCount' } }">
 					<items>
-						<IconTabFilter key="{StatusId}" showAll="{= ${StatusId} === 'ALL' }" count="{OrderCount}" text="{StatusDescription}"
+						<IconTabFilter  key="{StatusId}" showAll="{= ${StatusId} === 'ALL' }" count="{OrderCount}" text="{StatusDescription}"
 							icon="{path:'StatusId',formatter: '.formatter.orderStatusToIcon'}"
 							iconColor="{path:'StatusId',formatter: '.formatter.orderStatusToIconColor'}"/>
 					</items>

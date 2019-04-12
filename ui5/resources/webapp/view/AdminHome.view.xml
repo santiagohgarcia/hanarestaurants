@@ -10,50 +10,6 @@
 			</tnt:ToolHeader>
 		</customHeader>
 		<OverflowToolbar class="sapUiSmallMarginBottom">
-			<Title titleStyle="H2" text="{i18n>Administration}" class="sapUiTinyMarginBegin"/>
-			<ToolbarSpacer/>
-		</OverflowToolbar>
-		<f:GridList>
-			<f:customLayout>
-				<grid:GridBoxLayout boxWidth="22.5rem"/>
-			</f:customLayout>
-			<f:items>
-				<CustomListItem press="onPressStaff" type="Active">
-					<VBox justifyContent="SpaceBetween" fitContainer="true">
-						<VBox class="sapUiSmallMargin">
-							<layoutData>
-								<FlexItemData growFactor="1" shrinkFactor="0"/><!-- Don't shrink below minimum size. Fill space if available. --></layoutData>
-							<core:Icon src="sap-icon://group" size="2.625rem" color="Default" class="sapUiTinyMarginBottom"/>
-							<Title text="{i18n>Staff}" wrapping="true"/>
-							<Text text="{i18n>AdminYourStaff}" wrapping="true"/>
-						</VBox>
-					</VBox>
-				</CustomListItem>
-				<!--	<CustomListItem press="onPressManagerView" type="Active">
-					<VBox height="100%">
-						<VBox class="sapUiSmallMargin">
-							<layoutData>
-								<FlexItemData growFactor="1" shrinkFactor="0"/></layoutData>
-							<core:Icon src="sap-icon://activity-individual" size="2.625rem" color="Default" class="sapUiTinyMarginBottom"/>
-							<Title text="{i18n>ManagerView}" wrapping="true"/>
-							<Text text="{i18n>SeeRealTimeOrderStatus}" wrapping="true"/>
-						</VBox>
-					</VBox>
-				</CustomListItem>
-				<CustomListItem press="onPressMenus" type="Active">
-					<VBox height="100%">
-						<VBox class="sapUiSmallMargin">
-							<layoutData>
-								<FlexItemData growFactor="1" shrinkFactor="0"/></layoutData>
-							<core:Icon src="sap-icon://activity-items" size="2.625rem" color="Default" class="sapUiTinyMarginBottom"/>
-							<Title text="{i18n>Menus}" wrapping="true"/>
-							<Text text="{i18n>EditMenusForYourRestaurants}" wrapping="true"/>
-						</VBox>
-					</VBox>
-				</CustomListItem>-->
-			</f:items>
-		</f:GridList>
-		<OverflowToolbar class="sapUiSmallMarginBottom">
 			<Title titleStyle="H2" text="{i18n>Restaurants}" class="sapUiTinyMarginBegin"/>
 			<ToolbarSpacer/>
 			<Button icon="sap-icon://add" press="onAddRestaurant" text="{i18n>AddRestaurant}" type="Transparent"/>
@@ -93,6 +49,28 @@
 					</OverflowToolbar>
 				</VBox>
 			</CustomListItem>
+		</f:GridList>
+		<OverflowToolbar class="sapUiSmallMarginBottom">
+			<Title titleStyle="H2" text="{i18n>Administration}" class="sapUiTinyMarginBegin"/>
+			<ToolbarSpacer/>
+		</OverflowToolbar>
+		<f:GridList>
+			<f:customLayout>
+				<grid:GridBoxLayout boxWidth="22.5rem"/>
+			</f:customLayout>
+			<f:items>
+				<CustomListItem press="onPressStaff" type="Active">
+					<VBox justifyContent="SpaceBetween" fitContainer="true">
+						<VBox class="sapUiSmallMargin">
+							<layoutData>
+								<FlexItemData growFactor="1" shrinkFactor="0"/><!-- Don't shrink below minimum size. Fill space if available. --></layoutData>
+							<core:Icon src="sap-icon://group" size="2.625rem" color="Default" class="sapUiTinyMarginBottom"/>
+							<Title text="{i18n>Staff}" wrapping="true"/>
+							<Text text="{i18n>AdminYourStaff}" wrapping="true"/>
+						</VBox>
+					</VBox>
+				</CustomListItem>
+			</f:items>
 		</f:GridList>
 	</Page>
 </mvc:View>

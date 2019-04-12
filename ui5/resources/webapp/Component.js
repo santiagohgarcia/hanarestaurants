@@ -1,12 +1,7 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
-	"sap/ui/Device",
-	"restaurants/ui5/model/models",
-	"restaurants/ui5/controller/Restaurant/RestaurantDialog",
-	"restaurants/ui5/controller/Menu/Category/CategoryDialog",
-	"restaurants/ui5/controller/Menu/Product/ProductDialog",
-	"restaurants/ui5/controller/MessageDialog"
-], function(UIComponent, Device, models, RestaurantDialog, CategoryDialog, ProductDialog, MessageDialog) {
+	"sap/ui/Device"
+], function (UIComponent, Device, models) {
 	"use strict";
 
 	return UIComponent.extend("restaurants.ui5.Component", {
@@ -20,21 +15,28 @@ sap.ui.define([
 		 * @public
 		 * @override
 		 */
-		init: function() {
+		init: function () {
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
 
 			// enable routing
 			this.getRouter().initialize();
 
-			//Set core models
-			sap.ui.getCore().setModel(this.getModel("i18n"), "i18n");
+			this.requirePromisified("restaurants/ui5/model/models").then(models => {
+				//Set core models
+				sap.ui.getCore().setModel(this.getModel("i18n"), "i18n");
 
-			// set the device model
-			this.setModel(models.createDeviceModel(), "device");
+				// set the device model
+				this.setModel(models.createDeviceModel(), "device");
 
-			// set the frontend view model
-			this.setModel(models.createViewModel(), "view");
+				// set the frontend view model
+				this.setModel(models.createViewModel(), "view");
+
+				// set the restaurants model
+				var restaurantModel = models.createRestaurantsModel();
+				this.setModel(restaurantModel);
+				sap.ui.getCore().setModel(restaurantModel);
+			});
 
 			// set message model
 			this.setModel(sap.ui.getCore().getMessageManager().getMessageModel(), "messages");
@@ -42,20 +44,9 @@ sap.ui.define([
 			//init firebase
 			this.initFirebase();
 
-			// set the restaurants model
-			var restaurantModel = models.createRestaurantsModel();
-			this.setModel(restaurantModel);
-			sap.ui.getCore().setModel(restaurantModel);
-
-			//CREATE COMMON DIALOGS
-			this._restaurantDialog = new RestaurantDialog(this.getRootControl());
-			this._categoryDialog = new CategoryDialog(this.getRootControl());
-			this._productDialog = new ProductDialog(this.getRootControl());
-			this._messageDialog = new MessageDialog(this.getRootControl());
-
 		},
 
-		initFirebase: function() {
+		initFirebase: function () {
 			// Initialize Firebase
 			var config = {
 				apiKey: "AIzaSyBqfxKgMJMYESECE9FmoxiuMOgBbG-TvXc",
@@ -68,7 +59,7 @@ sap.ui.define([
 			firebase.initializeApp(config);
 		},
 
-		getContentDensityClass: function() {
+		getContentDensityClass: function () {
 			if (!this._sContentDensityClass) {
 				if (!sap.ui.Device.support.touch) {
 					this._sContentDensityClass = "sapUiSizeCompact";
@@ -79,25 +70,52 @@ sap.ui.define([
 			return this._sContentDensityClass;
 		},
 
-		exit: function() {
+		exit: function () {
 			this._restaurantDialog.destroy();
 			delete this._restaurantDialog;
 		},
 
-		openRestaurantDialog: function(ctx) {
+		openRestaurantDialog: async function (ctx) {
+			if (!this._restaurantDialog) {
+				var RestaurantDialog = await this.requirePromisified("restaurants/ui5/controller/Restaurant/RestaurantDialog");
+				this._restaurantDialog = new RestaurantDialog(this.getRootControl());
+			}
 			return this._restaurantDialog.open(ctx);
 		},
 
-		openCategoryDialog: function(ctx) {
+		openCategoryDialog: async function (ctx) {
+			if (!this._categoryDialog) {
+				var CategoryDialog = await this.requirePromisified("restaurants/ui5/controller/Menu/Category/CategoryDialog");
+				this._categoryDialog = new CategoryDialog(this.getRootControl());
+			}
 			return this._categoryDialog.open(ctx);
 		},
 
-		openProductDialog: function(ctx) {
+		openProductDialog: async function (ctx) {
+			if (!this._productDialog) {
+				var ProductDialog = await this.requirePromisified("restaurants/ui5/controller/Menu/Product/ProductDialog");
+				this._productDialog = new ProductDialog(this.getRootControl());
+			}
 			return this._productDialog.open(ctx);
 		},
 
-		openMessageDialog: function(response) {
+		openMessageDialog: async function (response) {
+			if (!this._messageDialog) {
+				var MessageDialog = await this.requirePromisified("restaurants/ui5/controller/MessageDialog");
+				this._messageDialog = new MessageDialog(this.getRootControl());
+			}
 			return this._messageDialog.open(response);
+		},
+
+		requirePromisified: async function (dependency) {
+			return new Promise((res, rej) => {
+				sap.ui.require([dependency], function (component) {
+					res(component);
+				}, function (response) {
+					rej(response);
+				});
+			});
 		}
+
 	});
 });

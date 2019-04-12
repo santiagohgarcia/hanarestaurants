@@ -4,7 +4,7 @@ sap.ui.define([
 	"restaurants/ui5/model/types",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
-	"restaurants/ui5/model/models",
+	"restaurants/ui5/model/models"
 ], function(BaseController, formatter, types, Filter, FO, models) {
 	"use strict";
 
@@ -19,6 +19,7 @@ sap.ui.define([
 		_onManagerHomeMatched: function(evt) {
 			var params = evt.getParameter("arguments");
 			this.getView().bindElement(`/Restaurants(RestaurantId=${params.RestaurantId})`);
+			this._attachNotificationHandler([params]);
 			this._updateOrderBindings();
 		},
 
@@ -59,14 +60,14 @@ sap.ui.define([
 			}
 		},
 
-		onReceiveRestaurants: function(evt) {
+	/*	onReceiveRestaurants: function(evt) {
 			var bindingContext = this.getView().getBindingContext(),
 				data = evt.getParameter("data");
 			if (data && !bindingContext) {
 				this.getView().bindElement(`/Restaurants(RestaurantId=${data.results[0].RestaurantId})`);
 				this._attachNotificationHandler(data.results);
 			}
-		},
+		},*/
 
 		onReceiveOrdersCount: function() {
 			this.byId("orderStatusTabHeader").insertItem(new sap.m.IconTabSeparator(), 1);

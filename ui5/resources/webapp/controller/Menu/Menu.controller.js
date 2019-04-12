@@ -20,12 +20,12 @@ sap.ui.define([
 			this.getView().bindElement(`/Restaurants(RestaurantId=${params.RestaurantId})`);
 		},
 
-		onSelectRestaurant: function(evt) {
+	/*	onSelectRestaurant: function(evt) {
 			var restaurant = evt.getParameter("item").getBindingContext().getObject();
 			this.getRouter().navTo("Menu", {
 				RestaurantId: restaurant.RestaurantId
 			},true);
-		},
+		},*/
 
 		onSelectCategory: function(evt) {
 			var category = evt.getParameter("listItem").getBindingContext().getObject();

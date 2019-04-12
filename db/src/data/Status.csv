@@ -1,0 +1,4 @@
+﻿	StatusId	Description
+1	PENDING	Pending
+2	READY	Ready
+3	CANCELLED	Cancelled
