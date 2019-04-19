@@ -96,6 +96,10 @@
 				"pattern": "Staff",
 				"target": "staff"
 			}, {
+				"name": "Reporting",
+				"pattern": "Reporting",
+				"target": "reporting"
+			}, {
 				"name": "NewOrder",
 				"pattern": "Restaurant/{RestaurantId}/NewOrder",
 				"target": "newOrder"
@@ -119,6 +123,11 @@
 				"staff": {
 					"viewType": "XML",
 					"viewName": "Staff.Staff",
+					"viewLevel": 1
+				},
+				"reporting": {
+					"viewType": "XML",
+					"viewName": "Reporting.Reporting",
 					"viewLevel": 1
 				},
 				"newOrder": {

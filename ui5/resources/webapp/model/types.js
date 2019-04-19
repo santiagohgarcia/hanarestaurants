@@ -8,6 +8,18 @@ sap.ui.define([
 	"use strict";
 
 	return {
+		
+		dateTypeForTimeAxis: Date.extend("DateType", {
+
+			setFormatOptions: function(oFormatOptions) {
+				var standardFormatOptions = jQuery.extend(oFormatOptions, {
+					pattern: "MM/dd/yyyy"
+				});
+				this.oFormatOptions = standardFormatOptions;
+				this._createFormats();
+			}
+
+		}),
 
 		dateType: Date.extend("DateType", {
 

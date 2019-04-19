@@ -18,7 +18,7 @@ sap.ui.define([
 			ctx = this.getNewContext(ctx);
 			this._dialog.setBindingContext(ctx);
 			// forward compact/cozy style into dialog
-			jQuery.sap.syncStyleClass(this._view.getController().getOwnerComponent().getContentDensityClass(), this._view, this._dialog);
+			//jQuery.sap.syncStyleClass(this._view.getController().getOwnerComponent().getContentDensityClass(), this._view, this._dialog);
 			this._dialog.open();
 			return new Promise((res) => this._openPromRes = res);
 		},

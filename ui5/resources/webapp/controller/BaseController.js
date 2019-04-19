@@ -1,9 +1,6 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"sap/ui/core/routing/History",
-	"sap/m/MessageToast",
-	"sap/m/MessageBox"
-], function(Controller, History, MessageToast, MessageBox) {
+	"sap/ui/core/mvc/Controller"
+], function(Controller) {
 	"use strict";
 	return Controller.extend("restaurants.ui5.controller.BaseController", {
 
@@ -23,10 +20,10 @@ sap.ui.define([
 			return this.getView().setModel(model, sModelName);
 		},
 
-		onNavBack: function(evt, defaultNav) {
-			var oHistory, sPreviousHash;
-			oHistory = History.getInstance();
-			sPreviousHash = oHistory.getPreviousHash();
+		onNavBack: async function(evt, defaultNav) {
+			var History = await this.requirePromisified("sap/ui/core/routing/History");
+			var oHistory = History.getInstance(),
+				sPreviousHash = oHistory.getPreviousHash();
 			if (sPreviousHash !== undefined) {
 				window.history.go(-1);
 			} else {
@@ -66,18 +63,30 @@ sap.ui.define([
 			return this.getOwnerComponent().openMessageDialog();
 		},
 
-		showMessageToast: function(id, args) {
+		showMessageToast: async function(id, args) {
+			var MessageToast = await this.requirePromisified("sap/m/MessageToast");
 			MessageToast.show(this.getText(id, args), {
 				closeOnBrowserNavigation: false
 			});
 		},
 
 		confirmPopup: function() {
-			return new Promise((res) => {
+			return new Promise(async (res) => {
+				var MessageBox = await this.requirePromisified("sap/m/MessageBox");
 				MessageBox.confirm(this.getText("DoYouWantToLosePendingChanges"), {
 					onClose: function(action) {
 						res(action);
 					}
+				});
+			});
+		},
+
+		requirePromisified: async function(dependency) { //TODO: put this ONLY in basecontroller
+			return new Promise((res, rej) => {
+				sap.ui.require([dependency], function(component) {
+					res(component);
+				}, function(response) {
+					rej(response);
 				});
 			});
 		}

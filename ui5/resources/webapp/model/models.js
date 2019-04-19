@@ -2,31 +2,31 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/Device",
 	"restaurants/ui5/utils/PromisifiedODataModel"
-], function (JSONModel, Device, PromisifiedODataModel) {
+], function(JSONModel, Device, PromisifiedODataModel) {
 	"use strict";
 
-	//var baseURl = "https://hxehost:51030";
-	var baseURl = "";
+	var baseURl = "https://hxehost:51006";
+	//var baseURl = "";
 	return {
 
-		createDeviceModel: function () {
+		createDeviceModel: function() {
 			var oModel = new JSONModel(Device);
 			oModel.setDefaultBindingMode("OneWay");
 			return oModel;
 		},
 
-		createViewModel: function () {
+		createViewModel: function() {
 			return new JSONModel();
 		},
 
-		createRestaurantsModel: function () {
+		createRestaurantsModel: function() {
 			return new PromisifiedODataModel(baseURl + "/xsodata/Restaurants.xsodata", {
 				defaultBindingMode: sap.ui.model.BindingMode.TwoWay,
 				defaultUpdateMethod: sap.ui.model.odata.UpdateMethod.Put
 			});
 		},
 
-		updateRestaurantStaffRelation: function (staffRestaurantRelation) {
+		updateRestaurantStaffRelation: function(staffRestaurantRelation) {
 			return jQuery.ajax({
 				type: "POST",
 				data: JSON.stringify(staffRestaurantRelation),
@@ -36,7 +36,7 @@ sap.ui.define([
 			});
 		},
 
-		getNewOrderId: function (restaurant) {
+		getNewOrderId: function(restaurant) {
 			return jQuery.ajax({
 				type: "GET",
 				contentType: 'application/json',
@@ -45,7 +45,7 @@ sap.ui.define([
 			});
 		},
 
-		getBase64: function (file) {
+		getBase64: function(file) {
 			return new Promise((resolve, reject) => {
 				const reader = new FileReader();
 				reader.readAsDataURL(file);
@@ -54,7 +54,7 @@ sap.ui.define([
 			});
 		},
 
-		subscribeToRestaurantTopic: function (token, restaurant) {
+		subscribeToRestaurantTopic: function(token, restaurant) {
 			return jQuery.ajax({
 				type: "POST",
 				contentType: 'application/json',
@@ -67,11 +67,20 @@ sap.ui.define([
 			});
 		},
 
-		getMe: function () {
+		getMe: function() {
 			return jQuery.ajax({
 				type: "GET",
 				contentType: 'application/json',
 				url: baseURl + `/xsjs/security/Me.xsjs`,
+				dataType: "json"
+			});
+		},
+
+		getRevenueByTime: function(dateGroupBy) {
+			return jQuery.ajax({
+				type: "GET",
+				contentType: 'application/json',
+				url: baseURl + `/xsjs/report/RevenueByTime.xsjs?dateGroupBy=${dateGroupBy}`,
 				dataType: "json"
 			});
 		}

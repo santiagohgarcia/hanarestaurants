@@ -1,33 +1,5 @@
 {
 	"welcomeFile": "webapp/index.html",
 	"authenticationMethod": "route",
-	"routes": [{
-		"source": "(.*)(.xsjs)",
-		"destination": "js_api",
-		"csrfProtection": false,
-		"authenticationType": "xsuaa"
-	}, {
-		"source": "(.*)(.xsodata)",
-		"destination": "js_api",
-		"authenticationType": "xsuaa"
-	}, {
-		"source": "^/webapp/view/ManagerHome(.*)",
-		"localDir": "resources",
-		"scope": "$XSAPPNAME.ManagerHome"
-	},  {
-		"source": "^/webapp/view/Menu(.*)",
-		"localDir": "resources",
-		"scope": "$XSAPPNAME.Menu"
-	}, {
-		"source": "^/webapp/view/Staff(.*)",
-		"localDir": "resources",
-		"scope": "$XSAPPNAME.Staff"
-	}, {
-		"source": "^/webapp/view/AdminHome(.*)",
-		"localDir": "resources",
-		"scope": "$XSAPPNAME.AdminHome"
-	}, {
-		"source": "/(.*)",
-		"localDir": "resources"
-	}]
+	"routes": []
 }
