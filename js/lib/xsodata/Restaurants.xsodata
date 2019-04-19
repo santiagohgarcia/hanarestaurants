@@ -2,8 +2,8 @@ service {
 	/*
 		RESTAURANT
 	*/
-     "restaurants.db::RestaurantsContext.RestaurantView" 
-	  as "Restaurants" key("RestaurantId")
+     "restaurants.db::RestaurantsContext.Restaurant" 
+	  as "Restaurants" //key("RestaurantId")
 	  navigates ("RestaurantToCategories"  as "Categories",
 				"RestaurantToProducts"  as "Products",
 				"RestaurantToStaff"       as "Staff",
@@ -39,8 +39,8 @@ service {
 	/*
 		STAFF
 	*/
-	"restaurants.db::RestaurantsContext.StaffView" as "Staff"
-	key("StaffId")
+	"restaurants.db::RestaurantsContext.Staff" as "Staff"
+	//key("StaffId")
     navigates ("StaffToRestaurant"            as "Restaurants")
     create events (before "xsjslib:Staff.xsjslib::BeforeCreate");
 	
@@ -97,7 +97,14 @@ service {
 		RESTAURANT ORDER ITEM
 	*/   
 	"restaurants.db::RestaurantsContext.RestaurantOrderItem" as "OrderItems" 
+	navigates ("OrderItemToOrder" as "Order")
 	create events (before "xsjslib:RestaurantOrderItem.xsjslib::BeforeCreate");
+	
+	association "OrderItemToOrder"
+	principal "OrderItems"("RestaurantId","RestaurantOrderId")
+	multiplicity "1"
+	dependent "Orders"("RestaurantId","RestaurantOrderId")
+	multiplicity "1";
 	
 	"restaurants.db::RestaurantsContext.RestaurantOrderItem" as "AggregatedOrderItems" 
 	with("RestaurantId","RestaurantOrderId","Price")
@@ -194,7 +201,7 @@ service {
 	dependent "Statuses"("StatusId")
 	multiplicity "1";
 	
-		association "TodayOrderToPaymentMethod"
+	association "TodayOrderToPaymentMethod"
 	principal "TodayOrders"("PaymentMethod.PaymentMethodId")
 	multiplicity "1"
 	dependent "PaymentMethods"("PaymentMethodId")
@@ -224,12 +231,19 @@ service {
 	dependent "TodayOrders"("RestaurantId")
 	multiplicity "*";
      
+    /*
+		TODAY ORDERS COUNT
+	*/
     "restaurants.db.views::RestaurantTodayOrdersCount" as "TodayOrdersCount"
 	key("RestaurantId","StatusId") parameters via entity ;
     
     association via parameters "RestaurantToTodayOrdersCount"
     principal "Restaurants"("RestaurantId") multiplicity "1"
     dependent "TodayOrdersCount"("RESTAURANTID") multiplicity "*";
+    
+     /*
+		TODAY REVENUE
+	*/
     
     "restaurants.db.views::TodayRevenue" 
 	as "TodayRevenue" keys("RestaurantId");
