@@ -1,41 +1,48 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified">
-	<Dialog id="productDialog" title="{i18n>Product}" stretch="{= !${device>/system/desktop} }" contentWidth="35%">
-		<f:Form editable="true">
-			<f:layout>
-				<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0"
-					emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
-			</f:layout>
-			<f:formContainers>
-				<f:FormContainer>
-					<f:FormElement label="{i18n>Name}">
-						<Input fieldGroupIds="productFields" required="true" value="{path: 'Name', type: 'sap.ui.model.type.String' }"/>
-					</f:FormElement>
-					<f:FormElement label="{i18n>Description}">
-						<Input fieldGroupIds="productFields" required="true" value="{path: 'Description', type: 'sap.ui.model.type.String' }"/>
-					</f:FormElement>
-					<f:FormElement label="{i18n>Price}">
-						<Input textAlign="End" fieldGroupIds="productFields" required="true" value="{path: 'Price', type: '.types.floatType' }"/>
-					</f:FormElement>
-					<f:FormElement label="{i18n>NeedsPreparation}">
-						<Switch customTextOff="{i18n>OFF}" customTextOn="{i18n>ON}" state="{path:'NeedPreparation',type:'.types.hanaBoolean'}"/>
-					</f:FormElement>
-				</f:FormContainer>
-			</f:formContainers>
-		</f:Form>
-		<Panel >
-			<headerToolbar>
-				<Toolbar>
-					<Title text="{i18n>Image}"/>
-					<ToolbarSpacer/>
-					<Button visible="{= Boolean(${Image})}" type="Transparent" icon="sap-icon://delete" press="onDeleteImage"/>
-					<u:FileUploader change="onImageUpload" visible="{= !Boolean(${Image})}" buttonText="{i18n>UploadImage}" icon="sap-icon://upload"
-						buttonOnly="true"/>
-				</Toolbar>
-			</headerToolbar>
-			<HBox fitContainer="true" justifyContent="Center">
-				<Image src="{= ${Image} || './img/placeholder.png' }" heigth="300px"/>
-			</HBox>
-		</Panel>
+	<Dialog id="productDialog" title="{i18n>Product}" stretch="{= !${device>/system/desktop} }">
+		<HBox>
+			<f:Form editable="true">
+				<f:layoutData>
+					<FlexItemData minWidth="400px"/>
+				</f:layoutData>
+				<f:layout>
+					<f:ResponsiveGridLayout labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0"
+						emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"/>
+				</f:layout>
+				<f:formContainers>
+					<f:FormContainer>
+						<f:FormElement label="{i18n>Name}">
+							<Input fieldGroupIds="productFields" required="true" value="{path: 'Name', type: 'sap.ui.model.type.String' }"/>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Description}">
+							<Input fieldGroupIds="productFields" required="true" value="{path: 'Description', type: 'sap.ui.model.type.String' }"/>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Price}">
+							<Input textAlign="End" fieldGroupIds="productFields" required="true" value="{path: 'Price', type: '.types.floatType' }"/>
+						</f:FormElement>
+						<f:FormElement label="{i18n>NeedsPreparation}">
+							<Switch customTextOff="{i18n>OFF}" customTextOn="{i18n>ON}" state="{path:'NeedPreparation',type:'.types.hanaBoolean'}"/>
+						</f:FormElement>
+					</f:FormContainer>
+				</f:formContainers>
+			</f:Form>
+			<Panel >
+				<headerToolbar>
+					<Toolbar>
+						<Title text="{i18n>Image}"/>
+						<ToolbarSpacer/>
+						<Button visible="{= Boolean(${Image})}" type="Transparent" icon="sap-icon://delete" press="onDeleteImage"/>
+						<u:FileUploader change="onImageUpload" visible="{= !Boolean(${Image})}" buttonText="{i18n>UploadImage}" icon="sap-icon://upload"
+							buttonOnly="true"/>
+					</Toolbar>
+				</headerToolbar>
+				<Carousel class="sapUiContentPadding">
+					<pages>
+						<Image src="{= ${Image} || './img/placeholder.png' }" heigth="300px"/>
+					</pages>
+				</Carousel>
+			</Panel>
+		</HBox>
 		<beginButton>
 			<Button icon="sap-icon://save" press="onSave"/>
 		</beginButton>

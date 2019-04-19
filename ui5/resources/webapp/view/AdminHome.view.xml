@@ -70,6 +70,17 @@
 						</VBox>
 					</VBox>
 				</CustomListItem>
+				<CustomListItem press="onPressReporting" type="Active">
+					<VBox justifyContent="SpaceBetween" fitContainer="true">
+						<VBox class="sapUiSmallMargin">
+							<layoutData>
+								<FlexItemData growFactor="1" shrinkFactor="0"/><!-- Don't shrink below minimum size. Fill space if available. --></layoutData>
+							<core:Icon src="sap-icon://business-objects-experience" size="2.625rem" color="Default" class="sapUiTinyMarginBottom"/>
+							<Title text="{i18n>Reporting}" wrapping="true"/>
+							<Text text="{i18n>RevenueInteractiveReports}" wrapping="true"/>
+						</VBox>
+					</VBox>
+				</CustomListItem>
 			</f:items>
 		</f:GridList>
 	</Page>

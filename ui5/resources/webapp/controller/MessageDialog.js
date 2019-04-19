@@ -15,7 +15,7 @@ sap.ui.define([
 				this._dialog = sap.ui.xmlfragment(this._view.getId(), "restaurants.ui5.view.MessageDialog", this);
 				this._view.addDependent(this._dialog);
 			}
-			jQuery.sap.syncStyleClass(this._view.getController().getOwnerComponent().getContentDensityClass(), this._view, this._dialog);
+			//jQuery.sap.syncStyleClass(this._view.getController().getOwnerComponent().getContentDensityClass(), this._view, this._dialog);
 			this._dialog.open();
 		},
 		

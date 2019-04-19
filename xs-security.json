@@ -1,8 +1,11 @@
 {
 	"xsappname": "hanarestaurants",
 	"scopes": [{
-		"name": "$XSAPPNAME.AdminHome",
-		"description": "Access Admin Home"
+		"name": "$XSAPPNAME.RestaurantsDisplay",
+		"description": "Access Staff"
+	}, {
+		"name": "$XSAPPNAME.RestaurantsEdit",
+		"description": "Access Staff"
 	}, {
 		"name": "$XSAPPNAME.Staff",
 		"description": "Access Staff"
@@ -17,7 +20,8 @@
 		"name": "Admin",
 		"description": "Admin Role",
 		"scope-references": [
-			"$XSAPPNAME.AdminHome",
+			"$XSAPPNAME.RestaurantsDisplay",
+			"$XSAPPNAME.RestaurantsEdit",
 			"$XSAPPNAME.Staff",
 			"$XSAPPNAME.Menu",
 			"$XSAPPNAME.ManagerHome"

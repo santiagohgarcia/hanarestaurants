@@ -83,7 +83,7 @@
 								<ToolbarSpacer/>
 							</Toolbar>
 						</customHeader>
-						<List items="{Items}" noDataText="{i18n>SelectAProduct}">
+						<List id="orderItems" items="{Items}" noDataText="{i18n>SelectAProduct}">
 							<CustomListItem>
 								<HBox>
 									<f:Avatar src="{= ${Image} || './img/placeholder.png' }" displaySize="L" class="sapUiSmallMargin">

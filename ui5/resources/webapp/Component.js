@@ -1,7 +1,6 @@
 sap.ui.define([
-	"sap/ui/core/UIComponent",
-	"sap/ui/Device"
-], function (UIComponent, Device, models) {
+	"sap/ui/core/UIComponent"
+], function(UIComponent) {
 	"use strict";
 
 	return UIComponent.extend("restaurants.ui5.Component", {
@@ -15,7 +14,7 @@ sap.ui.define([
 		 * @public
 		 * @override
 		 */
-		init: function () {
+		init: function() {
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
 
@@ -46,7 +45,7 @@ sap.ui.define([
 
 		},
 
-		initFirebase: function () {
+		initFirebase: function() {
 			// Initialize Firebase
 			var config = {
 				apiKey: "AIzaSyBqfxKgMJMYESECE9FmoxiuMOgBbG-TvXc",
@@ -59,23 +58,12 @@ sap.ui.define([
 			firebase.initializeApp(config);
 		},
 
-		getContentDensityClass: function () {
-			if (!this._sContentDensityClass) {
-				if (!sap.ui.Device.support.touch) {
-					this._sContentDensityClass = "sapUiSizeCompact";
-				} else {
-					this._sContentDensityClass = "sapUiSizeCozy";
-				}
-			}
-			return this._sContentDensityClass;
-		},
-
-		exit: function () {
+		exit: function() {
 			this._restaurantDialog.destroy();
 			delete this._restaurantDialog;
 		},
 
-		openRestaurantDialog: async function (ctx) {
+		openRestaurantDialog: async function(ctx) {
 			if (!this._restaurantDialog) {
 				var RestaurantDialog = await this.requirePromisified("restaurants/ui5/controller/Restaurant/RestaurantDialog");
 				this._restaurantDialog = new RestaurantDialog(this.getRootControl());
@@ -83,7 +71,7 @@ sap.ui.define([
 			return this._restaurantDialog.open(ctx);
 		},
 
-		openCategoryDialog: async function (ctx) {
+		openCategoryDialog: async function(ctx) {
 			if (!this._categoryDialog) {
 				var CategoryDialog = await this.requirePromisified("restaurants/ui5/controller/Menu/Category/CategoryDialog");
 				this._categoryDialog = new CategoryDialog(this.getRootControl());
@@ -91,7 +79,7 @@ sap.ui.define([
 			return this._categoryDialog.open(ctx);
 		},
 
-		openProductDialog: async function (ctx) {
+		openProductDialog: async function(ctx) {
 			if (!this._productDialog) {
 				var ProductDialog = await this.requirePromisified("restaurants/ui5/controller/Menu/Product/ProductDialog");
 				this._productDialog = new ProductDialog(this.getRootControl());
@@ -99,7 +87,7 @@ sap.ui.define([
 			return this._productDialog.open(ctx);
 		},
 
-		openMessageDialog: async function (response) {
+		openMessageDialog: async function(response) {
 			if (!this._messageDialog) {
 				var MessageDialog = await this.requirePromisified("restaurants/ui5/controller/MessageDialog");
 				this._messageDialog = new MessageDialog(this.getRootControl());
@@ -107,11 +95,11 @@ sap.ui.define([
 			return this._messageDialog.open(response);
 		},
 
-		requirePromisified: async function (dependency) {
+		requirePromisified: async function(dependency) { //TODO: put this in basecontroller
 			return new Promise((res, rej) => {
-				sap.ui.require([dependency], function (component) {
+				sap.ui.require([dependency], function(component) {
 					res(component);
-				}, function (response) {
+				}, function(response) {
 					rej(response);
 				});
 			});

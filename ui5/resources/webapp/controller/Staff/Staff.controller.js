@@ -107,7 +107,31 @@ sap.ui.define([
 				.then(() => {
 					this.showMessageToast("StaffUpdated", [staff.StaffId, staff.UserId]);
 				});
+		},
 
+		onNavBack: function() {
+			var model = this.getModel();
+			if (model.hasPendingChanges()) {
+				this.confirmPopup().then(async(action) => {
+					var MessageBox = await this.requirePromisified("sap/m/MessageBox");
+					if (action === MessageBox.Action.OK) {
+						this.resetChanges();
+						BaseController.prototype.onNavBack.apply(this, ["AdminHome"]);
+					}
+				});
+			} else {
+				BaseController.prototype.onNavBack.apply(this, ["AdminHome"]);
+			}
+		},
+
+		resetChanges: function() {
+			var ctx = this.byId("staff").getBindingContext();
+			var model = this.byId("staff").getModel();
+			if (ctx.bCreated) {
+				model.deleteCreatedEntry(ctx);
+			} else {
+				model.resetChanges();
+			}
 		}
 
 	});

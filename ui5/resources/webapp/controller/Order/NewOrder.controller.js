@@ -4,9 +4,8 @@ sap.ui.define([
 	"restaurants/ui5/model/types",
 	"restaurants/ui5/model/models",
 	"sap/ui/model/json/JSONModel",
-	"restaurants/ui5/utils/Validator",
-	"sap/m/MessageBox"
-], function(BaseController, formatter, types, models, JSONModel, Validator, MessageBox) {
+	"restaurants/ui5/utils/Validator"
+], function(BaseController, formatter, types, models, JSONModel, Validator) {
 	"use strict";
 
 	return BaseController.extend("restaurants.ui5.controller.Order.NewOrder", {
@@ -137,11 +136,21 @@ sap.ui.define([
 		},
 
 		onNavBack: function() {
-			this.confirmPopup().then(action => {
+			this.confirmPopup().then(async action => {
+				var MessageBox = await this.requirePromisified("sap/m/MessageBox");
 				if (action === MessageBox.Action.OK) {
+					this.resetChanges();
 					BaseController.prototype.onNavBack.apply(this, ["ManagerHome"]);
 				}
 			});
+		},
+
+		resetChanges: function() {
+			var model = this.getModel(),
+				orderCtx = this.byId("order").getBindingContext(),
+				orderItemsCtx = this.byId("orderItems").getItems().map(i => i.getBindingContext());
+			model.deleteCreatedEntry(orderCtx);
+			orderItemsCtx.forEach(c => model.deleteCreatedEntry(c));
 		}
 
 	});
