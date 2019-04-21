@@ -1,7 +1,7 @@
 VIEW "restaurants.db.views::RevenueByTime" 
-AS SELECT TO_NVARCHAR("O"."CreatedAt", 'dd-MM-YYYY') as "Date",
-		TO_NVARCHAR("O"."CreatedAt", 'Month, YYYY') as "MonthYear",
-		year("O"."CreatedAt") as "Year",
+AS SELECT TO_TIMESTAMP (TO_DATE ( ( YEAR("O"."CreatedAt") || '-' || MONTH("O"."CreatedAt") || '-' || DAYOFMONTH("O"."CreatedAt")), 'YYYY-MM-dd') ) as "Date",
+		TO_TIMESTAMP ( TO_DATE ( ( YEAR("O"."CreatedAt") || '-' || MONTH("O"."CreatedAt") ), 'YYYY-MM') ) as "MonthYear",
+		TO_TIMESTAMP ( TO_DATE ( ( YEAR("O"."CreatedAt")), 'YYYY') ) as "Year",
 		"R"."RestaurantId", 
 		"R"."Name" as "RestaurantName" , 
 		"I"."Price" AS "Price"
@@ -10,5 +10,4 @@ AS SELECT TO_NVARCHAR("O"."CreatedAt", 'dd-MM-YYYY') as "Date",
 	ON "R"."RestaurantId" = "O"."RestaurantId"
 	INNER JOIN "restaurants.db::RestaurantsContext.RestaurantOrderItem" AS "I"
 	ON "O"."RestaurantId" = "I"."RestaurantId" AND
-	   "O"."RestaurantOrderId" = "I"."RestaurantOrderId" 
-	ORDER BY "R"."Name";
+	   "O"."RestaurantOrderId" = "I"."RestaurantOrderId";

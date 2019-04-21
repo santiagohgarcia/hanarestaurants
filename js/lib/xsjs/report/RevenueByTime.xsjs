@@ -5,7 +5,7 @@ var stRevenueBy = conn.prepareStatement(
 	`SELECT "${dateGroupBy}" as "DateGroupBy",
 			"RestaurantId",
 			"RestaurantName",
-			SUM("Price") as "Price"
+			SUM("Price") as "Total"
 		FROM "HANARESTAURANTS_HDI_DB_1"."restaurants.db.views::RevenueByTime"
 		group by "${dateGroupBy}","RestaurantId","RestaurantName";`
 );
@@ -15,13 +15,13 @@ var aggregatedResults = resultSet._rows.reduce((acum, item) => {
 	var dateElement = acum.find(i => i.DateGroupBy === item.DateGroupBy);
 	if (dateElement) {
 		dateElement[item.RestaurantName] = dateElement[item.RestaurantName] ?
-			(dateElement[item.RestaurantName] + item.Price) :
-			item.Price;
+			(dateElement[item.RestaurantName] + item.Total) :
+			item.Total;
 	} else {
 		var newDateElement = {
 			DateGroupBy: item.DateGroupBy
 		};
-		newDateElement[item.RestaurantName] = item.Price;
+		newDateElement[item.RestaurantName] = item.Total;
 		acum.push(newDateElement);
 	}
 	restaurantSet.add(item.RestaurantName);
@@ -30,8 +30,10 @@ var aggregatedResults = resultSet._rows.reduce((acum, item) => {
 
 var restaurantArray = Array.from(restaurantSet);
 aggregatedResults.forEach(result => {
-	result.Price = restaurantArray.reduce((acum, restaurant) => ( Number(result[restaurant]) || 0 ) + acum, 0);
+	result.Total = restaurantArray.reduce((acum, restaurant) => (Number(result[restaurant]) || 0) + acum, 0);
 });
+
+aggregatedResults = aggregatedResults.sort((a, b) => a.DateGroupBy > b.DateGroupBy);
 
 $.response.contentType = "text/json";
 $.response.setBody(JSON.stringify({
