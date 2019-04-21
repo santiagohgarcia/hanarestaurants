@@ -1,0 +1,14 @@
+VIEW "restaurants.db.views::RevenueByTime" 
+AS SELECT TO_NVARCHAR("O"."CreatedAt", 'dd-MM-YYYY') as "Date",
+		TO_NVARCHAR("O"."CreatedAt", 'Month, YYYY') as "MonthYear",
+		year("O"."CreatedAt") as "Year",
+		"R"."RestaurantId", 
+		"R"."Name" as "RestaurantName" , 
+		"I"."Price" AS "Price"
+	FROM "restaurants.db::RestaurantsContext.Restaurant" AS "R"
+	INNER JOIN "restaurants.db::RestaurantsContext.RestaurantOrder" AS "O"
+	ON "R"."RestaurantId" = "O"."RestaurantId"
+	INNER JOIN "restaurants.db::RestaurantsContext.RestaurantOrderItem" AS "I"
+	ON "O"."RestaurantId" = "I"."RestaurantId" AND
+	   "O"."RestaurantOrderId" = "I"."RestaurantOrderId" 
+	ORDER BY "R"."Name";
