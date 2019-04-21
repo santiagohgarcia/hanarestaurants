@@ -2,24 +2,21 @@ sap.ui.define([
 	"restaurants/ui5/controller/BaseController",
 	"restaurants/ui5/model/formatter",
 	"restaurants/ui5/model/types",
-	"restaurants/ui5/model/models",
-	"sap/ui/model/json/JSONModel",
-	'sap/viz/ui5/format/ChartFormatter'
-], function(BaseController, formatter, types, models, JSONModel, ChartFormatter) {
+	"sap/ui/model/json/JSONModel"
+], function(BaseController, formatter, types, JSONModel) {
 	"use strict";
 
 	return BaseController.extend("restaurants.ui5.controller.Reporting.Reporting", {
 		types: types,
 		formatter: formatter,
 
-		onInit: function() {
+		onInit: async function() {
 			//Set popover
 			var revenueByTime = this.byId("revenueByTime"),
 				revenueByTimePopover = this.byId("revenueByTimePopover");
 			this.setModel(new JSONModel(), "revenueByTime");
-			revenueByTimePopover.connect(revenueByTime.getVizUid());
 			this.getRouter().getRoute("Reporting").attachMatched(this._onReportingMatched.bind(this));
-
+			revenueByTimePopover.connect(revenueByTime.getVizUid());
 		},
 
 		_onReportingMatched: function() {
@@ -32,12 +29,16 @@ sap.ui.define([
 
 		_getRevenueByTime: async function(dateGroupBy) {
 			//Get Data	
+			var models = await this.requirePromisified("restaurants/ui5/model/models");
 			var response = await models.getRevenueByTime(dateGroupBy);
 
-			var formatPattern = ChartFormatter.DefaultPattern; // set explored app's demo model on this sample
 			//set properties
 			this.byId("revenueByTime").setVizProperties({
 				plotArea: {
+					window: {
+						start: "firstDataPoint",
+						end: "lastDataPoint"
+					},
 					dataLabel: {
 						visible: true
 					},
@@ -46,20 +47,25 @@ sap.ui.define([
 					}
 				},
 				valueAxis: {
-					label: {
-						visible: true
-					},
+					visible: true,
 					title: {
 						visible: false
 					}
 				},
-				categoryAxis: {
+				timeAxis: {
+					levels: this._getLevels(dateGroupBy),
 					title: {
 						visible: false
+					},
+					interval: {
+						unit: ''
 					}
 				},
 				title: {
 					visible: false
+				},
+				interaction: {
+					syncValueAxis: false
 				}
 			});
 
@@ -70,17 +76,27 @@ sap.ui.define([
 
 		},
 
+		_getLevels: function(dateGroupBy) {
+			return {
+				"Date": ["year", "month", "day"],
+				"MonthYear": ["year", "month"],
+				"Year": ["year"]
+			}[dateGroupBy];
+		},
+
 		_addMeasures: async function(restaurants) {
 			var revenueByTimeDataSet = this.byId("revenueByTimeDataSet");
 			var MeasureDefinition = await this.requirePromisified("sap/viz/ui5/data/MeasureDefinition");
 			revenueByTimeDataSet.destroyMeasures()
 				.addMeasure(new MeasureDefinition({
 					name: "Total",
-					value: "{Price}"
+					unit: "ARS",
+					value: "{Total}"
 				}));
 			restaurants.forEach(restaurantName => {
 				revenueByTimeDataSet.addMeasure(new MeasureDefinition({
 					name: restaurantName,
+					unit: "ARS",
 					value: `{${restaurantName}}`
 				}));
 			});
@@ -90,7 +106,7 @@ sap.ui.define([
 			var FeedItem = await this.requirePromisified("sap/viz/ui5/controls/common/feeds/FeedItem");
 			this.byId("revenueByTime").destroyFeeds()
 				.addFeed(new FeedItem({
-					uid: "categoryAxis",
+					uid: "timeAxis",
 					type: "Dimension",
 					values: ["Time"]
 				})).addFeed(new FeedItem({
