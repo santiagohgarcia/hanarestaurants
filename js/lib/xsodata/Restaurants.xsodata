@@ -241,7 +241,7 @@ service {
     principal "Restaurants"("RestaurantId") multiplicity "1"
     dependent "TodayOrdersCount"("RESTAURANTID") multiplicity "*";
     
-     /*
+    /*
 		TODAY REVENUE
 	*/
     
@@ -253,7 +253,12 @@ service {
 	multiplicity "1"
 	dependent "TodayRevenue"("RestaurantId")
 	multiplicity "1";
-    
+	
+	/*
+		PRODUCT BY ORDERS
+	*/
+     "restaurants.db.views::QuantityByProduct" 
+	as "QuantityByProduct" keys("RestaurantId","ProductId");
 }
 settings {
 
