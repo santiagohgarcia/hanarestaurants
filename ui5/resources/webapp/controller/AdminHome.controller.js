@@ -41,6 +41,10 @@ sap.ui.define([
 
 		onPressReporting: function() {
 			this.getRouter().navTo("Reporting");
+		},
+
+		onPressInvoicing: function() {
+			this.getRouter().navTo("Invoicing");
 		}
 
 	});

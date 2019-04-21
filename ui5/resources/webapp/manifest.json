@@ -100,6 +100,10 @@
 				"pattern": "Reporting",
 				"target": "reporting"
 			}, {
+				"name": "Invoicing",
+				"pattern": "Invoicing",
+				"target": "invoicing"
+			}, {
 				"name": "NewOrder",
 				"pattern": "Restaurant/{RestaurantId}/NewOrder",
 				"target": "newOrder"
@@ -128,6 +132,11 @@
 				"reporting": {
 					"viewType": "XML",
 					"viewName": "Reporting.Reporting",
+					"viewLevel": 1
+				},
+				"invoicing": {
+					"viewType": "XML",
+					"viewName": "Invoicing.Invoicing",
 					"viewLevel": 1
 				},
 				"newOrder": {

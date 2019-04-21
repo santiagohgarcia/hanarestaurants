@@ -32,11 +32,11 @@
 					<c:content>
 						<c:ChartContainerContent icon="sap-icon://line-chart" title="Line Chart">
 							<c:content>
-								<viz:VizFrame id="revenueByTime" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType="stacked_combination">
+								<viz:VizFrame id="revenueByTime" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType="info/timeseries_stacked_combination">
 									<viz:dataset>
 										<viz.data:FlattenedDataset id="revenueByTimeDataSet" data="{revenueByTime>/}">
 											<viz.data:dimensions>
-												<viz.data:DimensionDefinition name="Time" value="{DateGroupBy}"/>
+												<viz.data:DimensionDefinition name="Time" value="{DateGroupBy}" dataType="date"/>
 											</viz.data:dimensions>
 										</viz.data:FlattenedDataset>
 									</viz:dataset>
