@@ -254,11 +254,7 @@ service {
 	dependent "TodayRevenue"("RestaurantId")
 	multiplicity "1";
 	
-	/*
-		PRODUCT BY ORDERS
-	*/
-     "restaurants.db.views::QuantityByProduct" 
-	as "QuantityByProduct" keys("RestaurantId","ProductId");
+
 }
 settings {
 
