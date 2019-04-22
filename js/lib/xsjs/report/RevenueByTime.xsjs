@@ -33,8 +33,6 @@ aggregatedResults.forEach(result => {
 	result.Total = restaurantArray.reduce((acum, restaurant) => (Number(result[restaurant]) || 0) + acum, 0);
 });
 
-aggregatedResults = aggregatedResults.sort((a, b) => a.DateGroupBy > b.DateGroupBy);
-
 $.response.contentType = "text/json";
 $.response.setBody(JSON.stringify({
 	restaurants: restaurantArray,
