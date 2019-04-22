@@ -17,10 +17,26 @@ sap.ui.define([
 			this.setModel(new JSONModel(), "revenueByTime");
 			this.getRouter().getRoute("Reporting").attachMatched(this._onReportingMatched.bind(this));
 			revenueByTimePopover.connect(revenueByTime.getVizUid());
+
+		},
+
+		onRangeChanged: async function(e) {
+			var data = e.getParameters().data;
+			var start = data.start.Time;
+			var end = data.end.Time;
+			var Filter = await this.requirePromisified("sap/ui/model/Filter");
+			var dateFilter = new Filter({
+				path: "DateGroupBy",
+				test: function(oValue) {
+					var time = Date.parse(new Date(oValue));
+					return (time >= start && time <= end);
+				}
+			});
+			this.byId("revenueByTime").getDataset().getBinding('data').filter([dateFilter]);
 		},
 
 		_onReportingMatched: function() {
-			this._getRevenueByTime(this.byId("dateGroupBy").getSelectedKey());
+			this._getRevenueByTime("Date");
 		},
 
 		onSelectDateGroupByChange: function() {
@@ -28,12 +44,17 @@ sap.ui.define([
 		},
 
 		_getRevenueByTime: async function(dateGroupBy) {
+			var revenueByTime = this.byId("revenueByTime"),
+				revenueByTimeDataSet = this.byId("revenueByTimeDataSet"),
+				revenueByTimeSlider = this.byId("revenueByTimeSlider"),
+				revenueByTimeSliderDataSet = this.byId("revenueByTimeSliderDataSet");
+			revenueByTimeDataSet.getBinding("data").filter([]);
 			//Get Data	
 			var models = await this.requirePromisified("restaurants/ui5/model/models");
 			var response = await models.getRevenueByTime(dateGroupBy);
 
 			//set properties
-			this.byId("revenueByTime").setVizProperties({
+			revenueByTime.setVizProperties({
 				plotArea: {
 					window: {
 						start: "firstDataPoint",
@@ -71,8 +92,12 @@ sap.ui.define([
 
 			this.getModel("revenueByTime").setData(response.results);
 
-			this._addFeeds(response.restaurants);
-			this._addMeasures(response.restaurants)
+			this._addFeeds(revenueByTime, response.restaurants);
+			this._addMeasures(revenueByTimeDataSet, response.restaurants);
+			if (revenueByTimeSlider.getFeeds().length === 0 && revenueByTimeSliderDataSet.getMeasures().length === 0) {
+				this._addFeeds(revenueByTimeSlider, []);
+				this._addMeasures(revenueByTimeSliderDataSet, []);
+			}
 
 		},
 
@@ -84,17 +109,16 @@ sap.ui.define([
 			}[dateGroupBy];
 		},
 
-		_addMeasures: async function(restaurants) {
-			var revenueByTimeDataSet = this.byId("revenueByTimeDataSet");
+		_addMeasures: async function(dataset, restaurants) {
 			var MeasureDefinition = await this.requirePromisified("sap/viz/ui5/data/MeasureDefinition");
-			revenueByTimeDataSet.destroyMeasures()
+			dataset.destroyMeasures()
 				.addMeasure(new MeasureDefinition({
 					name: "Total",
 					unit: "ARS",
 					value: "{Total}"
 				}));
 			restaurants.forEach(restaurantName => {
-				revenueByTimeDataSet.addMeasure(new MeasureDefinition({
+				dataset.addMeasure(new MeasureDefinition({
 					name: restaurantName,
 					unit: "ARS",
 					value: `{${restaurantName}}`
@@ -102,9 +126,9 @@ sap.ui.define([
 			});
 		},
 
-		_addFeeds: async function(restaurants) {
+		_addFeeds: async function(chart, restaurants) {
 			var FeedItem = await this.requirePromisified("sap/viz/ui5/controls/common/feeds/FeedItem");
-			this.byId("revenueByTime").destroyFeeds()
+			chart.destroyFeeds()
 				.addFeed(new FeedItem({
 					uid: "timeAxis",
 					type: "Dimension",

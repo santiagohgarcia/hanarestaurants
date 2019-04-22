@@ -3,7 +3,7 @@
 	<Page class="sapUiResponsiveContentPadding">
 		<customHeader>
 			<tnt:ToolHeader >
-				<ToolbarSpacer/>
+				<core:Icon src="sap-icon://meal" size="30px" class="sapUiSmallMarginEnd sapUiTinyMarginBegin"/>
 				<Title text="{i18n>title}"/>
 				<ToolbarSpacer/>
 				<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
@@ -16,7 +16,7 @@
 		</OverflowToolbar>
 		<f:GridList items="{/Restaurants}">
 			<f:customLayout>
-				<grid:GridBoxLayout boxWidth="22.5rem"/>
+				<grid:GridBoxLayout minBoxWidth="22.5rem"/>
 			</f:customLayout>
 			<CustomListItem >
 				<VBox justifyContent="SpaceBetween" fitContainer="true">

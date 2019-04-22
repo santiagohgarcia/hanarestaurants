@@ -1,7 +1,5 @@
 <mvc:View controllerName="restaurants.ui5.controller.Reporting.Reporting" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:core="sap.ui.core"
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" height="100%" xmlns:tnt="sap.tnt" xmlns:viz="sap.viz.ui5.controls"
-	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data" xmlns:layout="sap.ui.layout"
-	xmlns:c="sap.suite.ui.commons">
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" height="100%" xmlns:tnt="sap.tnt" xmlns:l="sap.ui.layout">
 	<Page>
 		<customHeader>
 			<tnt:ToolHeader>
@@ -11,42 +9,6 @@
 				<MenuButton type="Transparent" icon="sap-icon://employee"></MenuButton>
 			</tnt:ToolHeader>
 		</customHeader>
-		<layout:FixFlex id='chartFixFlex' minFlexSize="250">
-			<layout:flexContent>
-				<viz:Popover id="revenueByTimePopover"></viz:Popover>
-				<c:ChartContainer id="chartContainer" showFullScreen="true" showPersonalization="false" autoAdjustHeight="true">
-					<c:toolbar>
-						<OverflowToolbar >
-							<Title text="{i18n>RevenueBy}"/>
-							<Select id="dateGroupBy" change="onSelectDateGroupByChange">
-								<items>
-									<core:Item key="Date" text="{i18n>Day}"/>
-									<core:Item key="MonthYear" text="{i18n>Month}"/>
-									<core:Item key="Year" text="{i18n>Year}"/>
-								</items>
-							</Select>
-							<ToolbarSpacer/>
-							<c:ChartContainerToolbarPlaceholder/>
-						</OverflowToolbar>
-					</c:toolbar>
-					<c:content>
-						<c:ChartContainerContent icon="sap-icon://line-chart" title="Line Chart">
-							<c:content>
-								<viz:VizFrame id="revenueByTime" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType="info/timeseries_stacked_combination">
-									<viz:dataset>
-										<viz.data:FlattenedDataset id="revenueByTimeDataSet" data="{revenueByTime>/}">
-											<viz.data:dimensions>
-												<viz.data:DimensionDefinition name="Time" value="{DateGroupBy}" dataType="date"/>
-											</viz.data:dimensions>
-										</viz.data:FlattenedDataset>
-									</viz:dataset>
-							
-								</viz:VizFrame>
-							</c:content>
-						</c:ChartContainerContent>
-					</c:content>
-				</c:ChartContainer>
-			</layout:flexContent>
-		</layout:FixFlex>
+		<core:Fragment fragmentName="restaurants.ui5.view.Reporting.RevenueByTime" type="XML"/>
 	</Page>
 </mvc:View>

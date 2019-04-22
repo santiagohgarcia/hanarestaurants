@@ -1,4 +1,54 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:fi="sap.f"
-	xmlns:grid="sap.ui.layout.cssgrid">
-	
+<core:FragmentDefinition xmlns="sap.m" xmlns:viz.data="sap.viz.ui5.data" xmlns:viz="sap.viz.ui5.controls" xmlns:c="sap.suite.ui.commons"
+	xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout">
+	<VBox fitContainer="true" height="100%">
+		<viz:Popover id="revenueByTimePopover"></viz:Popover>
+		<c:ChartContainer id="chartContainer" showFullScreen="true" showPersonalization="false" autoAdjustHeight="true">
+			<c:toolbar>
+				<OverflowToolbar >
+					<Title text="{i18n>RevenueBy}"/>
+					<Select id="dateGroupBy" change="onSelectDateGroupByChange">
+						<items>
+							<core:Item key="Date" text="{i18n>Day}"/>
+							<core:Item key="MonthYear" text="{i18n>Month}"/>
+							<core:Item key="Year" text="{i18n>Year}"/>
+						</items>
+					</Select>
+					<ToolbarSpacer/>
+					<c:ChartContainerToolbarPlaceholder/>
+				</OverflowToolbar>
+			</c:toolbar>
+			<c:content>
+				<c:ChartContainerContent icon="sap-icon://line-chart" title="Line Chart">
+					<c:content>
+						<viz:VizFrame id="revenueByTime" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%"
+							vizType="info/timeseries_stacked_combination">
+							<viz:dataset>
+								<viz.data:FlattenedDataset id="revenueByTimeDataSet" data="{revenueByTime>/}">
+									<viz.data:dimensions>
+										<viz.data:DimensionDefinition name="Time" value="{DateGroupBy}" dataType="date"/>
+									</viz.data:dimensions>
+								</viz.data:FlattenedDataset>
+							</viz:dataset>
+						</viz:VizFrame>
+					</c:content>
+				</c:ChartContainerContent>
+			</c:content>
+			<c:layoutData>
+				<FlexItemData maxHeight="90%" baseSize="100%"/>
+			</c:layoutData>
+		</c:ChartContainer>
+		<viz:VizSlider id="revenueByTimeSlider" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType="timeseries_column"
+			showStartEndLabel="false" valueAxisVisible="false" rangeChanged="onRangeChanged">
+			<viz:layoutData>
+				<FlexItemData maxHeight="10%" baseSize="100%"/>
+			</viz:layoutData>
+			<viz:dataset>
+				<viz.data:FlattenedDataset id="revenueByTimeSliderDataSet" data="{revenueByTime>/}">
+					<viz.data:dimensions>
+						<viz.data:DimensionDefinition name="Time" value="{DateGroupBy}" dataType="date"/>
+					</viz.data:dimensions>
+				</viz.data:FlattenedDataset>
+			</viz:dataset>
+		</viz:VizSlider>
+	</VBox>
 </core:FragmentDefinition>

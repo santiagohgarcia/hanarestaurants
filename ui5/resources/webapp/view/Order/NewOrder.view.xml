@@ -15,6 +15,9 @@
 			<l:PaneContainer>
 				<l:SplitPane requiredParentWidth="400">
 					<NavContainer id="categoriesProductsNavCont">
+						<layoutData>
+							<l:SplitterLayoutData size="800px"/>
+						</layoutData>
 						<Page id="categories">
 							<customHeader>
 								<Toolbar>
@@ -98,12 +101,12 @@
 										<ObjectIdentifier title="{ProductName}" class="sapUiTinyMarginBottom"/>
 										<HBox justifyContent="SpaceBetween" alignItems="Center">
 											<HBox alignItems="Center">
-												<StepInput min="1" value="{path:'Quantity',type:'sap.ui.model.type.Integer', constraints: {minimum:1} }" change="onChangeQuantity"/>
+												<StepInput min="1" value="{path:'Quantity',type:'sap.ui.model.type.Integer', constraints: {minimum:1} }" change="onChangeQuantity" width="120px"/>
 												<Text text=" x {path:'UnitPrice',type:'.types.floatType'} ARS" class="sapUiSmallMarginBegin"/>
 											</HBox>
-											<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="productNumber" textAlign="End">
+											<ObjectNumber number="{path:'Price',type:'.types.floatType'}" unit="ARS" class="sapMObjectNumberLarge" textAlign="End">
 												<layoutData>
-													<FlexItemData growFactor="1" styleClass="sapUiMediumMarginEnd"/>
+													<FlexItemData growFactor="1" styleClass="sapUiSmallMarginEnd"/>
 												</layoutData>
 											</ObjectNumber>
 											<Button icon="sap-icon://sys-cancel" press="onDeleteOrderItem" type="Transparent"/>
