@@ -33,8 +33,7 @@ sap.ui.define([], function() {
 							oMessageManager.addMessages(that.generateRequiredMessage(c, "value"));
 						}
 					}
-				} catch (Exception) {
-					//console.warn("field not required");
+				} catch (Exception) {s
 				}
 			});
 		},
@@ -69,25 +68,6 @@ sap.ui.define([], function() {
 			});
 		},
 
-		/*		addMessage: function(text, c, val) {
-					var oMessageProcessor = new sap.ui.core.message.ControlMessageProcessor(); //SINGLETON
-					var oMessageManager = sap.ui.getCore().getMessageManager();
-					oMessageManager.registerMessageProcessor(oMessageProcessor);
-					oMessageManager.addMessages(
-						new sap.ui.core.message.Message({
-							message: text,
-							type: sap.ui.core.MessageType.Error,
-							target: c.getId() + "/" + val,
-							processor: oMessageProcessor,
-							validation: true,
-							references: {
-								fieldName: {
-									fieldGroupIds: c.getFieldGroupIds()
-								}
-							}
-						}));
-				},*/
-
 		hasErrors: function(fieldGroupId) {
 			return sap.ui.getCore().getMessageManager().getMessageModel().getData().some(function(e) {
 				var errorFromGroupId = Object.keys(e.references).some(function(key) {
@@ -102,27 +82,6 @@ sap.ui.define([], function() {
 		isValid: function(fieldGroupId, view) {
 			this.validateRequireds(view, fieldGroupId);
 			return !this.hasErrors(fieldGroupId);
-		},
-
-		/*		removeRequiredMessages: function()s {
-					var oMessageManager = sap.ui.getCore().getMessageManager();
-					var messages = oMessageManager.getMessageModel().getData();
-					var requiredMessages = messages.filter(function(message) {
-						return message.code === "REQUIRED";
-					});
-					oMessageManager.removeMessages(requiredMessages);
-				},*/
-
-		validateCuilCuitByVerificationDoc: function(cuilCuit, verifDocType, verifDocNum) {
-			if (cuilCuit) {
-				if (verifDocType === "FS0001" || verifDocType === "ZFS0002" || verifDocType === "ZFS0003") {
-					return cuilCuit ? cuilCuit.indexOf(verifDocNum) > 0 : false;
-				} else {
-					return true;
-				}
-			} else {
-				return false;
-			}
 		}
 
 	};
